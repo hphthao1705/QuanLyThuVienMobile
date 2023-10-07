@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="dark_blue">#14375f</color>
+    <color name="light_gray">#6D8199</color>
+    <color name="white">#ffffff</color>
+    <color name="light_red">#E24943</color>
+    <color name="red">#E0312E</color>
+    <color name="black">#000000</color>
+    <color name="tan">#fcffe7</color>
+    <color name="high_tan">#e0d8b0</color>
+    <color name="orange">#dea057</color>
+
+</resources>
