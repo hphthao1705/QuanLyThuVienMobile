@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.TheLoai">
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:layout_editor_absoluteX="1dp"
+        app:layout_editor_absoluteY="1dp">
+
+
+        <LinearLayout
+            android:id="@+id/layout_chung"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/searchBook"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/shape"
+                    android:backgroundTint="@color/gray"
+                    android:textColor="@color/black"
+                    app:iconifiedByDefault="false"
+                    app:queryHint="Tìm kiếm..." />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="Loại tài liệu"
+                android:textColor="@color/text_khoa"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_theloai"
+                app:tabMode="scrollable"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/tablayout"
+                app:tabBackground="@drawable/tab_layout_selector"
+                app:tabSelectedTextColor="@color/orange"
+                app:tabPaddingStart="16dp"
+                app:tabPaddingEnd="16dp"
+                app:tabIndicatorHeight="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tab_tatca"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TẤT CẢ"/>
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tab_tinhoc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TIN HỌC" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tab_ngoaingu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="NGOẠI NGỮ" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tab_ketoan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="KẾ TOÁN" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tab_dulich"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DU LỊCH" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tab_detmay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DỆT MAY" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tab_sinhhoc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SINH HỌC" />
+
+            </com.google.android.material.tabs.TabLayout>
+
+            <FrameLayout
+                android:id="@+id/frame_container"
+                android:layout_width="match_parent"
+                android:layout_marginTop="50dp"
+                android:layout_height="wrap_content"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

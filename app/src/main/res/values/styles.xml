@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="MyDatePickerDialog" parent="Theme.AppCompat.Light.Dialog">
+        <!-- BackgroundColor of the date modal -->
+        <item name="colorAccent">#0066F5</item>
+        <!-- Change textColor of the date modal -->
+        <item name="android:textColorPrimary">#000000</item>
+        <item name="android:calendarTextColor">@android:color/black</item>
+    </style>
+
+</resources>

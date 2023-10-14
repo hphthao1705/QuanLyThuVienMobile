@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.CartBookFragment"
+    android:background="@color/gray"
+    android:orientation="vertical"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        >
+        <ImageButton
+            android:paddingTop="10dp"
+            android:layout_width="wrap_content"
+            android:src="@drawable/icon_back"
+            android:backgroundTint="@android:color/transparent"
+            android:layout_height="wrap_content"
+            app:tint="@color/black" />
+        <TextView
+            android:layout_width="match_parent"
+            android:text="Giỏ hàng"
+            android:textColor="@color/orange"
+            android:gravity="center_vertical|center_horizontal"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:layout_marginRight="50dp"
+            android:layout_height="fill_parent"/>
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvCartBook"
+        tools:listitem="@layout/item_cart_book"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="70dp"
+        >
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+</LinearLayout>
