@@ -3,19 +3,13 @@
     <color name="dark_blue">#14375f</color>
     <color name="light_gray">#6D8199</color>
 
-    <color name="light_red">#E24943</color>
 
-    <color name="tan">#fcffe7</color>
-    <color name="high_tan">#e0d8b0</color>
-    <color name="orange">#dea057</color>
 
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
 
     <color name="transparent">#00000000</color>
     <color name="xanhduong">#0553a2</color>
@@ -27,7 +21,6 @@
     <color name="blue_home">#0553a2</color>
     <color name="nhat">#e0fbff</color>
     <color name="aqua">#00FFFF</color>
-    <color name="red">#FF0000</color>
     <color name="gray">#EEEEEE</color>
 
     <color name="blue">#73c9fa</color>
@@ -55,4 +48,13 @@
     <color name="kha">#CC66FF</color>
     <color name="linh">#FFCC00</color>
 
+    <color name="white">#ffffff</color>
+    <color name="light_red">#E24943</color>
+    <color name="red">#E0312E</color>
+    <color name="black">#000000</color>
+    <color name="tan">#fcffe7</color>
+    <color name="high_tan">#e0d8b0</color>
+    <color name="orange">#dea057</color>
+    <color name="light_orange">#ffe8c8</color>
+    <color name="light_mint">#edf9f5</color>
 </resources>

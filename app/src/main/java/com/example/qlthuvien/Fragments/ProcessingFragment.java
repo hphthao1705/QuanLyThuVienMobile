@@ -8,16 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.fragment.app.Fragment;
-
 import com.example.qlthuvien.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link CartBookFragment#newInstance} factory method to
+ * Use the {@link ProcessingFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CartBookFragment extends Fragment {
+public class ProcessingFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,7 +26,7 @@ public class CartBookFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public CartBookFragment() {
+    public ProcessingFragment() {
         // Required empty public constructor
     }
 
@@ -38,11 +36,11 @@ public class CartBookFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment CartBookFragment.
+     * @return A new instance of fragment ProcessingFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CartBookFragment newInstance(String param1, String param2) {
-        CartBookFragment fragment = new CartBookFragment();
+    public static ProcessingFragment newInstance(String param1, String param2) {
+        ProcessingFragment fragment = new ProcessingFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -63,6 +61,6 @@ public class CartBookFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cart_book, container, false);
+        return inflater.inflate(R.layout.fragment_processing, container, false);
     }
 }

@@ -19,6 +19,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.qlthuvien.Activities.DetailsBookActivity;
+import com.example.qlthuvien.Dtos.DtoFavourite;
+import com.example.qlthuvien.R;
+
+import java.util.List;
 
 public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.FavouriteViewHolder>  {
     List<DtoFavourite> list;
@@ -48,7 +56,6 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Favo
         }
         holder.nameOfBook.setText(dtoFavourite.TenSach);
         holder.imgBook.setImageResource(R.drawable.conan);
-
         holder.authorOfBook.setText(dtoFavourite.TacGia);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +66,8 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Favo
         holder.btnRent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(context, DetailsBookActivity.class);
+                context.startActivity(intent);
             }
         });
     }

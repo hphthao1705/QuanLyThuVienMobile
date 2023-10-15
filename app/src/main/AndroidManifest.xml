@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
     <uses-permission android:name="android.permission.INTERNET"/>
-
     <application
         android:allowBackup="true"
         android:appComponentFactory="androidx"
@@ -18,30 +16,36 @@
         <activity
             android:name=".Activities.Activity_TimKiemSach"
             android:exported="false" />
-
-<!--        <activity-->
-<!--            android:name=".TheLoai"-->
-<!--            android:exported="true"-->
-<!--            android:label="Thể loại"-->
-<!--            android:parentActivityName=".MainActivity" />-->
-
         <activity
             android:name=".Activities.Chi_Tiet_Sach"
-            android:exported="true" />
-
-        <activity
-            android:name=".Activities.MainActivity"
-            android:exported="true" />
-
+            android:exported="false" />
         <activity
             android:name=".Activities.TheLoai"
+            android:exported="false"/>
+        <activity
+            android:name=".Activities.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.InfomationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.HistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.DetailsBookActivity"
+            android:exported="false"
+            android:label="@string/title_activity_details_book"
+            android:theme="@style/Theme.QuanLyThuVien" />
+        <activity
+            android:name=".Activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

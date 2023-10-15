@@ -11,6 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.qlthuvien.Adapters.FavouriteAdapter;
 import com.example.qlthuvien.Dtos.DtoFavourite;
@@ -83,6 +90,8 @@ public class FavouriteFragment extends Fragment {
         FavouriteAdapter adapter = new FavouriteAdapter(getContext());
 //        adapter.SetData(favouriteList);
 //        rcvFavourite.setAdapter(adapter);
+        adapter.SetData(favouriteList);
+        rcvFavourite.setAdapter(adapter);
         return view;
     }
 }
