@@ -9,5 +9,6 @@
     <color name="tan">#fcffe7</color>
     <color name="high_tan">#e0d8b0</color>
     <color name="orange">#dea057</color>
-
+    <color name="light_orange">#ffe8c8</color>
+    <color name="light_mint">#edf9f5</color>
 </resources>

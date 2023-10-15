@@ -12,6 +12,23 @@
         android:theme="@style/Theme.QuanLyThuVien"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.InfomationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.HistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.DetailsBookActivity"
+            android:exported="false"
+            android:label="@string/title_activity_details_book"
+            android:theme="@style/Theme.QuanLyThuVien" />
+        <activity
             android:name=".Activities.MainActivity"
             android:exported="true">
             <intent-filter>
