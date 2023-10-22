@@ -4,6 +4,6 @@
         android:drawable="@drawable/selected_tab"
         android:state_selected="true"/>
     <item
-        android:drawable="@drawable/tablayout"
+        android:drawable="@drawable/selected_tab"
         android:state_selected="false"/>
 </selector>

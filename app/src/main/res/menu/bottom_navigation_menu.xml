@@ -11,14 +11,9 @@
         android:icon="@drawable/baseline_favorite_24"
         android:title="Yêu thích"/>
     <item
-        android:id="@+id/page_search"
-        android:enabled="true"
-        android:icon="@drawable/baseline_search_24"
-        android:title="Tìm kiếm"/>
-    <item
         android:id="@+id/page_cart_book"
         android:enabled="true"
-        android:icon="@drawable/baseline_library_books_24"
+        android:icon="@drawable/baseline_shopping_cart_24"
         android:title="Giỏ sách"/>
     <item
         android:id="@+id/page_information"

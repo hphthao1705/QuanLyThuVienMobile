@@ -20,7 +20,8 @@
             android:layout_margin="10dp"
             android:paddingLeft="10dp"
             android:text="tìm kiếm"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:textColor="@color/black"/>
 
 
     </LinearLayout>

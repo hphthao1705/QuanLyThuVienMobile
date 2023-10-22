@@ -14,33 +14,21 @@
         tools:replace="android:appComponentFactory"
         tools:targetApi="31">
         <activity
-            android:name=".Activities.Activity_TimKiemSach"
+            android:name=".view.activities.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.Chi_Tiet_Sach"
+            android:name=".view.activities.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.TheLoai"
-            android:exported="false"/>
-        <activity
-            android:name=".Activities.RegisterActivity"
+            android:name=".view.activities.HistoryActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Activities.InfomationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Activities.HistoryActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Activities.DetailsBookActivity"
+            android:name=".view.activities.DetailsBookActivity"
             android:exported="false"
             android:label="@string/title_activity_details_book"
             android:theme="@style/Theme.QuanLyThuVien" />
         <activity
-            android:name=".Activities.MainActivity"
+            android:name=".view.activities.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
