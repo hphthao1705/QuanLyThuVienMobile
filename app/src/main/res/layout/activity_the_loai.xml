@@ -21,23 +21,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <androidx.appcompat.widget.SearchView
-                    android:id="@+id/searchBook"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp"
-
-                    android:backgroundTint="@color/gray"
-                    android:textColor="@color/black"
-                    app:iconifiedByDefault="false"
-                    app:queryHint="Tìm kiếm..." />
-            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"

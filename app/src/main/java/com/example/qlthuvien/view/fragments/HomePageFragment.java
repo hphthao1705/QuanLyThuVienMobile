@@ -19,14 +19,15 @@ import com.example.qlthuvien.data.model.Item_Book;
 import com.example.qlthuvien.data.model.Item_Loai;
 import com.example.qlthuvien.databinding.FragmentHomeBinding;
 import com.example.qlthuvien.databinding.FragmentHomePageBinding;
+import com.example.qlthuvien.view.activities.MainActivity;
 import com.example.qlthuvien.view.adapter.BookInTopAdapter;
 import com.example.qlthuvien.view.adapter.ImageSlideAdapter;
 import com.example.qlthuvien.view.adapter.TheLoaiAdapter;
 
 import java.util.ArrayList;
 
-public class HomePageFragment extends Fragment {
-    TheLoaiAdapter loaiAdapter = new TheLoaiAdapter(new ArrayList<Item_Loai>());
+public class HomePageFragment extends Fragment implements TheLoaiAdapter.ReplaceFragment {
+    TheLoaiAdapter loaiAdapter = new TheLoaiAdapter(new ArrayList<Item_Loai>(), HomePageFragment.this);
     FragmentHomePageBinding binding;
     ImageSlideAdapter imageSlideAdapter = new ImageSlideAdapter(new ArrayList<>());
     BookInTopAdapter bookInTopAdapter = new BookInTopAdapter(new ArrayList<>());
@@ -41,6 +42,7 @@ public class HomePageFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        View par = view.getRootView();
         initRecyclerView();
         loadLoai();
         loadSlideImage();
@@ -67,7 +69,7 @@ public class HomePageFragment extends Fragment {
         //
         Item_Loai loai6 = new Item_Loai("Thời trang", R.drawable.ic_theloai_detmay);
         list.add(loai6);
-        loaiAdapter = new TheLoaiAdapter(list);
+        loaiAdapter = new TheLoaiAdapter(list,HomePageFragment.this);
 
         binding.recyclerviewLoai.setAdapter(loaiAdapter);
     }
@@ -110,5 +112,15 @@ public class HomePageFragment extends Fragment {
 
         bookInTopAdapter = new BookInTopAdapter(list);
         binding.recyclerBookinTop.setAdapter(bookInTopAdapter);
+    }
+
+    @Override
+    public void replaceFragment() {
+        MainActivity activity = (MainActivity) getActivity();
+        NavigationBottomFragment f = new NavigationBottomFragment();
+        HomeFragment homeFragment = new HomeFragment(1);
+        f.setCurrent(homeFragment);
+        f.setMenu_bottom(R.id.page_home);
+        activity.replaceFragment(f);
     }
 }

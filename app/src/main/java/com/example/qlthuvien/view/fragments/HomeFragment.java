@@ -15,6 +15,10 @@ import com.example.qlthuvien.R;
 import com.example.qlthuvien.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
+    public HomeFragment(int i){
+        _i = i;
+    }
+    int _i;
     FragmentHomeBinding binding;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,11 +33,18 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if(_i == 1)
+        {
+            replaceFragment(new CategoryFragment());
+        }
+        else
+        {
+            replaceFragment(new HomePageFragment());
 
-        replaceFragment(new HomePageFragment());
+        }
     }
 
-    private void replaceFragment(Fragment fragment) {
+    public void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(binding.framelayout3.getId(), fragment).commit();
     }

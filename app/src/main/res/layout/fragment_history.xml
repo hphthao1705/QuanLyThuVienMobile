@@ -1,21 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.fragments.HistoryFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:layout_height="match_parent">
-        <androidx.recyclerview.widget.RecyclerView
+        android:layout_height="match_parent"
+        tools:context=".view.fragments.HistoryFragment">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            tools:listitem="@layout/item_history"
-            android:layout_height="match_parent">
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_height="56dp"
+            android:background="@color/blue1">
 
-        </androidx.recyclerview.widget.RecyclerView>
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_arrow_back_24"
+                android:backgroundTint="@android:color/transparent" />
 
+            <TextView
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24dp"
+                android:textAlignment="center"
+                android:text="Lịch sử mượn trả"
+                android:textStyle="bold"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="@color/blue2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btn_rcv_lichsu"
+                android:backgroundTint="@color/blue2"
+                android:layout_height="wrap_content"
+                android:text="LỊCH SỬ MƯỢN TRẢ"
+                android:textSize="15dp"
+                android:textColor="@color/black"
+                android:layout_width="fill_parent"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btn_rcv_dangxuly"
+                android:backgroundTint="@color/blue2"
+                android:layout_height="wrap_content"
+                android:text="ĐANG XỬ LÝ"
+                android:textSize="15dp"
+                android:textColor="@color/black"
+                android:layout_width="fill_parent"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/frame_history"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            tools:listitem="@layout/item_history"></androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>
-
-</FrameLayout>
+</layout>
