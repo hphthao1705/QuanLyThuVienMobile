@@ -20,6 +20,16 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class NavigationBottomFragment extends Fragment {
     FragmentNavigationBottomBinding binding;
     Fragment current = new FavouriteFragment();
+    int menu_bottom =R.id.page_favourite;
+
+    public void setCurrent(Fragment current) {
+        this.current = current;
+    }
+
+    public void setMenu_bottom(int menu_bottom) {
+        this.menu_bottom = menu_bottom;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -35,13 +45,15 @@ public class NavigationBottomFragment extends Fragment {
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(binding.frameLayout2.getId(), fragment).commit();
+
+
     }
 
     private void clickOnNavigationBottom()
     {
         replaceFragment(current);
 
-        binding.bottomNavigation.setSelectedItemId(R.id.page_favourite);
+        binding.bottomNavigation.setSelectedItemId(menu_bottom);
         binding.bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -71,7 +83,6 @@ public class NavigationBottomFragment extends Fragment {
             }
         });
     }
-    private void check () {
 
-    }
+
 }

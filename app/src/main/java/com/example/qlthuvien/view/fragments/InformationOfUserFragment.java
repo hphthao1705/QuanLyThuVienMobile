@@ -32,7 +32,10 @@ public class InformationOfUserFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 activity = (MainActivity) getActivity();
-                activity.replaceFragment(new NavigationBottomFragment());
+                NavigationBottomFragment f = new NavigationBottomFragment();
+                f.setCurrent(new InformationFragment());
+                f.setMenu_bottom(R.id.page_information);
+                activity.replaceFragment(f);
             }
         });
     }
