@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        tools:context=".view.fragments.DetailsOfBookLoanSlipsFragment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_height="56dp"
+            android:background="@color/blue1">
+
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_arrow_back_24"
+                android:backgroundTint="@android:color/transparent" />
+
+            <TextView
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24dp"
+                android:textAlignment="center"
+                android:text="Chi tiết phiếu mượn"
+                android:textStyle="bold"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rectangle_2"
+            android:layout_width="177dp"
+            android:layout_height="51dp"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:background="#FCCD85">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="MT01"
+                android:textStyle="bold"
+                android:textSize="17dp"
+                android:textColor="@color/black"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_marginTop="25dp"
+                android:layout_width="wrap_content"
+                android:text="Ngày mượn 17/7/2002"
+                android:textSize="14dp"
+                android:textColor="@color/black"
+                android:layout_marginLeft="-45dp"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/frame_detailsOfBookLoanSlips"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            tools:listitem="@layout/item_details_of_book_loan_slips"></androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+</layout>
