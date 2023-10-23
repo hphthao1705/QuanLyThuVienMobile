@@ -14,6 +14,13 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <CheckBox
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            />
         <androidx.cardview.widget.CardView
             app:cardCornerRadius="10dp"
             android:layout_width="80dp"
