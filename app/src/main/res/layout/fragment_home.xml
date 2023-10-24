@@ -18,7 +18,7 @@
             android:orientation="horizontal">
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/searchView"
-                android:layout_width="match_parent"
+                android:layout_width="340dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
@@ -28,6 +28,17 @@
                 android:textColor="@color/black"
                 app:iconifiedByDefault="false"
                 app:queryHint="Tìm kiếm..." />
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="50dp">
+                <ImageView
+                    android:id="@+id/img_logo"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/bell"/>
+
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
         <FrameLayout
             android:id="@+id/framelayout_3"

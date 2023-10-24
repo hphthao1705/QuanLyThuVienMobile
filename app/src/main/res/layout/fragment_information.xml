@@ -97,8 +97,33 @@
                         android:orientation="vertical"
                         android:padding="15dp">
 
+<!--                        <RelativeLayout-->
+<!--                            android:id="@+id/view_lichsumuontra"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content">-->
+
+<!--                            <ImageView-->
+<!--                                android:id="@+id/img_1"-->
+<!--                                android:layout_width="40dp"-->
+<!--                                android:layout_height="40dp"-->
+<!--                                android:background="@drawable/bg_icon_taikhoan"-->
+<!--                                android:padding="12dp"-->
+<!--                                android:src="@drawable/lsmuontra" />-->
+
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_centerVertical="true"-->
+<!--                                android:layout_marginStart="20dp"-->
+<!--                                android:layout_toEndOf="@+id/img_1"-->
+<!--                                android:text="Lịch sử mượn trả"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:textSize="18sp"-->
+<!--                                android:textStyle="bold" />-->
+<!--                        </RelativeLayout>-->
+
                         <RelativeLayout
-                            android:id="@+id/view_lichsumuontra"
+                            android:id="@+id/view_yeuthich"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
@@ -108,7 +133,7 @@
                                 android:layout_height="40dp"
                                 android:background="@drawable/bg_icon_taikhoan"
                                 android:padding="12dp"
-                                android:src="@drawable/lsmuontra" />
+                                android:src="@drawable/heart" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -116,7 +141,7 @@
                                 android:layout_centerVertical="true"
                                 android:layout_marginStart="20dp"
                                 android:layout_toEndOf="@+id/img_1"
-                                android:text="Lịch sử mượn trả"
+                                android:text="Yêu thích"
                                 android:textColor="@color/black"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
@@ -149,6 +174,7 @@
 
                         </RelativeLayout>
 
+
                         <RelativeLayout
                             android:id="@+id/view_caidat"
                             android:layout_width="match_parent"
@@ -175,22 +201,12 @@
                                 android:textStyle="bold" />
 
                         </RelativeLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginEnd="20dp"
-                        android:background="@drawable/bg_theme_menu"
-                        android:orientation="vertical"
-                        android:padding="15dp">
 
                         <RelativeLayout
-                            android:id="@+id/view_thoat"
+                            android:id="@+id/view_dangxuat"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp">
 
                             <ImageView
                                 android:id="@+id/img_4"
@@ -198,7 +214,7 @@
                                 android:layout_height="40dp"
                                 android:background="@drawable/bg_icon_taikhoan"
                                 android:padding="12dp"
-                                android:src="@drawable/exit" />
+                                android:src="@drawable/log" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -206,13 +222,50 @@
                                 android:layout_centerVertical="true"
                                 android:layout_marginStart="20dp"
                                 android:layout_toEndOf="@+id/img_4"
-                                android:text="Thoát"
+                                android:text="Đăng xuất"
                                 android:textColor="@color/black"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
                         </RelativeLayout>
                     </LinearLayout>
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="20dp"-->
+<!--                        android:layout_marginTop="20dp"-->
+<!--                        android:layout_marginEnd="20dp"-->
+<!--                        android:background="@drawable/bg_theme_menu"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:padding="15dp">-->
+
+<!--                        <RelativeLayout-->
+<!--                            android:id="@+id/view_thoat"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content">-->
+
+<!--                            <ImageView-->
+<!--                                android:id="@+id/img_4"-->
+<!--                                android:layout_width="40dp"-->
+<!--                                android:layout_height="40dp"-->
+<!--                                android:background="@drawable/bg_icon_taikhoan"-->
+<!--                                android:padding="12dp"-->
+<!--                                android:src="@drawable/exit" />-->
+
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_centerVertical="true"-->
+<!--                                android:layout_marginStart="20dp"-->
+<!--                                android:layout_toEndOf="@+id/img_4"-->
+<!--                                android:text="Thoát"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:textSize="18sp"-->
+<!--                                android:textStyle="bold" />-->
+
+<!--                        </RelativeLayout>-->
+<!--                    </LinearLayout>-->
 
                     <TextView
                         android:layout_width="wrap_content"

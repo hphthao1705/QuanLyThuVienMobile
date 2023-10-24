@@ -10,39 +10,61 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="50dp"
-        tools:context=".view.fragments.CartBookFragment"
         android:background="@color/gray"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:context=".view.fragments.CartBookFragment">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:orientation="horizontal"
-            android:background="@color/blue1">
+            android:background="@color/blue1"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
                 android:gravity="center"
                 android:text="Giỏ hàng"
                 android:textColor="@color/white"
-                android:layout_gravity="center"
                 android:textSize="24dp"
-                android:textStyle="bold"
-                android:layout_height="fill_parent" />
+                android:textStyle="bold" />
         </LinearLayout>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcvCartBook"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="50dp"
-            tools:listitem="@layout/item_cart_book"
-            ></androidx.recyclerview.widget.RecyclerView>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:text="Mượn sách"
-            />
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/item_cart_book">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_so_luong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="số lượng: 1"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+            <Button
+                android:id="@+id/btn_muon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/blue1"
+                android:text="Mượn"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
     </LinearLayout>
 </layout>

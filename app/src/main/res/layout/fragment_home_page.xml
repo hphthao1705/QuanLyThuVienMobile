@@ -68,6 +68,46 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"/>
                 </LinearLayout>
+
+                <LinearLayout
+                    android:paddingTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sách mới"
+                        android:textColor="@color/black"
+                        android:textSize="24sp"
+                        android:paddingLeft="20dp"
+                        android:textStyle="bold" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_marginTop="20dp"
+                        android:id="@+id/recycler_sachMoi"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gợi ý"
+                        android:textColor="@color/black"
+                        android:textSize="24sp"
+                        android:paddingLeft="20dp"
+                        android:textStyle="bold" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_marginTop="20dp"
+                        android:id="@+id/recycler_GoiY"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                </LinearLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </FrameLayout>

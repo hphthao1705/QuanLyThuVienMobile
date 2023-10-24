@@ -20,6 +20,7 @@ import com.example.qlthuvien.data.model.Item_Loai;
 import com.example.qlthuvien.databinding.FragmentHomeBinding;
 import com.example.qlthuvien.databinding.FragmentHomePageBinding;
 import com.example.qlthuvien.view.activities.MainActivity;
+import com.example.qlthuvien.view.adapter.BookCategoryAdapter;
 import com.example.qlthuvien.view.adapter.BookInTopAdapter;
 import com.example.qlthuvien.view.adapter.ImageSlideAdapter;
 import com.example.qlthuvien.view.adapter.TheLoaiAdapter;
@@ -47,6 +48,8 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
         loadLoai();
         loadSlideImage();
         loadBookInTop();
+        loadNewBook();
+        loadGoiY();
     }
     private void loadLoai()
     {
@@ -86,6 +89,15 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
         binding.recyclerBookinTop.hasFixedSize();
         LinearLayoutManager layoutManager3 = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
         binding.recyclerBookinTop.setLayoutManager(layoutManager3);
+
+        binding.recyclerSachMoi.hasFixedSize();
+        LinearLayoutManager layoutManager4 = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+        binding.recyclerSachMoi.setLayoutManager(layoutManager4);
+
+        binding.recyclerGoiY.hasFixedSize();
+        LinearLayoutManager layoutManager5 = new GridLayoutManager(getActivity(), 2);
+        binding.recyclerGoiY.setLayoutManager(layoutManager5);
+
     }
     private void loadSlideImage()
     {
@@ -112,6 +124,37 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
 
         bookInTopAdapter = new BookInTopAdapter(list);
         binding.recyclerBookinTop.setAdapter(bookInTopAdapter);
+    }
+
+    private void loadNewBook()
+    {
+        ArrayList<Item_Book> list = new ArrayList<>();
+        Item_Book i = new Item_Book("", "Conan", "Thao");
+        Item_Book i2 = new Item_Book("", "Hehe", "Thao1");
+
+        list.add(i);
+        list.add(i2);
+
+        bookInTopAdapter = new BookInTopAdapter(list);
+        binding.recyclerSachMoi.setAdapter(bookInTopAdapter);
+    }
+
+    private void loadGoiY()
+    {
+        ArrayList<Item_Book> list = new ArrayList<>();
+        Item_Book i = new Item_Book("", "Conan", "Thao");
+        Item_Book i2 = new Item_Book("", "Hehe", "Thao1");
+
+        Item_Book i3 = new Item_Book("", "Conan", "Thao3");
+        Item_Book i4 = new Item_Book("", "Hehe", "Thao4");
+
+        list.add(i);
+        list.add(i2);
+        list.add(i3);
+        list.add(i4);
+
+        bookInTopAdapter = new BookInTopAdapter(list);
+        binding.recyclerGoiY.setAdapter(bookInTopAdapter);
     }
 
     @Override
