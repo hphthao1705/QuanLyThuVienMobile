@@ -71,5 +71,23 @@ android {
 
         //fragment
         implementation 'androidx.fragment:fragment-ktx:1.6.1'
+        //retrofit2
+        implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+        implementation 'com.google.code.gson:gson:2.8.8'
+        implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+        implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
+        implementation 'com.squareup.moshi:moshi-kotlin:1.14.0'
+        implementation 'androidx.activity:activity-ktx:1.7.2'
+        /// RxAndroid
+        def rxandroid_version = '2.1.1'
+        implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
+        //RxJava
+        def rxjava_version = '2.1.1'
+        implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
+        //ViewModel
+        implementation 'android.arch.lifecycle:extensions:1.1.1'
+        annotationProcessor 'android.arch.lifecycle:compiler:1.0.0'
+        implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
+        implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
     }
 }

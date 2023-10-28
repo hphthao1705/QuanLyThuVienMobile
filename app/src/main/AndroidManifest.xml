@@ -20,9 +20,6 @@
             android:name=".view.activities.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".view.activities.HistoryActivity"
-            android:exported="false" />
-        <activity
             android:name=".view.activities.DetailsBookActivity"
             android:exported="false"
             android:label="@string/title_activity_details_book"
