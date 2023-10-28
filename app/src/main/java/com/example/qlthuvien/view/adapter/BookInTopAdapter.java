@@ -1,5 +1,9 @@
 package com.example.qlthuvien.view.adapter;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -11,7 +15,9 @@ import com.example.qlthuvien.R;
 import com.example.qlthuvien.data.model.Item_Book;
 import com.example.qlthuvien.databinding.ItemBookBinding;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.net.URL;
 
 public class BookInTopAdapter extends RecyclerView.Adapter<BookInTopAdapter.MyViewHolder>{
     ArrayList<Item_Book> list;
@@ -28,8 +34,12 @@ public class BookInTopAdapter extends RecyclerView.Adapter<BookInTopAdapter.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        //fix loi hinh
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         holder.binding.setBook(list.get(position));
-        holder.binding.imageView.setImageResource(R.drawable.conan);
+        holder.binding.imageView.setImageBitmap(getBitmapFromURL(list.get(position).getImage_book()));
     }
 
     @Override
@@ -43,6 +53,15 @@ public class BookInTopAdapter extends RecyclerView.Adapter<BookInTopAdapter.MyVi
         public MyViewHolder(final ItemBookBinding itemBinding) {
             super(itemBinding.getRoot());
             this.binding = itemBinding;
+        }
+    }
+    private Bitmap getBitmapFromURL(String src){
+        try {
+            return BitmapFactory.decodeStream(new URL(src).openConnection().getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("Exception", e.toString());
+            return null;
         }
     }
 }

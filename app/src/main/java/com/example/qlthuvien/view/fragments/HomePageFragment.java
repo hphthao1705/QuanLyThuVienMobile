@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,10 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.qlthuvien.R;
+import com.example.qlthuvien.data.model.ChiTietMuonTra;
 import com.example.qlthuvien.data.model.Item_Book;
 import com.example.qlthuvien.data.model.Item_Loai;
+import com.example.qlthuvien.data.model.TaiLieu;
+import com.example.qlthuvien.data.model.ThaoMet;
+import com.example.qlthuvien.data.model.TimesComparator;
 import com.example.qlthuvien.databinding.FragmentHomeBinding;
 import com.example.qlthuvien.databinding.FragmentHomePageBinding;
 import com.example.qlthuvien.view.activities.MainActivity;
@@ -24,14 +31,27 @@ import com.example.qlthuvien.view.adapter.BookCategoryAdapter;
 import com.example.qlthuvien.view.adapter.BookInTopAdapter;
 import com.example.qlthuvien.view.adapter.ImageSlideAdapter;
 import com.example.qlthuvien.view.adapter.TheLoaiAdapter;
+import com.example.qlthuvien.viewmodels.ChiTietMuonTraViewModel;
+import com.example.qlthuvien.viewmodels.TaiLieuViewModel;
 
+import java.time.Year;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 public class HomePageFragment extends Fragment implements TheLoaiAdapter.ReplaceFragment {
     TheLoaiAdapter loaiAdapter = new TheLoaiAdapter(new ArrayList<Item_Loai>(), HomePageFragment.this);
     FragmentHomePageBinding binding;
     ImageSlideAdapter imageSlideAdapter = new ImageSlideAdapter(new ArrayList<>());
     BookInTopAdapter bookInTopAdapter = new BookInTopAdapter(new ArrayList<>());
+    private TaiLieuViewModel viewModel_TL;
+    private ChiTietMuonTraViewModel viewModel_MT;
+    ArrayList<TaiLieu> list_tailieu = new ArrayList<>();
+    ArrayList<ChiTietMuonTra> list_ctmt = new ArrayList<>();
+    ArrayList<ThaoMet> list_countTime = new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -43,13 +63,15 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        viewModel_TL = new ViewModelProvider(this).get(TaiLieuViewModel.class);
+        viewModel_MT = new ViewModelProvider(this).get(ChiTietMuonTraViewModel.class);
+        loadBook();
+        loadDetailOfBorrowBook();
+
         View par = view.getRootView();
         initRecyclerView();
         loadLoai();
         loadSlideImage();
-        loadBookInTop();
-        loadNewBook();
-        loadGoiY();
     }
     private void loadLoai()
     {
@@ -113,45 +135,33 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
         binding.recyclerSlideimg.setAdapter(imageSlideAdapter);
     }
 
-    private void loadBookInTop()
-    {
-        ArrayList<Item_Book> list = new ArrayList<>();
-        Item_Book i = new Item_Book("", "Conan", "Thao");
-        Item_Book i2 = new Item_Book("", "Hehe", "Thao1");
-
-        list.add(i);
-        list.add(i2);
-
-        bookInTopAdapter = new BookInTopAdapter(list);
-        binding.recyclerBookinTop.setAdapter(bookInTopAdapter);
-    }
-
     private void loadNewBook()
     {
+        List<TaiLieu> list_temp = null;
         ArrayList<Item_Book> list = new ArrayList<>();
-        Item_Book i = new Item_Book("", "Conan", "Thao");
-        Item_Book i2 = new Item_Book("", "Hehe", "Thao1");
-
-        list.add(i);
-        list.add(i2);
-
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            list_temp = list_tailieu.stream().filter(p -> p.getNamsanxuat() >= (Year.now().getValue() - 3)).collect(Collectors.toList());
+        }
+        for (TaiLieu i:list_temp) {
+            Item_Book b = new Item_Book(i.getHinh(),i.getTentailieu(),i.getTacgia());
+            list.add(b);
+        }
         bookInTopAdapter = new BookInTopAdapter(list);
         binding.recyclerSachMoi.setAdapter(bookInTopAdapter);
     }
 
-    private void loadGoiY()
+    private void loadRecommendBooks()
     {
+        List<TaiLieu> list_temp = null;
         ArrayList<Item_Book> list = new ArrayList<>();
-        Item_Book i = new Item_Book("", "Conan", "Thao");
-        Item_Book i2 = new Item_Book("", "Hehe", "Thao1");
-
-        Item_Book i3 = new Item_Book("", "Conan", "Thao3");
-        Item_Book i4 = new Item_Book("", "Hehe", "Thao4");
-
-        list.add(i);
-        list.add(i2);
-        list.add(i3);
-        list.add(i4);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            Collections.shuffle(list_tailieu);
+            list_temp = list_tailieu.stream().limit(3).collect(Collectors.toList());
+        }
+        for (TaiLieu i:list_temp) {
+            Item_Book b = new Item_Book(i.getHinh(),i.getTentailieu(),i.getTacgia());
+            list.add(b);
+        }
 
         bookInTopAdapter = new BookInTopAdapter(list);
         binding.recyclerGoiY.setAdapter(bookInTopAdapter);
@@ -165,5 +175,73 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
         f.setCurrent(homeFragment);
         f.setMenu_bottom(R.id.page_home);
         activity.replaceFragment(f);
+    }
+    private void loadBook()
+    {
+        viewModel_TL.liveData_TL.observe(getViewLifecycleOwner(), new Observer<List<TaiLieu>>() {
+            @Override
+            public void onChanged(List<TaiLieu> taiLieus) {
+                list_tailieu = (ArrayList<TaiLieu>) taiLieus;
+                loadNewBook();
+                loadRecommendBooks();
+            }
+        });
+    }
+    private void loadDetailOfBorrowBook()
+    {
+        viewModel_MT.liveData.observe(getViewLifecycleOwner(), new Observer<List<ChiTietMuonTra>>() {
+            @Override
+            public void onChanged(List<ChiTietMuonTra> chiTietMuonTras) {
+                list_ctmt = (ArrayList<ChiTietMuonTra>) chiTietMuonTras;
+                countTimes();
+                sortListCountTime();
+
+            }
+        });
+        loadBookInTop();
+    }
+    private void countTimes()
+    {
+        for (ChiTietMuonTra i:list_ctmt) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                if(list_countTime.stream().filter(o -> o.getId_tailieu() == i.getId_tailieu()).findFirst().isPresent())
+                {
+                    for(ThaoMet thaoMet: list_countTime)
+                    {
+                        if(thaoMet.getId_tailieu() == i.getId_tailieu())
+                        {
+                            thaoMet.setSolanmuon(thaoMet.getSolanmuon() + 1);
+                        }
+                    }
+                }
+                else
+                {
+                    ThaoMet thaoMet = new ThaoMet(i.getId_tailieu(), 1);
+                    list_countTime.add(thaoMet);
+                }
+            }
+        }
+        Toast.makeText(getContext(), String.valueOf(list_countTime.size()), Toast.LENGTH_SHORT).show();
+    }
+    private void sortListCountTime()
+    {
+        Collections.sort(list_countTime, new TimesComparator());
+    }
+    private void loadBookInTop()
+    {
+        ArrayList<Item_Book> list = new ArrayList<>();
+        for (ThaoMet i: list_countTime)
+        {
+            for(TaiLieu j:list_tailieu)
+            {
+                if(i.getId_tailieu() == j.getId_tailieu())
+                {
+                    Item_Book b = new Item_Book(j.getHinh(),j.getTentailieu(),j.getTacgia());
+                    list.add(b);
+                }
+            }
+        }
+        bookInTopAdapter = new BookInTopAdapter(list);
+        binding.recyclerBookinTop.setAdapter(bookInTopAdapter);
     }
 }
