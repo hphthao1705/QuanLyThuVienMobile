@@ -54,6 +54,7 @@ public class HomeFragment extends Fragment {
                 return false;
             }
         });
+        binding.searchView.setFocusable(false);
     }
 
     public void replaceFragment(Fragment fragment) {

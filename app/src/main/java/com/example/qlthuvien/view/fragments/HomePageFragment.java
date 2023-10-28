@@ -63,6 +63,7 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding.progressbarStart.setVisibility(View.VISIBLE);
         viewModel_TL = new ViewModelProvider(this).get(TaiLieuViewModel.class);
         viewModel_MT = new ViewModelProvider(this).get(ChiTietMuonTraViewModel.class);
         loadBook();
@@ -139,14 +140,15 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
     {
         List<TaiLieu> list_temp = null;
         ArrayList<Item_Book> list = new ArrayList<>();
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            list_temp = list_tailieu.stream().filter(p -> p.getNamsanxuat() >= (Year.now().getValue() - 3)).collect(Collectors.toList());
-        }
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+//        }
+            list_temp = list_tailieu.stream().collect(Collectors.toList());
         for (TaiLieu i:list_temp) {
             Item_Book b = new Item_Book(i.getHinh(),i.getTentailieu(),i.getTacgia());
             list.add(b);
         }
         bookInTopAdapter = new BookInTopAdapter(list);
+        bookInTopAdapter.setContext(getContext());
         binding.recyclerSachMoi.setAdapter(bookInTopAdapter);
     }
 
@@ -154,16 +156,17 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
     {
         List<TaiLieu> list_temp = null;
         ArrayList<Item_Book> list = new ArrayList<>();
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             Collections.shuffle(list_tailieu);
             list_temp = list_tailieu.stream().limit(3).collect(Collectors.toList());
-        }
+//        }
         for (TaiLieu i:list_temp) {
             Item_Book b = new Item_Book(i.getHinh(),i.getTentailieu(),i.getTacgia());
             list.add(b);
         }
 
         bookInTopAdapter = new BookInTopAdapter(list);
+        bookInTopAdapter.setContext(getContext());
         binding.recyclerGoiY.setAdapter(bookInTopAdapter);
     }
 
@@ -242,6 +245,7 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
             }
         }
         bookInTopAdapter = new BookInTopAdapter(list);
+        bookInTopAdapter.setContext(getContext());
         binding.recyclerBookinTop.setAdapter(bookInTopAdapter);
     }
 }

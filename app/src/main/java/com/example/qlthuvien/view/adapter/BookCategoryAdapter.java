@@ -30,6 +30,7 @@ public class BookCategoryAdapter extends RecyclerView.Adapter<BookCategoryAdapte
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.binding.setBook(list.get(position));
+
         holder.binding.imageView.setImageResource(R.drawable.conan);
     }
 

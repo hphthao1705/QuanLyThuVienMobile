@@ -1,5 +1,6 @@
 package com.example.qlthuvien.view.adapter;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.StrictMode;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.qlthuvien.R;
 import com.example.qlthuvien.data.model.Item_Book;
 import com.example.qlthuvien.databinding.ItemBookBinding;
@@ -21,6 +23,12 @@ import java.net.URL;
 
 public class BookInTopAdapter extends RecyclerView.Adapter<BookInTopAdapter.MyViewHolder>{
     ArrayList<Item_Book> list;
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    Context context;
     public BookInTopAdapter(ArrayList<Item_Book> list)
     {
         this.list = list;
@@ -39,7 +47,11 @@ public class BookInTopAdapter extends RecyclerView.Adapter<BookInTopAdapter.MyVi
         StrictMode.setThreadPolicy(policy);
 
         holder.binding.setBook(list.get(position));
-        holder.binding.imageView.setImageBitmap(getBitmapFromURL(list.get(position).getImage_book()));
+        Glide
+                .with(context)
+                .load(list.get(position).getImage_book()).centerCrop().placeholder(R.drawable.avatar)
+                .into(holder.binding.imageView);
+        //holder.binding.imageView.setImageBitmap(getBitmapFromURL(list.get(position).getImage_book()));
     }
 
     @Override

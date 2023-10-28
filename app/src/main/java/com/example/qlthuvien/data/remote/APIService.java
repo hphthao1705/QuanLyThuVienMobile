@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.qlthuvien.data.model.ChiTietMuonTra;
 import com.example.qlthuvien.data.model.DocGia;
+import com.example.qlthuvien.data.model.Loai;
 import com.example.qlthuvien.data.model.TaiLieu;
 
 import java.util.List;
@@ -21,4 +22,8 @@ public interface APIService {
 
     @GET("chitietmuontra")
     Call<List<ChiTietMuonTra>> getDetailOfBorrowBooks();
+
+    @GET("loai")
+    Call<List<Loai>> getCategories();
+
 }
