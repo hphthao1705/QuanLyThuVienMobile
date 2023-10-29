@@ -44,7 +44,7 @@ public class TheLoaiAdapter extends RecyclerView.Adapter<TheLoaiAdapter.MyViewHo
         holder.binding.btnTheloai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 replaceFragment.replaceFragment();
+                 replaceFragment.replaceFragment(-1);
             }
         });
     }
@@ -65,6 +65,6 @@ public class TheLoaiAdapter extends RecyclerView.Adapter<TheLoaiAdapter.MyViewHo
     }
 
      public interface ReplaceFragment{
-         void replaceFragment();
+         void replaceFragment(int id_tailieu);
     }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,9 +12,31 @@ import androidx.appcompat.widget.SearchView;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.qlthuvien.R;
+import com.example.qlthuvien.data.model.ChiTietMuonTra;
+import com.example.qlthuvien.data.model.Item_Book;
+import com.example.qlthuvien.data.model.Item_Loai;
+import com.example.qlthuvien.data.model.TaiLieu;
+import com.example.qlthuvien.data.model.ThaoMet;
+import com.example.qlthuvien.data.model.TimesComparator;
 import com.example.qlthuvien.databinding.FragmentHomeBinding;
+import com.example.qlthuvien.databinding.FragmentHomePageBinding;
+import com.example.qlthuvien.view.activities.MainActivity;
+import com.example.qlthuvien.view.adapter.BookInTopAdapter;
+import com.example.qlthuvien.view.adapter.ImageSlideAdapter;
+import com.example.qlthuvien.view.adapter.TheLoaiAdapter;
+import com.example.qlthuvien.viewmodels.ChiTietMuonTraViewModel;
+import com.example.qlthuvien.viewmodels.TaiLieuViewModel;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class HomeFragment extends Fragment {
     public HomeFragment(int i){
@@ -34,9 +57,14 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if(_i == 1)
+        if(_i == -1)
         {
             replaceFragment(new CategoryFragment());
+        }
+        else if(_i > 0)
+        {
+            MainActivity activity = (MainActivity) getActivity();
+            activity.replaceFragment(new InformationFragment());
         }
         else
         {

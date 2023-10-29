@@ -43,7 +43,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 public class HomePageFragment extends Fragment implements TheLoaiAdapter.ReplaceFragment {
-    TheLoaiAdapter loaiAdapter = new TheLoaiAdapter(new ArrayList<Item_Loai>(), HomePageFragment.this);
+    TheLoaiAdapter loaiAdapter = new TheLoaiAdapter(new ArrayList<>(), HomePageFragment.this);
     FragmentHomePageBinding binding;
     ImageSlideAdapter imageSlideAdapter = new ImageSlideAdapter(new ArrayList<>());
     BookInTopAdapter bookInTopAdapter = new BookInTopAdapter(new ArrayList<>());
@@ -63,13 +63,13 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        hideView(false);
         binding.progressbarStart.setVisibility(View.VISIBLE);
+
         viewModel_TL = new ViewModelProvider(this).get(TaiLieuViewModel.class);
         viewModel_MT = new ViewModelProvider(this).get(ChiTietMuonTraViewModel.class);
         loadBook();
-        loadDetailOfBorrowBook();
 
-        View par = view.getRootView();
         initRecyclerView();
         loadLoai();
         loadSlideImage();
@@ -132,10 +132,10 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
         list.add(i);
         list.add(i2);
         list.add(i3);
+
         imageSlideAdapter = new ImageSlideAdapter(list);
         binding.recyclerSlideimg.setAdapter(imageSlideAdapter);
     }
-
     private void loadNewBook()
     {
         List<TaiLieu> list_temp = null;
@@ -144,37 +144,37 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
 //        }
             list_temp = list_tailieu.stream().collect(Collectors.toList());
         for (TaiLieu i:list_temp) {
-            Item_Book b = new Item_Book(i.getHinh(),i.getTentailieu(),i.getTacgia());
+            Item_Book b = new Item_Book(i.getHinh(),i.getTentailieu(),i.getTacgia(), i.getId_tailieu());
             list.add(b);
         }
         bookInTopAdapter = new BookInTopAdapter(list);
         bookInTopAdapter.setContext(getContext());
         binding.recyclerSachMoi.setAdapter(bookInTopAdapter);
+        clickOnItem();
     }
-
     private void loadRecommendBooks()
     {
         List<TaiLieu> list_temp = null;
         ArrayList<Item_Book> list = new ArrayList<>();
 //        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             Collections.shuffle(list_tailieu);
-            list_temp = list_tailieu.stream().limit(3).collect(Collectors.toList());
+            list_temp = list_tailieu.stream().limit(10).collect(Collectors.toList());
 //        }
         for (TaiLieu i:list_temp) {
-            Item_Book b = new Item_Book(i.getHinh(),i.getTentailieu(),i.getTacgia());
+            Item_Book b = new Item_Book(i.getHinh(),i.getTentailieu(),i.getTacgia(), i.getId_tailieu());
             list.add(b);
         }
 
         bookInTopAdapter = new BookInTopAdapter(list);
         bookInTopAdapter.setContext(getContext());
         binding.recyclerGoiY.setAdapter(bookInTopAdapter);
+        clickOnItem();
     }
-
     @Override
-    public void replaceFragment() {
+    public void replaceFragment(int id_tailieu) {
         MainActivity activity = (MainActivity) getActivity();
         NavigationBottomFragment f = new NavigationBottomFragment();
-        HomeFragment homeFragment = new HomeFragment(1);
+        HomeFragment homeFragment = new HomeFragment(id_tailieu);
         f.setCurrent(homeFragment);
         f.setMenu_bottom(R.id.page_home);
         activity.replaceFragment(f);
@@ -187,6 +187,7 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
                 list_tailieu = (ArrayList<TaiLieu>) taiLieus;
                 loadNewBook();
                 loadRecommendBooks();
+                loadDetailOfBorrowBook();
             }
         });
     }
@@ -196,12 +197,14 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
             @Override
             public void onChanged(List<ChiTietMuonTra> chiTietMuonTras) {
                 list_ctmt = (ArrayList<ChiTietMuonTra>) chiTietMuonTras;
+                Toast.makeText(getContext(), "list_ctmt: " + list_ctmt.size(), Toast.LENGTH_SHORT).show();
                 countTimes();
                 sortListCountTime();
-
+                loadBookInTop();
             }
         });
-        loadBookInTop();
+        hideView(true);
+        binding.progressbarStart.setVisibility(View.GONE);
     }
     private void countTimes()
     {
@@ -224,7 +227,6 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
                 }
             }
         }
-        Toast.makeText(getContext(), String.valueOf(list_countTime.size()), Toast.LENGTH_SHORT).show();
     }
     private void sortListCountTime()
     {
@@ -239,13 +241,49 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
             {
                 if(i.getId_tailieu() == j.getId_tailieu())
                 {
-                    Item_Book b = new Item_Book(j.getHinh(),j.getTentailieu(),j.getTacgia());
+                    Item_Book b = new Item_Book(j.getHinh(),j.getTentailieu(),j.getTacgia(),j.getId_tailieu());
                     list.add(b);
                 }
             }
         }
+        Toast.makeText(getContext(), "HomePage: " + list.size(), Toast.LENGTH_SHORT).show();
         bookInTopAdapter = new BookInTopAdapter(list);
         bookInTopAdapter.setContext(getContext());
         binding.recyclerBookinTop.setAdapter(bookInTopAdapter);
+        clickOnItem();
+    }
+    private void hideView(boolean check)
+    {
+        if(check)
+        {
+            binding.recyclerviewLoai.setVisibility(View.VISIBLE);
+            binding.recyclerGoiY.setVisibility(View.VISIBLE);
+            binding.recyclerSachMoi.setVisibility(View.VISIBLE);
+            binding.recyclerSlideimg.setVisibility(View.VISIBLE);
+            binding.recyclerBookinTop.setVisibility(View.VISIBLE);
+            binding.txt1.setVisibility(View.VISIBLE);
+            binding.txt2.setVisibility(View.VISIBLE);
+            binding.txt3.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            binding.recyclerviewLoai.setVisibility(View.GONE);
+            binding.recyclerGoiY.setVisibility(View.GONE);
+            binding.recyclerSachMoi.setVisibility(View.GONE);
+            binding.recyclerSlideimg.setVisibility(View.GONE);
+            binding.recyclerBookinTop.setVisibility(View.GONE);
+            binding.txt1.setVisibility(View.GONE);
+            binding.txt2.setVisibility(View.GONE);
+            binding.txt3.setVisibility(View.GONE);
+        }
+    }
+    private void clickOnItem()
+    {
+        bookInTopAdapter.setOnClickListener(new BookInTopAdapter.OnClickListener() {
+            @Override
+            public void onClick(Item_Book item_book) {
+                replaceFragment(item_book.getId_tailieu());
+            }
+        });
     }
 }

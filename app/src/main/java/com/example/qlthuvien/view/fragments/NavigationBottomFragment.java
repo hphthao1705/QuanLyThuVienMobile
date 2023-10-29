@@ -19,7 +19,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class NavigationBottomFragment extends Fragment {
     FragmentNavigationBottomBinding binding;
-    Fragment current = new HomeFragment(2);
+    Fragment current = new HomeFragment(0);
     int menu_bottom =R.id.page_home;
 
     public void setCurrent(Fragment current) {
@@ -45,8 +45,6 @@ public class NavigationBottomFragment extends Fragment {
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(binding.frameLayout2.getId(), fragment).commit();
-
-
     }
 
     private void clickOnNavigationBottom()
@@ -60,7 +58,7 @@ public class NavigationBottomFragment extends Fragment {
                 Fragment fragment = null;
                 if (item.getItemId() == R.id.page_home)
                 {
-                    fragment = new HomeFragment(2);
+                    fragment = new HomeFragment(0);
                 }
                 else  if (item.getItemId() == R.id.page_favourite)
                 {
