@@ -64,7 +64,7 @@ public class HomeFragment extends Fragment {
         else if(_i > 0)
         {
             MainActivity activity = (MainActivity) getActivity();
-            activity.replaceFragment(new InformationFragment());
+            activity.replaceFragment(new DetailsBookFragment());
         }
         else
         {

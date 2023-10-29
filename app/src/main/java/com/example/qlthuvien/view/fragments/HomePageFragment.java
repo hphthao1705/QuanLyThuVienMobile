@@ -143,7 +143,7 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
 //        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
 //        }
             list_temp = list_tailieu.stream().collect(Collectors.toList());
-        for (TaiLieu i:list_temp) {
+            for (TaiLieu i:list_temp) {
             Item_Book b = new Item_Book(i.getHinh(),i.getTentailieu(),i.getTacgia(), i.getId_tailieu());
             list.add(b);
         }
