@@ -91,5 +91,8 @@ android {
         annotationProcessor 'android.arch.lifecycle:compiler:1.0.0'
         implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
         implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
+        //Room
+        implementation 'androidx.room:room-runtime:2.5.2'
+        implementation 'androidx.room:room-ktx:2.5.2'
     }
 }

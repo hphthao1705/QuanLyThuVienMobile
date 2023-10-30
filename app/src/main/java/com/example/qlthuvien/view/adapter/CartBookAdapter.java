@@ -22,7 +22,7 @@ import com.example.qlthuvien.view.activities.DetailsBookActivity;
 public class CartBookAdapter extends RecyclerView.Adapter<CartBookAdapter.CartBookAdapterViewHolder>  {
     List<DtoFavourite> list;
     Context context;
-    public  CartBookAdapter(Context t ){
+    public  CartBookAdapter(Context t){
         context = t;
     }
 
