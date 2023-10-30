@@ -6,6 +6,7 @@ import com.example.qlthuvien.data.model.ChiTietMuonTra;
 import com.example.qlthuvien.data.model.DocGia;
 import com.example.qlthuvien.data.model.Loai;
 import com.example.qlthuvien.data.model.TaiLieu;
+import com.example.qlthuvien.data.model.YeuThich;
 
 import java.util.List;
 
@@ -27,7 +28,8 @@ public interface APIService {
 
     @GET("loai")
     Call<List<Loai>> getCategories();
-
+    @GET("yeuthich")
+    Call<List<YeuThich>> getFavorites();
     @GET("tailieu/{id}")
     Call<TaiLieu> getDetailOfBook(@Path("id") int id_tailieu);
 
