@@ -39,7 +39,7 @@ public class DetailsBookFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         viewModel = new ViewModelProvider(this).get(TaiLieuViewModel.class);
-        cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
+        //cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
 
         binding.progressbarStart.setVisibility(View.VISIBLE);
         hideView(false);
