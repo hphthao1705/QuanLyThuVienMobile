@@ -40,7 +40,12 @@ public class DetailsBookFragment extends Fragment {
 
         viewModel = new ViewModelProvider(this).get(TaiLieuViewModel.class);
         //cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
+        binding.btnDetailsBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
         binding.progressbarStart.setVisibility(View.VISIBLE);
         hideView(false);
         loadDetailBook();

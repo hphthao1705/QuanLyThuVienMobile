@@ -21,6 +21,7 @@ import com.example.qlthuvien.R;
 import com.example.qlthuvien.data.model.ChiTietMuonTra;
 import com.example.qlthuvien.data.model.Item_Book;
 import com.example.qlthuvien.data.model.Item_Loai;
+import com.example.qlthuvien.data.model.Loai;
 import com.example.qlthuvien.data.model.TaiLieu;
 import com.example.qlthuvien.data.model.ThaoMet;
 import com.example.qlthuvien.data.model.TimesComparator;
@@ -32,7 +33,9 @@ import com.example.qlthuvien.view.adapter.BookInTopAdapter;
 import com.example.qlthuvien.view.adapter.ImageSlideAdapter;
 import com.example.qlthuvien.view.adapter.TheLoaiAdapter;
 import com.example.qlthuvien.viewmodels.ChiTietMuonTraViewModel;
+import com.example.qlthuvien.viewmodels.LoaiViewModel;
 import com.example.qlthuvien.viewmodels.TaiLieuViewModel;
+import com.google.android.material.tabs.TabLayout;
 
 import java.time.Year;
 import java.util.ArrayList;
@@ -49,6 +52,9 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
     BookInTopAdapter bookInTopAdapter = new BookInTopAdapter(new ArrayList<>());
     private TaiLieuViewModel viewModel_TL;
     private ChiTietMuonTraViewModel viewModel_MT;
+
+    private LoaiViewModel viewModel_Loai;
+
     ArrayList<TaiLieu> list_tailieu = new ArrayList<>();
     ArrayList<ChiTietMuonTra> list_ctmt = new ArrayList<>();
     ArrayList<ThaoMet> list_countTime = new ArrayList<>();
@@ -68,6 +74,7 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
 
         viewModel_TL = new ViewModelProvider(this).get(TaiLieuViewModel.class);
         viewModel_MT = new ViewModelProvider(this).get(ChiTietMuonTraViewModel.class);
+        viewModel_Loai = new ViewModelProvider(this).get(LoaiViewModel.class);
         loadBook();
 
         initRecyclerView();
@@ -77,26 +84,22 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
     private void loadLoai()
     {
         ArrayList<Item_Loai> list = new ArrayList<>();
-        //
-        Item_Loai loai = new Item_Loai("Tin học", R.drawable.ic_theloai_tinhoc);
-        list.add(loai);
-        //
-        Item_Loai loai2 = new Item_Loai("Kinh tế", R.drawable.ic_theloai_ketoan);
-        list.add(loai2);
-        //
-        Item_Loai loai3 = new Item_Loai("Sinh học", R.drawable.ic_theloai_sinhhoc);
-        list.add(loai3);
-        //
-        Item_Loai loai4 = new Item_Loai("Du lịch", R.drawable.ic_theloai_dulich);
-        list.add(loai4);
-        //
-        Item_Loai loai5 = new Item_Loai("Ngoại ngữ", R.drawable.ic_theloai_ngoaingu);
-        list.add(loai5);
-        //
-        Item_Loai loai6 = new Item_Loai("Thời trang", R.drawable.ic_theloai_detmay);
-        list.add(loai6);
-        loaiAdapter = new TheLoaiAdapter(list,HomePageFragment.this);
+        viewModel_Loai.liveData_TL.observe(getViewLifecycleOwner(), new Observer<List<Loai>>() {
+            @Override
+            public void onChanged(List<Loai> loais) {
+                for (Loai i:
+                        loais) {
+                    Item_Loai loai = new Item_Loai();
+                    loai.setName(i.tenloai);
+                    loai.setIcon(i.icon);
+                    list.add(loai);
 
+
+                }
+            }
+        });
+        loaiAdapter = new TheLoaiAdapter(list,HomePageFragment.this);
+        loaiAdapter.setContext(getContext());
         binding.recyclerviewLoai.setAdapter(loaiAdapter);
     }
     private void initRecyclerView()
