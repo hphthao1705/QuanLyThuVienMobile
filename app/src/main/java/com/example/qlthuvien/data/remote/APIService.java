@@ -12,6 +12,8 @@ import java.util.List;
 import io.reactivex.Flowable;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface APIService {
     @GET("docgia")
@@ -25,5 +27,8 @@ public interface APIService {
 
     @GET("loai")
     Call<List<Loai>> getCategories();
+
+    @GET("tailieu/{id}")
+    Call<TaiLieu> getDetailOfBook(@Path("id") int id_tailieu);
 
 }

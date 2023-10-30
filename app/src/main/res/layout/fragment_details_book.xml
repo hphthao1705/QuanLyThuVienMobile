@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="book"
+            type="com.example.qlthuvien.data.model.TaiLieu" />
     </data>
 
     <LinearLayout
@@ -13,14 +15,25 @@
         android:orientation="vertical"
         tools:context=".view.fragments.DetailsBookFragment">
 
+        <ProgressBar
+            android:id="@+id/progressbar_start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="320dp"
+            android:indeterminateDrawable="@drawable/loading"
+            android:visibility="gone" />
+
         <LinearLayout
+            android:id="@+id/view_1"
             android:paddingBottom="20dp"
             android:orientation="vertical"
             android:background="@color/blue1"
             android:layout_width="match_parent"
             android:layout_gravity="center"
             android:gravity="center"
-            android:layout_height="500dp">
+            android:layout_height="500dp"
+            android:visibility="visible">
 
             <LinearLayout
                 android:gravity="center_vertical"
@@ -66,7 +79,7 @@
                 android:textStyle="bold"
                 android:layout_marginTop="10dp"
                 android:textSize="30dp"
-                android:text="Conan"
+                android:text="@{book.tentailieu}"
                 android:textColor="@color/tan" />
 
             <TextView
@@ -75,7 +88,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:text="Tác giả"
+                android:text="@{book.tacgia}"
                 android:textSize="20dp"
                 android:textColor="@color/tan" />
 
@@ -184,6 +197,7 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/btn_addcart"
             android:layout_gravity="center_horizontal"
             android:translationZ="2dp"
             android:layout_marginTop="-20dp"
@@ -193,11 +207,14 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:text="Thêm vào giỏ hàng"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:visibility="visible"/>
 
         <ScrollView
+            android:id="@+id/view_2"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent"
+            android:visibility="visible">
 
             <LinearLayout
                 android:paddingHorizontal="15dp"
@@ -233,7 +250,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18dp"
-                    android:text="Mô tả sách"
+                    android:text="@{book.mota}"
                     android:textColor="@color/black" />
             </LinearLayout>
         </ScrollView>
