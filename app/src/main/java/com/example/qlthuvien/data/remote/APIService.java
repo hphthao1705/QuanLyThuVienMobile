@@ -28,8 +28,6 @@ public interface APIService {
 
     @GET("loai")
     Call<List<Loai>> getCategories();
-    @GET("yeuthich")
-    Call<List<YeuThich>> getFavorites();
     @GET("tailieu/{id}")
     Call<TaiLieu> getDetailOfBook(@Path("id") int id_tailieu);
 
