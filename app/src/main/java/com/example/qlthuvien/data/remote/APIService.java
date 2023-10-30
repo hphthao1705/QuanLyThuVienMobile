@@ -33,4 +33,7 @@ public interface APIService {
     @GET("tailieu/{id}")
     Call<TaiLieu> getDetailOfBook(@Path("id") int id_tailieu);
 
+    @GET("yeuthich")
+    Call<List<YeuThich>> getFavorites();
+
 }

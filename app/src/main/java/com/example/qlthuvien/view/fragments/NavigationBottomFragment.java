@@ -44,7 +44,8 @@ public class NavigationBottomFragment extends Fragment {
     }
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(binding.frameLayout2.getId(), fragment).commit();
+        fragmentManager.beginTransaction().replace(binding.frameLayout2.getId(), fragment).addToBackStack(null).commit();
+
     }
 
     private void clickOnNavigationBottom()
