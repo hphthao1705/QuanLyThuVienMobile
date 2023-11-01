@@ -6,8 +6,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 
 public class ChiTietMuonTra {
-    public ChiTietMuonTra(int id_muon, int id_tailieu, Date ngaytra, int tinhtrangtra) {
+    public ChiTietMuonTra(int id_muon, int id_ctmuon, int id_tailieu, Date ngaytra, int tinhtrangtra) {
         this.id_muon = id_muon;
+        this.id_ctmuon = id_ctmuon;
         this.id_tailieu = id_tailieu;
         this.ngaytra = ngaytra;
         this.tinhtrangtra = tinhtrangtra;
@@ -19,6 +20,14 @@ public class ChiTietMuonTra {
 
     public void setId_muon(int id_muon) {
         this.id_muon = id_muon;
+    }
+
+    public int getId_ctmuon() {
+        return id_ctmuon;
+    }
+
+    public void setId_ctmuon(int id_ctmuon) {
+        this.id_ctmuon = id_ctmuon;
     }
 
     public int getId_tailieu() {
@@ -48,7 +57,10 @@ public class ChiTietMuonTra {
     @SerializedName("id_muon")
     @Expose
     private int id_muon;
-    @SerializedName("tailieu")
+    @SerializedName("id_ctmuon")
+    @Expose
+    private int id_ctmuon;
+    @SerializedName("id_tailieu")
     @Expose
     private int id_tailieu;
     @SerializedName("ngaytra")

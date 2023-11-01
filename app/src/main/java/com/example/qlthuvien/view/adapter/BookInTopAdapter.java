@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -23,7 +24,7 @@ import java.net.URL;
 
 public class BookInTopAdapter extends RecyclerView.Adapter<BookInTopAdapter.MyViewHolder>{
     ArrayList<Item_Book> list;
-
+    private OnClickListener onClickListener = null;
     public void setContext(Context context) {
         this.context = context;
     }
@@ -45,12 +46,19 @@ public class BookInTopAdapter extends RecyclerView.Adapter<BookInTopAdapter.MyVi
         //fix loi hinh
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-
+        Item_Book post = list.get(position);
         holder.binding.setBook(list.get(position));
         Glide
                 .with(context)
                 .load(list.get(position).getImage_book()).centerCrop().placeholder(R.drawable.avatar)
                 .into(holder.binding.imageView);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickListener.onClick(post);
+            }
+        });
         //holder.binding.imageView.setImageBitmap(getBitmapFromURL(list.get(position).getImage_book()));
     }
 
@@ -66,6 +74,13 @@ public class BookInTopAdapter extends RecyclerView.Adapter<BookInTopAdapter.MyVi
             super(itemBinding.getRoot());
             this.binding = itemBinding;
         }
+    }
+    public interface OnClickListener {
+        void onClick(Item_Book item_book);
+    }
+    public void setOnClickListener(OnClickListener listener)
+    {
+        this.onClickListener = listener;
     }
     private Bitmap getBitmapFromURL(String src){
         try {

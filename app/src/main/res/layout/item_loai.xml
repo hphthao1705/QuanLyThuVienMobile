@@ -24,6 +24,7 @@
                 android:layout_gravity="center"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:scaleType="centerCrop"
                 android:src="@drawable/ic_theloai_tinhoc"
                 tools:ignore="MissingClass" />
         </androidx.cardview.widget.CardView>

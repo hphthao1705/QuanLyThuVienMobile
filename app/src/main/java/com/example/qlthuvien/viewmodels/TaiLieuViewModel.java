@@ -13,13 +13,14 @@ import java.util.List;
 public class TaiLieuViewModel extends ViewModel {
     private final TaiLieuRepository repository;
     public LiveData<List<TaiLieu>> liveData_TL = new MutableLiveData();
+    public LiveData<TaiLieu> liveData = new MutableLiveData<>();
 
     public TaiLieuViewModel() {
         this.repository = new TaiLieuRepository();
         liveData_TL = repository.loadBook();
     }
-    public LiveData<List<TaiLieu>> getBook()
+    public void loadDetailBook(int id_tailieu)
     {
-        return liveData_TL;
+        liveData = repository.loadDetailOfBook(id_tailieu);
     }
 }

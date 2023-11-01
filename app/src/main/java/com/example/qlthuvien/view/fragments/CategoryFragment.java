@@ -30,7 +30,6 @@ import java.util.List;
 
 
 public class CategoryFragment extends Fragment {
-
     FragmentCategoryBinding binding;
     private LoaiViewModel viewModel_Loai;
     private void loadBooks()
@@ -39,7 +38,7 @@ public class CategoryFragment extends Fragment {
         for (int i = 0 ; i <10; i++)
         {
 
-            Item_Book temp = new Item_Book("", "Conan", "Thao");
+            Item_Book temp = new Item_Book("", "Conan", "Thao", 1);
             list.add(temp);
         }
 
@@ -54,7 +53,6 @@ public class CategoryFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_category, container, false);
-
         return binding.getRoot();
     }
 

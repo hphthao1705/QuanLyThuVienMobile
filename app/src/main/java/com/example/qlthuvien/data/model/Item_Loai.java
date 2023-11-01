@@ -1,9 +1,13 @@
 package com.example.qlthuvien.data.model;
 
 public class Item_Loai {
-    public Item_Loai(String name, int icon) {
+    public Item_Loai(String name, String icon) {
         this.name = name;
         this.icon = icon;
+    }
+    public  Item_Loai()
+    {
+
     }
 
     public String getName() {
@@ -14,14 +18,14 @@ public class Item_Loai {
         this.name = name;
     }
 
-    public int getIcon() {
+    public String getIcon() {
         return icon;
     }
 
-    public void setIcon(int icon) {
+    public void setIcon(String icon) {
         this.icon = icon;
     }
 
     String name;
-    int icon;
+    String icon;
 }

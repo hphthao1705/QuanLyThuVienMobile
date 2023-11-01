@@ -33,4 +33,23 @@ public class TaiLieuRepository {
         });
         return data;
     }
+    public LiveData<TaiLieu> loadDetailOfBook(int id_tailieu)
+    {
+        MutableLiveData<TaiLieu> data = new MutableLiveData<>();
+        Common.apiService.getDetailOfBook(id_tailieu).enqueue(new Callback<TaiLieu>() {
+            @Override
+            public void onResponse(Call<TaiLieu> call, Response<TaiLieu> response) {
+                if(response.isSuccessful())
+                {
+                    data.setValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TaiLieu> call, Throwable t) {
+
+            }
+        });
+        return data;
+    }
 }

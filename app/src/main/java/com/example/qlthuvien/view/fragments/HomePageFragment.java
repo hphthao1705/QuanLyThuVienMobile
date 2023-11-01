@@ -21,6 +21,7 @@ import com.example.qlthuvien.R;
 import com.example.qlthuvien.data.model.ChiTietMuonTra;
 import com.example.qlthuvien.data.model.Item_Book;
 import com.example.qlthuvien.data.model.Item_Loai;
+import com.example.qlthuvien.data.model.Loai;
 import com.example.qlthuvien.data.model.TaiLieu;
 import com.example.qlthuvien.data.model.ThaoMet;
 import com.example.qlthuvien.data.model.TimesComparator;
@@ -32,7 +33,9 @@ import com.example.qlthuvien.view.adapter.BookInTopAdapter;
 import com.example.qlthuvien.view.adapter.ImageSlideAdapter;
 import com.example.qlthuvien.view.adapter.TheLoaiAdapter;
 import com.example.qlthuvien.viewmodels.ChiTietMuonTraViewModel;
+import com.example.qlthuvien.viewmodels.LoaiViewModel;
 import com.example.qlthuvien.viewmodels.TaiLieuViewModel;
+import com.google.android.material.tabs.TabLayout;
 
 import java.time.Year;
 import java.util.ArrayList;
@@ -43,12 +46,15 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 public class HomePageFragment extends Fragment implements TheLoaiAdapter.ReplaceFragment {
-    TheLoaiAdapter loaiAdapter = new TheLoaiAdapter(new ArrayList<Item_Loai>(), HomePageFragment.this);
+    TheLoaiAdapter loaiAdapter = new TheLoaiAdapter(new ArrayList<>(), HomePageFragment.this);
     FragmentHomePageBinding binding;
     ImageSlideAdapter imageSlideAdapter = new ImageSlideAdapter(new ArrayList<>());
     BookInTopAdapter bookInTopAdapter = new BookInTopAdapter(new ArrayList<>());
     private TaiLieuViewModel viewModel_TL;
     private ChiTietMuonTraViewModel viewModel_MT;
+
+    private LoaiViewModel viewModel_Loai;
+
     ArrayList<TaiLieu> list_tailieu = new ArrayList<>();
     ArrayList<ChiTietMuonTra> list_ctmt = new ArrayList<>();
     ArrayList<ThaoMet> list_countTime = new ArrayList<>();
@@ -63,13 +69,14 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        hideView(false);
         binding.progressbarStart.setVisibility(View.VISIBLE);
+
         viewModel_TL = new ViewModelProvider(this).get(TaiLieuViewModel.class);
         viewModel_MT = new ViewModelProvider(this).get(ChiTietMuonTraViewModel.class);
+        viewModel_Loai = new ViewModelProvider(this).get(LoaiViewModel.class);
         loadBook();
-        loadDetailOfBorrowBook();
 
-        View par = view.getRootView();
         initRecyclerView();
         loadLoai();
         loadSlideImage();
@@ -77,26 +84,22 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
     private void loadLoai()
     {
         ArrayList<Item_Loai> list = new ArrayList<>();
-        //
-        Item_Loai loai = new Item_Loai("Tin học", R.drawable.ic_theloai_tinhoc);
-        list.add(loai);
-        //
-        Item_Loai loai2 = new Item_Loai("Kinh tế", R.drawable.ic_theloai_ketoan);
-        list.add(loai2);
-        //
-        Item_Loai loai3 = new Item_Loai("Sinh học", R.drawable.ic_theloai_sinhhoc);
-        list.add(loai3);
-        //
-        Item_Loai loai4 = new Item_Loai("Du lịch", R.drawable.ic_theloai_dulich);
-        list.add(loai4);
-        //
-        Item_Loai loai5 = new Item_Loai("Ngoại ngữ", R.drawable.ic_theloai_ngoaingu);
-        list.add(loai5);
-        //
-        Item_Loai loai6 = new Item_Loai("Thời trang", R.drawable.ic_theloai_detmay);
-        list.add(loai6);
-        loaiAdapter = new TheLoaiAdapter(list,HomePageFragment.this);
+        viewModel_Loai.liveData_TL.observe(getViewLifecycleOwner(), new Observer<List<Loai>>() {
+            @Override
+            public void onChanged(List<Loai> loais) {
+                for (Loai i:
+                        loais) {
+                    Item_Loai loai = new Item_Loai();
+                    loai.setName(i.tenloai);
+                    loai.setIcon(i.icon);
+                    list.add(loai);
 
+
+                }
+            }
+        });
+        loaiAdapter = new TheLoaiAdapter(list,HomePageFragment.this);
+        loaiAdapter.setContext(getContext());
         binding.recyclerviewLoai.setAdapter(loaiAdapter);
     }
     private void initRecyclerView()
@@ -132,10 +135,10 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
         list.add(i);
         list.add(i2);
         list.add(i3);
+
         imageSlideAdapter = new ImageSlideAdapter(list);
         binding.recyclerSlideimg.setAdapter(imageSlideAdapter);
     }
-
     private void loadNewBook()
     {
         List<TaiLieu> list_temp = null;
@@ -143,38 +146,38 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
 //        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
 //        }
             list_temp = list_tailieu.stream().collect(Collectors.toList());
-        for (TaiLieu i:list_temp) {
-            Item_Book b = new Item_Book(i.getHinh(),i.getTentailieu(),i.getTacgia());
+            for (TaiLieu i:list_temp) {
+            Item_Book b = new Item_Book(i.getHinh(),i.getTentailieu(),i.getTacgia(), i.getId_tailieu());
             list.add(b);
         }
         bookInTopAdapter = new BookInTopAdapter(list);
         bookInTopAdapter.setContext(getContext());
         binding.recyclerSachMoi.setAdapter(bookInTopAdapter);
+        clickOnItem();
     }
-
     private void loadRecommendBooks()
     {
         List<TaiLieu> list_temp = null;
         ArrayList<Item_Book> list = new ArrayList<>();
 //        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             Collections.shuffle(list_tailieu);
-            list_temp = list_tailieu.stream().limit(3).collect(Collectors.toList());
+            list_temp = list_tailieu.stream().limit(10).collect(Collectors.toList());
 //        }
         for (TaiLieu i:list_temp) {
-            Item_Book b = new Item_Book(i.getHinh(),i.getTentailieu(),i.getTacgia());
+            Item_Book b = new Item_Book(i.getHinh(),i.getTentailieu(),i.getTacgia(), i.getId_tailieu());
             list.add(b);
         }
 
         bookInTopAdapter = new BookInTopAdapter(list);
         bookInTopAdapter.setContext(getContext());
         binding.recyclerGoiY.setAdapter(bookInTopAdapter);
+        clickOnItem();
     }
-
     @Override
-    public void replaceFragment() {
+    public void replaceFragment(int id_tailieu) {
         MainActivity activity = (MainActivity) getActivity();
         NavigationBottomFragment f = new NavigationBottomFragment();
-        HomeFragment homeFragment = new HomeFragment(1);
+        HomeFragment homeFragment = new HomeFragment(id_tailieu);
         f.setCurrent(homeFragment);
         f.setMenu_bottom(R.id.page_home);
         activity.replaceFragment(f);
@@ -187,6 +190,7 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
                 list_tailieu = (ArrayList<TaiLieu>) taiLieus;
                 loadNewBook();
                 loadRecommendBooks();
+                loadDetailOfBorrowBook();
             }
         });
     }
@@ -196,12 +200,14 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
             @Override
             public void onChanged(List<ChiTietMuonTra> chiTietMuonTras) {
                 list_ctmt = (ArrayList<ChiTietMuonTra>) chiTietMuonTras;
+                Toast.makeText(getContext(), "list_ctmt: " + list_ctmt.size(), Toast.LENGTH_SHORT).show();
                 countTimes();
                 sortListCountTime();
-
+                loadBookInTop();
             }
         });
-        loadBookInTop();
+        hideView(true);
+        binding.progressbarStart.setVisibility(View.GONE);
     }
     private void countTimes()
     {
@@ -224,7 +230,6 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
                 }
             }
         }
-        Toast.makeText(getContext(), String.valueOf(list_countTime.size()), Toast.LENGTH_SHORT).show();
     }
     private void sortListCountTime()
     {
@@ -239,13 +244,49 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
             {
                 if(i.getId_tailieu() == j.getId_tailieu())
                 {
-                    Item_Book b = new Item_Book(j.getHinh(),j.getTentailieu(),j.getTacgia());
+                    Item_Book b = new Item_Book(j.getHinh(),j.getTentailieu(),j.getTacgia(),j.getId_tailieu());
                     list.add(b);
                 }
             }
         }
+        Toast.makeText(getContext(), "HomePage: " + list.size(), Toast.LENGTH_SHORT).show();
         bookInTopAdapter = new BookInTopAdapter(list);
         bookInTopAdapter.setContext(getContext());
         binding.recyclerBookinTop.setAdapter(bookInTopAdapter);
+        clickOnItem();
+    }
+    private void hideView(boolean check)
+    {
+        if(check)
+        {
+            binding.recyclerviewLoai.setVisibility(View.VISIBLE);
+            binding.recyclerGoiY.setVisibility(View.VISIBLE);
+            binding.recyclerSachMoi.setVisibility(View.VISIBLE);
+            binding.recyclerSlideimg.setVisibility(View.VISIBLE);
+            binding.recyclerBookinTop.setVisibility(View.VISIBLE);
+            binding.txt1.setVisibility(View.VISIBLE);
+            binding.txt2.setVisibility(View.VISIBLE);
+            binding.txt3.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            binding.recyclerviewLoai.setVisibility(View.GONE);
+            binding.recyclerGoiY.setVisibility(View.GONE);
+            binding.recyclerSachMoi.setVisibility(View.GONE);
+            binding.recyclerSlideimg.setVisibility(View.GONE);
+            binding.recyclerBookinTop.setVisibility(View.GONE);
+            binding.txt1.setVisibility(View.GONE);
+            binding.txt2.setVisibility(View.GONE);
+            binding.txt3.setVisibility(View.GONE);
+        }
+    }
+    private void clickOnItem()
+    {
+        bookInTopAdapter.setOnClickListener(new BookInTopAdapter.OnClickListener() {
+            @Override
+            public void onClick(Item_Book item_book) {
+                replaceFragment(item_book.getId_tailieu());
+            }
+        });
     }
 }

@@ -4,12 +4,7 @@ public class Item_Book {
     String image_book;
     String name_book;
     String author_book;
-
-    public Item_Book(String image_book, String name_book, String author_book) {
-        this.image_book = image_book;
-        this.name_book = name_book;
-        this.author_book = author_book;
-    }
+    int id_tailieu;
 
     public String getImage_book() {
         return image_book;
@@ -33,5 +28,20 @@ public class Item_Book {
 
     public void setAuthor_book(String author_book) {
         this.author_book = author_book;
+    }
+
+    public int getId_tailieu() {
+        return id_tailieu;
+    }
+
+    public void setId_tailieu(int id_tailieu) {
+        this.id_tailieu = id_tailieu;
+    }
+
+    public Item_Book(String image_book, String name_book, String author_book, int id_tailieu) {
+        this.image_book = image_book;
+        this.name_book = name_book;
+        this.author_book = author_book;
+        this.id_tailieu = id_tailieu;
     }
 }
