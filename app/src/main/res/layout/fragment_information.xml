@@ -57,6 +57,7 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
+                android:id="@+id/tv_nameuser"
                 android:layout_width="wrap_content"
                 android:text="Thảo Khùng"
                 android:textSize="27dp"

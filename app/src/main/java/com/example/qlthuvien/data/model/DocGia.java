@@ -1,10 +1,17 @@
 package com.example.qlthuvien.data.model;
 
+import android.util.Patterns;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class DocGia {
-    public DocGia(int id_dg, int id_sv, String email, int password) {
+
+    public DocGia()
+    {
+
+    }
+    public DocGia(int id_dg, int id_sv, String email, String password) {
         this.id_dg = id_dg;
         this.id_sv = id_sv;
         this.email = email;
@@ -35,13 +42,18 @@ public class DocGia {
         this.email = email;
     }
 
-    public int getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(int password) {
+    public void setPassword(String password) {
         this.password = password;
     }
+
+    public boolean isEmailValid() {
+        return Patterns.EMAIL_ADDRESS.matcher(getEmail()).matches();
+    }
+
 
     @SerializedName("id_dg")
     @Expose
@@ -54,6 +66,15 @@ public class DocGia {
     private String email;
     @SerializedName("password")
     @Expose
-    private int password;
+    private String password;
+
+
+    @SerializedName("response")
+    @Expose()
+    public SinhVien loginresponse;
+
+    public SinhVien getLoginresponse() {
+        return loginresponse;
+    }
 
 }

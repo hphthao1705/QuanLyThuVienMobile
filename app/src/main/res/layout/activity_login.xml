@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/thao_bg_2"
         tools:context=".view.activities.LoginActivity"
-        android:paddingTop="150dp">
+        android:paddingTop="130dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -25,6 +25,7 @@
             android:backgroundTint="#9922151F">
 
             <LinearLayout
+                android:id="@+id/ll_lay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -55,20 +56,26 @@
                     android:textColor="@color/white"
                     android:textColorHighlight="@color/cardview_dark_background" />
 
-                <EditText
-                    android:id="@+id/txt_password"
+                <RelativeLayout
+                    android:id="@+id/rl_pwd"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="40dp"
-                    android:background="@drawable/custom_edittext"
-                    android:drawableLeft="@drawable/baseline_lock_24"
-                    android:drawablePadding="8dp"
-                    android:hint="Mật khẩu"
-                    android:inputType="textPassword"
-                    android:padding="8dp"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/white"
-                    android:textColorHighlight="@color/cardview_dark_background" />
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/txt_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="30dp"
+                        android:background="@drawable/custom_edittext"
+                        android:drawableLeft="@drawable/baseline_lock_24"
+                        android:drawablePadding="8dp"
+                        android:hint="Mật khẩu"
+                        android:inputType="textPassword"
+                        android:padding="8dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        android:textColorHighlight="@color/cardview_dark_background" />
+                </RelativeLayout>
 
                 <Button
                     android:id="@+id/btn_dangnhap"
@@ -84,18 +91,40 @@
 
         </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:padding="8dp"
-            android:text="Bạn chưa có tài khoản? Đăng ký"
-            android:textSize="14sp"
-            android:layout_gravity="center"
-            android:textAlignment="center"
-            android:id="@+id/txt_dangky"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:background="#9922151F"
-            android:layout_marginBottom="20dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Bạn chưa có tài khoản?"
+                android:textSize="14sp"
+                android:textAlignment="center"
+                android:id="@+id/txt_dangky"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:background="#9922151F"
+                android:layout_marginBottom="20dp" />
+
+            <TextView
+                android:id="@+id/tvreg"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:padding="8dp"
+                android:text="Đăng ký"
+                android:textSize="14sp"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:textColor="@color/red"
+                android:textStyle="bold"
+                android:background="#9922151F"
+                android:layout_marginBottom="20dp" />
+
+        </LinearLayout>
+
     </LinearLayout>
 </layout>

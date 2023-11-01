@@ -66,6 +66,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:text="Thảo Khùng"
+                android:id="@+id/tv_name"
                 android:textSize="27dp"
                 android:textColor="@color/black"
                 android:textStyle="bold"
@@ -107,6 +108,7 @@
                         android:textColor="@color/black" />
 
                     <TextView
+                        android:id="@+id/tv_email"
                         android:text="thảokhùng@gmail.com"
                         android:layout_marginTop="10dp"
                         android:textSize="18dp"
@@ -144,12 +146,13 @@
                     <TextView
                         android:textSize="18dp"
                         android:layout_width="wrap_content"
-                        android:text="Số điện thoại"
+                        android:text="MSSV"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black" />
 
                     <TextView
-                        android:text="thảokhùng@gmail.com"
+                        android:id="@+id/tv_mssv"
+                        android:text="2001206988"
                         android:layout_marginTop="10dp"
                         android:textSize="18dp"
                         android:textColor="@color/black"
@@ -179,6 +182,7 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
+                    android:id="@+id/tv_change"
                     android:layout_marginTop="5dp"
                     android:layout_width="wrap_content"
                     android:textSize="18dp"
