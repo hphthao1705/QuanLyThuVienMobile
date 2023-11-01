@@ -12,16 +12,13 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
-<<<<<<< HEAD
 import retrofit2.http.POST;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
-=======
 import retrofit2.http.Path;
 import retrofit2.http.Query;
->>>>>>> aeed15c5794e6a24a5988098c919987d127215d9
 
 public interface APIService {
     @GET("docgia")
