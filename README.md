@@ -7,4 +7,5 @@ Công nghệ phần mềm nâng cao
   <li>Room</li>
   <li>Shared Preferences</li>
   <li>Glide</li>
+  <li>Retrofit2</li>
 </ul>
