@@ -267,6 +267,8 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
             binding.txt1.setVisibility(View.VISIBLE);
             binding.txt2.setVisibility(View.VISIBLE);
             binding.txt3.setVisibility(View.VISIBLE);
+            binding.txt5.setVisibility(View.VISIBLE);
+            binding.txt6.setVisibility(View.VISIBLE);
         }
         else
         {
@@ -278,6 +280,8 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
             binding.txt1.setVisibility(View.GONE);
             binding.txt2.setVisibility(View.GONE);
             binding.txt3.setVisibility(View.GONE);
+            binding.txt5.setVisibility(View.GONE);
+            binding.txt6.setVisibility(View.GONE);
         }
     }
     private void clickOnItem()

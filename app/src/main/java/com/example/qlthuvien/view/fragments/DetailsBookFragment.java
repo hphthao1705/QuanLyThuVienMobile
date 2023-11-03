@@ -39,7 +39,7 @@ public class DetailsBookFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         viewModel = new ViewModelProvider(this).get(TaiLieuViewModel.class);
-        //cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
+        cartViewModel = ViewModelProviders.of(this).get(CartViewModel.class);
         binding.btnDetailsBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,7 +49,7 @@ public class DetailsBookFragment extends Fragment {
         binding.progressbarStart.setVisibility(View.VISIBLE);
         hideView(false);
         loadDetailBook();
-        //addBookToCart();
+        addBookToCart();
     }
 
     @Override

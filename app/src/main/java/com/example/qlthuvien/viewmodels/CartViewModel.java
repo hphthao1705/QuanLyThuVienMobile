@@ -12,7 +12,6 @@ import com.example.qlthuvien.data.local.CartDatabase;
 import com.example.qlthuvien.data.local.entities.Cart;
 
 import java.util.List;
-
 public class CartViewModel extends AndroidViewModel {
     public MutableLiveData<List<Cart>> cartBook;
     private CartDatabase cartDatabase;
