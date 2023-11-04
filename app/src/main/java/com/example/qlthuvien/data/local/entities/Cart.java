@@ -18,10 +18,17 @@ public class Cart {
     private String tensach;
     @ColumnInfo(name="tacgia")
     private String tacgia;
+
+    public int getCheckbox() {
+        return checkbox;
+    }
+
+    public void setCheckbox(int checkbox) {
+        this.checkbox = checkbox;
+    }
+
     @ColumnInfo(name="checkbox")
-    private boolean checkbox;
-    @ColumnInfo(name="yeuthich")
-    private boolean yeuthich;
+    private int checkbox;
 
     public int getId() {
         return id;
@@ -71,29 +78,13 @@ public class Cart {
         this.tacgia = tacgia;
     }
 
-    public boolean isCheckbox() {
-        return checkbox;
-    }
 
-    public void setCheckbox(boolean checkbox) {
-        this.checkbox = checkbox;
-    }
-
-    public boolean isYeuthich() {
-        return yeuthich;
-    }
-
-    public void setYeuthich(boolean yeuthich) {
-        this.yeuthich = yeuthich;
-    }
-
-    public Cart(int id_tailieu, int id_dg, String hinh, String tensach, String tacgia, boolean checkbox, boolean yeuthich) {
+    public Cart(int id_tailieu, int id_dg, String hinh, String tensach, String tacgia, int checkbox) {
         this.id_tailieu = id_tailieu;
         this.id_dg = id_dg;
         this.hinh = hinh;
         this.tensach = tensach;
         this.tacgia = tacgia;
         this.checkbox = checkbox;
-        this.yeuthich = yeuthich;
     }
 }

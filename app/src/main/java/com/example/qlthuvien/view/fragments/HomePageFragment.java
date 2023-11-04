@@ -200,7 +200,6 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
             @Override
             public void onChanged(List<ChiTietMuonTra> chiTietMuonTras) {
                 list_ctmt = (ArrayList<ChiTietMuonTra>) chiTietMuonTras;
-                Toast.makeText(getContext(), "list_ctmt: " + list_ctmt.size(), Toast.LENGTH_SHORT).show();
                 countTimes();
                 sortListCountTime();
                 loadBookInTop();
@@ -249,7 +248,6 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
                 }
             }
         }
-        Toast.makeText(getContext(), "HomePage: " + list.size(), Toast.LENGTH_SHORT).show();
         bookInTopAdapter = new BookInTopAdapter(list);
         bookInTopAdapter.setContext(getContext());
         binding.recyclerBookinTop.setAdapter(bookInTopAdapter);
