@@ -17,12 +17,14 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.qlthuvien.data.local.entities.Cart;
+import com.example.qlthuvien.data.model.MuonTra;
 import com.example.qlthuvien.databinding.FragmentCartBookBinding;
 import com.example.qlthuvien.view.activities.MainActivity;
 import com.example.qlthuvien.view.adapter.CartBookAdapter;
@@ -30,12 +32,22 @@ import com.example.qlthuvien.view.adapter.FavouriteAdapter;
 import com.example.qlthuvien.dto.DtoFavourite;
 import com.example.qlthuvien.R;
 import com.example.qlthuvien.viewmodels.CartViewModel;
+import com.example.qlthuvien.viewmodels.MuonTraViewModel;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Locale;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
@@ -45,6 +57,8 @@ public class CartBookFragment extends Fragment {
     List<DtoFavourite> list = new ArrayList<>();
     List<Cart> cartList = new ArrayList<>();
     CartBookAdapter adapter = new CartBookAdapter(getContext());
+    private MuonTraViewModel muonTraViewModel;
+    int number = 0;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -58,13 +72,14 @@ public class CartBookFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         viewModel = new ViewModelProvider(this).get(CartViewModel.class);
+        muonTraViewModel = new ViewModelProvider(this).get(MuonTraViewModel.class);
         //viewModel = ViewModelProviders.of(this).get(CartViewModel.class);
         loadCart();
         initRecyclerView();
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(binding.rcvCartBook);
         loadCountBook();
-
+        borrowBooks();
     }
     private void loadCart()
     {
@@ -166,6 +181,33 @@ public class CartBookFragment extends Fragment {
             @Override
             public void onChanged(Integer integer) {
                 binding.txtSoLuong.setText("Số lượng: " + viewModel.count.getValue());
+            }
+        });
+    }
+    public void borrowBooks()
+    {
+        binding.btnMuon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                muonTraViewModel.liveData.observe(getViewLifecycleOwner(), new Observer<List<MuonTra>>() {
+                    @Override
+                    public void onChanged(List<MuonTra> muonTras) {
+                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+                        Date date = new Date();
+                        Date d;
+                        try {
+                            d = formatter.parse(String.valueOf(date));
+                        } catch (ParseException e) {
+                            throw new RuntimeException(e);
+                        }
+                        number = muonTras.size();
+                        number++;
+                        MuonTra mt = new MuonTra(number,1,d,0,1);
+                        Log.d("check", mt.getId_muon() + " - " + mt.getId_dg() + " - " + mt.getId_nv() + " - " + mt.getNgaymuon());
+                        muonTraViewModel.insertCallCard(mt);
+                    }
+                });
+                viewModel.deleteBooksWhichIsBorrowed();
             }
         });
     }

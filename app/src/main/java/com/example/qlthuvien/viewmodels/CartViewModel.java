@@ -42,4 +42,8 @@ public class CartViewModel extends AndroidViewModel {
     {
         repository.update(checked, id_tailieu);
     }
+    public void deleteBooksWhichIsBorrowed()
+    {
+        repository.deleteBooksWhichIsBorrowed();
+    }
 }

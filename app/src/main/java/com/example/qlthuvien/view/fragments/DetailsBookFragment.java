@@ -21,10 +21,12 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.qlthuvien.R;
 import com.example.qlthuvien.data.local.entities.Cart;
+import com.example.qlthuvien.data.model.NhaXuatBan;
 import com.example.qlthuvien.data.model.TaiLieu;
 import com.example.qlthuvien.databinding.FragmentDetailsBookBinding;
 import com.example.qlthuvien.view.activities.MainActivity;
 import com.example.qlthuvien.viewmodels.CartViewModel;
+import com.example.qlthuvien.viewmodels.NhaXuatBanViewModel;
 import com.example.qlthuvien.viewmodels.TaiLieuViewModel;
 
 
@@ -32,6 +34,7 @@ public class DetailsBookFragment extends Fragment {
     MainActivity activity;
     private FragmentDetailsBookBinding binding;
     TaiLieuViewModel viewModel;
+    NhaXuatBanViewModel viewModelNXB;
     private CartViewModel cartViewModel;
     private TaiLieu taiLieu2;
     int id_tailieu;
@@ -46,6 +49,7 @@ public class DetailsBookFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(TaiLieuViewModel.class);
         //cartViewModel = new ViewModelProvider(requireActivity()).get(CartViewModel.class);
         cartViewModel = ViewModelProviders.of(this).get(CartViewModel.class);
+        viewModelNXB = new ViewModelProvider(this).get(NhaXuatBanViewModel.class);
         binding.btnDetailsBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,7 +79,10 @@ public class DetailsBookFragment extends Fragment {
             @Override
             public void onChanged(TaiLieu taiLieu) {
                 taiLieu2 = taiLieu;
+                loadPulisher(taiLieu.getId_nxb());
                 binding.setBook(taiLieu);
+                binding.txtSotrang.setText(taiLieu.getSotrang() + "");
+                binding.txtNsx.setText("Năm sản xuất: " + taiLieu.getNamsanxuat());
                 binding.hinhsachDetails.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 
                 Glide
@@ -124,6 +131,16 @@ public class DetailsBookFragment extends Fragment {
                         }
                     }
                 });
+            }
+        });
+    }
+    private void loadPulisher(int id)
+    {
+        viewModelNXB.loadPulisher(id);
+        viewModelNXB.liveData.observe(getViewLifecycleOwner(), new Observer<NhaXuatBan>() {
+            @Override
+            public void onChanged(NhaXuatBan nhaXuatBan) {
+                binding.txtNxb.setText("Nhà xuất bản: " + nhaXuatBan.getTennxb());
             }
         });
     }

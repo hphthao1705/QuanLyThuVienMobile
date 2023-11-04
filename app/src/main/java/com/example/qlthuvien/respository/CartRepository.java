@@ -49,6 +49,10 @@ public class CartRepository {
     {
         return cartDAO.countBookWhichIsChoosen(id_dg);
     }
+    public void deleteBooksWhichIsBorrowed()
+    {
+        cartDAO.deleteBooksWhichIsBorrowed(id_dg);
+    }
     private static class InsertBookAsyncTask extends AsyncTask<Cart, Void, Void>{
         private CartDAO cartDAO;
         private InsertBookAsyncTask(CartDAO cartDAO)

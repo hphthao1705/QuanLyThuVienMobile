@@ -23,5 +23,6 @@ public interface CartDAO {
     void updateCheckBox(int checked, int id_dg, int id_tailieu);
     @Query("select count(*) from cart where id_dg = :id_dg and checkbox = 1")
     LiveData<Integer> countBookWhichIsChoosen(int id_dg);
-
+    @Query("delete from cart where id_dg = :id_dg and checkbox = 1")
+    void deleteBooksWhichIsBorrowed(int id_dg);
 }
