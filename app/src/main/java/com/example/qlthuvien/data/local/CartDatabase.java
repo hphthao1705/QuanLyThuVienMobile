@@ -12,18 +12,20 @@ import com.example.qlthuvien.data.local.entities.Cart;
 @Database(entities = {Cart.class}, version = 3)
 public abstract class CartDatabase extends RoomDatabase {
     static CartDatabase instance;
+
     public abstract CartDAO cartDao();
-    public static synchronized CartDatabase getInstance(Context context)
-    {
-        if(instance == null){
+
+    public static synchronized CartDatabase getInstance(Context context) {
+        if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
-                    CartDatabase.class, "cart")
+                            CartDatabase.class, "cart")
                     .allowMainThreadQueries()
                     .build();
 //            instance = Room.databaseBuilder(context.getApplicationContext(),
 //                            CartDatabase.class, "cart")
 //                    .fallbackToDestructiveMigration()
 //                    .build();
+
         }
         return instance;
     }
