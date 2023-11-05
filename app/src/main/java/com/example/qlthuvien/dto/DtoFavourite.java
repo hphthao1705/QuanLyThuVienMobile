@@ -5,6 +5,7 @@ public class DtoFavourite {
     public  String TenSach;
     public  String TacGia;
     public  Integer HinhSach;
+    public Integer Check;
 
     public DtoFavourite() {
     }

@@ -3,6 +3,8 @@ package com.example.qlthuvien.data.remote;
 import com.example.qlthuvien.data.model.ChiTietMuonTra;
 import com.example.qlthuvien.data.model.DocGia;
 import com.example.qlthuvien.data.model.Loai;
+import com.example.qlthuvien.data.model.MuonTra;
+import com.example.qlthuvien.data.model.NhaXuatBan;
 import com.example.qlthuvien.data.model.SinhVien;
 import com.example.qlthuvien.data.model.TaiLieu;
 import com.example.qlthuvien.data.model.YeuThich;
@@ -17,6 +19,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface APIService {
@@ -25,9 +28,15 @@ public interface APIService {
 
     @GET("tailieu")
     Call<List<TaiLieu>> getBook();
+    @GET("nhaxuatban/{id}")
+    Call<NhaXuatBan> getPublisher(@Path("id") int id_nxb);
 
     @GET("chitietmuontra")
     Call<List<ChiTietMuonTra>> getDetailOfBorrowBooks();
+    @GET("muontra")
+    Call<List<MuonTra>> getListOfBorrowBook();
+    @PUT("muontra/{id}")
+    Call<MuonTra> insertCallCard(@Path("id") int id_muon, @Body MuonTra body);
 
     @GET("loai")
     Call<List<Loai>> getCategories();
@@ -36,7 +45,6 @@ public interface APIService {
 
     @GET("yeuthich")
     Call<List<YeuThich>> getFavorites();
-
 
     // login
     @FormUrlEncoded

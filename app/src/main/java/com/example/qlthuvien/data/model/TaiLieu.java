@@ -115,4 +115,27 @@ public class TaiLieu {
     @SerializedName("mota")
     @Expose
     private String mota;
+
+    public String getNgonngu() {
+        return ngonngu;
+    }
+
+    public void setNgonngu(String ngonngu) {
+        this.ngonngu = ngonngu;
+    }
+
+    public int getSotrang() {
+        return sotrang;
+    }
+
+    public void setSotrang(int sotrang) {
+        this.sotrang = sotrang;
+    }
+
+    @SerializedName("ngonngu")
+    @Expose
+    private String ngonngu;
+    @SerializedName("sotrang")
+    @Expose
+    private int sotrang;
 }

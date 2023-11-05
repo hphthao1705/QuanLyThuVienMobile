@@ -25,7 +25,7 @@
                 android:layout_height="fill_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="Giỏ hàng"
+                android:text="Giỏ sách"
                 android:textColor="@color/white"
                 android:textSize="24dp"
                 android:textStyle="bold" />
@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
-                android:text="số lượng: 1"
+                android:text="Số lượng: 0"
                 android:textColor="@color/black"
                 android:textSize="18dp" />
 

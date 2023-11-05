@@ -54,15 +54,31 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/txt_1"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Thịnh hành"
-                        android:textColor="@color/black"
-                        android:textSize="24sp"
-                        android:paddingLeft="20dp"
-                        android:textStyle="bold" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/txt_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Thịnh hành"
+                            android:textColor="@color/black"
+                            android:textSize="24sp"
+                            android:paddingLeft="20dp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/txt_5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Thêm >"
+                            android:gravity="right"
+                            android:textColor="@color/blue1"
+                            android:textSize="16sp"
+                            android:paddingLeft="195dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_marginTop="20dp"
                         android:id="@+id/recycler_bookinTop"
@@ -75,15 +91,31 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/txt_2"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Sách mới"
-                        android:textColor="@color/black"
-                        android:textSize="24sp"
-                        android:paddingLeft="20dp"
-                        android:textStyle="bold" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/txt_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sách mới"
+                            android:textColor="@color/black"
+                            android:textSize="24sp"
+                            android:paddingLeft="20dp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/txt_6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Thêm >"
+                            android:gravity="right"
+                            android:textColor="@color/blue1"
+                            android:textSize="16sp"
+                            android:paddingLeft="215dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_marginTop="20dp"
                         android:id="@+id/recycler_sachMoi"

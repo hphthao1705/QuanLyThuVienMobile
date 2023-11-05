@@ -6,21 +6,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.qlthuvien.data.model.Item_Book;
 import com.example.qlthuvien.dto.DtoFavourite;
 import com.example.qlthuvien.R;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import com.example.qlthuvien.view.activities.DetailsBookActivity;
+import com.example.qlthuvien.view.fragments.CartBookFragment;
+import com.example.qlthuvien.viewmodels.CartViewModel;
 
 public class CartBookAdapter extends RecyclerView.Adapter<CartBookAdapter.CartBookAdapterViewHolder>  {
     List<DtoFavourite> list;
+    private OnCheckedChangeListener onCheckedChangeListener = null;
     Context context;
     public  CartBookAdapter(Context t){
         context = t;
@@ -48,10 +56,24 @@ public class CartBookAdapter extends RecyclerView.Adapter<CartBookAdapter.CartBo
         holder.nameOfBook.setText(dtoFavourite.TenSach);
         holder.imgBook.setImageResource(R.drawable.conan);
         holder.authorOfBook.setText(dtoFavourite.TacGia);
+        if(dtoFavourite.Check == 1)
+        {
+            holder.checkBox.setChecked(true);
+        }
+        else
+        {
+            holder.checkBox.setChecked(false);
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+            }
+        });
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                onCheckedChangeListener.onChecked(b, holder);
             }
         });
     }
@@ -68,6 +90,7 @@ public class CartBookAdapter extends RecyclerView.Adapter<CartBookAdapter.CartBo
         private TextView nameOfBook;
         private TextView authorOfBook;
         private Button btnRent;
+        private CheckBox checkBox;
 
         public CartBookAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -80,6 +103,14 @@ public class CartBookAdapter extends RecyclerView.Adapter<CartBookAdapter.CartBo
             imgBook = itemView.findViewById(R.id.img_cart_book);
             nameOfBook = itemView.findViewById(R.id.txt_tensach_cart);
             authorOfBook = itemView.findViewById(R.id.txt_tacgia_cart);
+            checkBox = itemView.findViewById(R.id.ckeckbox);
         }
+    }
+    public interface OnCheckedChangeListener {
+        void onChecked(boolean checked, CartBookAdapterViewHolder viewHolder);
+    }
+    public void setOnCheckedListener(OnCheckedChangeListener listener)
+    {
+        this.onCheckedChangeListener = listener;
     }
 }

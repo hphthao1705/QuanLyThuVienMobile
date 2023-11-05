@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -93,8 +94,23 @@ android {
         implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
         implementation 'javax.inject:javax.inject:1'
         //Room
+<<<<<<< HEAD
         implementation 'androidx.room:room-runtime:2.5.2'
         implementation 'androidx.room:room-ktx:2.5.2'
+=======
+        implementation 'androidx.room:room-runtime:2.3.0'
+        implementation 'androidx.room:room-ktx:2.3.0'
+        kapt "androidx.room:room-compiler:2.3.0"
+        //Hilt
+        implementation "com.google.dagger:hilt-android:2.44"
+        kapt "com.google.dagger:hilt-compiler:2.44"
+        //Recycler View Swipe Decorator
+        implementation 'it.xabaras.android:recyclerview-swipedecorator:1.4'
+        //
+    }
+    kapt {
+        correctErrorTypes true
+>>>>>>> c4c714ebc1a8644af8e65560d2ab97d4a45d1e1d
     }
 }
 
