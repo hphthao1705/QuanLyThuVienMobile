@@ -63,7 +63,7 @@ public class MuonTra {
     @SerializedName("ngaymuon")
     @Expose
     private String ngaymuon;
-    @SerializedName("tintrangmuon")
+    @SerializedName("tinhtrangmuon")
     @Expose
     private int tintrangmuon;
     @SerializedName("id_nv")

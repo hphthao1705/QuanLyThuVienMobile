@@ -38,6 +38,18 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
             holder.binding.txtMamuon.setText("PM0" + post.getId_muon());
         }
         holder.binding.txtNgaymuon.setText(post.getNgaymuon());
+        if(post.getTintrangmuon() == 2)
+        {
+            holder.binding.txtNgaytra.setText("Đã trả");
+        }
+        else if(post.getTintrangmuon() == 1)
+        {
+            holder.binding.txtNgaytra.setText("Chưa trả");
+        }
+        else
+        {
+            holder.binding.txtNgaytra.setText("Đang xử lý");
+        }
     }
 
     @Override

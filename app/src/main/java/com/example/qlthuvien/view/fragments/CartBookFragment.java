@@ -29,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.qlthuvien.data.local.entities.Cart;
+import com.example.qlthuvien.data.model.ChiTietMuonTra;
 import com.example.qlthuvien.data.model.MuonTra;
 import com.example.qlthuvien.databinding.FragmentCartBookBinding;
 import com.example.qlthuvien.view.adapter.CartBookAdapter;
@@ -54,10 +55,12 @@ public class CartBookFragment extends Fragment {
     List<DtoFavourite> list = new ArrayList<>();
     List<Cart> cartList = new ArrayList<>();
     CartBookAdapter adapter = new CartBookAdapter(getContext());
+    ArrayList<MuonTra> list_thao = new ArrayList<>();
     private MuonTraViewModel muonTraViewModel;
     private ChiTietMuonTraViewModel chiTietMuonTraViewModel;
     int id_dg = 0;
-
+    int count=0;
+    int numberOfBooksIsChoosen = 0;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -80,6 +83,8 @@ public class CartBookFragment extends Fragment {
         viewModel.getAllBookFromUser(id_dg);
         viewModel.countBookWhichIsChoosen(id_dg);
         viewModel.addBooksToCallCard(id_dg);
+
+        loadBorrowBooks();
 
         loadCart();
         initRecyclerView();
@@ -197,6 +202,7 @@ public class CartBookFragment extends Fragment {
             @Override
             public void onChanged(Integer integer) {
                 binding.txtSoLuong.setText("Số lượng: " + viewModel.count.getValue());
+                numberOfBooksIsChoosen = integer;
             }
         });
     }
@@ -205,9 +211,32 @@ public class CartBookFragment extends Fragment {
         binding.btnMuon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //add phiếu mượn
-                CartBookFragment.AsyncTask task = new CartBookFragment.AsyncTask();
-                task.execute();
+                if(count + numberOfBooksIsChoosen > 3)
+                {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle("Thông báo");
+                    if((3 - count) < 0)
+                    {
+                        builder.setMessage("Số sách bạn muốn mượn đã vượt quá quy định. Hãy trả sách để có thể mượn tiếp");
+                    }
+                    else
+                    {
+                        builder.setMessage("Số sách bạn muốn mượn đã vượt quá quy định. Bạn chỉ có thể mượn " + (3 - count) + " quyển sách");
+                    }
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
+                else
+                {
+                    //add phiếu mượn
+                    CartBookFragment.AsyncTask task = new CartBookFragment.AsyncTask();
+                    task.execute();
+                }
             }
         });
     }
@@ -255,7 +284,7 @@ public class CartBookFragment extends Fragment {
             super.onPreExecute();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             String d = formatter.format(new Date());
-            String jsonString = "{'id_muon':0,'id_dg':" + 1 + ",'id_nv':1,'ngaymuon': '"+d+"','tintrangmuon':0}";
+            String jsonString = "{'id_muon':0,'id_dg':" + id_dg + ",'id_nv':1,'ngaymuon': '"+d+"','tintrangmuon':0}";
             JsonParser jsonParser = new JsonParser();
             JsonObject jsonObject = (JsonObject) jsonParser.parse(jsonString);
             muonTraViewModel.insertCallCard(jsonObject);
@@ -270,7 +299,6 @@ public class CartBookFragment extends Fragment {
         @Override
         protected void onPostExecute(Void unused) {
             super.onPostExecute(unused);
-            muonTraViewModel.loadListOfBorrowBook();
             addDetailOfCallCard();
         }
     }
@@ -278,7 +306,6 @@ public class CartBookFragment extends Fragment {
     {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         id_dg = Integer.parseInt(sharedPreferences.getString("user_id", "0"));
-        Toast.makeText(getContext(), id_dg + "", Toast.LENGTH_SHORT).show();
     }
     private void loadView(boolean check)
     {
@@ -298,5 +325,40 @@ public class CartBookFragment extends Fragment {
             binding.rcvCartBook.setVisibility(View.GONE);
             binding.muon.setVisibility(View.GONE);
         }
+    }
+    private void loadBorrowBooks()
+    {
+        muonTraViewModel.liveData.observe(getViewLifecycleOwner(), new Observer<List<MuonTra>>() {
+            @Override
+            public void onChanged(List<MuonTra> muonTras) {
+                for(MuonTra i:muonTras)
+                {
+                    if(i.getId_dg() == id_dg)
+                    {
+                        list_thao.add(i);
+                    }
+                }
+                countBooksThatUserBorrow();
+            }
+        });
+    }
+    private void countBooksThatUserBorrow()
+    {
+        chiTietMuonTraViewModel.liveData.observe(getViewLifecycleOwner(), new Observer<List<ChiTietMuonTra>>() {
+            @Override
+            public void onChanged(List<ChiTietMuonTra> chiTietMuonTras) {
+                for (ChiTietMuonTra i:chiTietMuonTras)
+                {
+                    for(MuonTra j:list_thao)
+                    {
+                        if(i.getId_muon() == j.getId_muon() && i.getTinhtrangtra() == 0)
+                        {
+                            count++;
+                        }
+                    }
+                    Toast.makeText(getContext(), count + "", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

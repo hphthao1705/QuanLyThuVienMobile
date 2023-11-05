@@ -18,13 +18,14 @@ public class MuonTraViewModel extends ViewModel {
     public MuonTraViewModel()
     {
         repository = new MuonTraRepository();
-    }
-    public void loadListOfBorrowBook()
-    {
         liveData = repository.getListOfBorrowBook();
     }
     public void insertCallCard(JsonObject muonTra)
     {
         repository.insertCallCard(muonTra);
+    }
+    public void load()
+    {
+        liveData = repository.getListOfBorrowBook();
     }
 }
