@@ -1,5 +1,11 @@
 package com.example.qlthuvien.view.fragments;
 
+import static com.example.qlthuvien.view.activities.LoginActivity.ID_DG;
+import static com.example.qlthuvien.view.activities.LoginActivity.SHARED_PREFERENCES_NAME;
+
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,6 +30,7 @@ import com.example.qlthuvien.data.local.entities.Cart;
 import com.example.qlthuvien.data.model.NhaXuatBan;
 import com.example.qlthuvien.data.model.TaiLieu;
 import com.example.qlthuvien.databinding.FragmentDetailsBookBinding;
+import com.example.qlthuvien.view.activities.LoginActivity;
 import com.example.qlthuvien.view.activities.MainActivity;
 import com.example.qlthuvien.viewmodels.CartViewModel;
 import com.example.qlthuvien.viewmodels.NhaXuatBanViewModel;
@@ -38,6 +45,7 @@ public class DetailsBookFragment extends Fragment {
     private CartViewModel cartViewModel;
     private TaiLieu taiLieu2;
     int id_tailieu;
+    int id_dg = 0;
     public DetailsBookFragment(int id_tailieu)
     {
         this.id_tailieu = id_tailieu;
@@ -45,7 +53,7 @@ public class DetailsBookFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        loadId_dg();
         viewModel = new ViewModelProvider(this).get(TaiLieuViewModel.class);
         //cartViewModel = new ViewModelProvider(requireActivity()).get(CartViewModel.class);
         cartViewModel = ViewModelProviders.of(this).get(CartViewModel.class);
@@ -61,6 +69,7 @@ public class DetailsBookFragment extends Fragment {
             }
         });
         binding.progressbarStart.setVisibility(View.VISIBLE);
+
         hideView(false);
         loadDetailBook();
         addBookToCart();
@@ -115,22 +124,32 @@ public class DetailsBookFragment extends Fragment {
         binding.btnAddcart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LiveData<Integer> thao = cartViewModel.countBookInCart(taiLieu2.getId_tailieu());
+                if(id_dg == 0)
+                {
+                    Intent loginIntent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(loginIntent);
+                    getActivity().finish();
+                }
+                else
+                {
+                    LiveData<Integer> thao = cartViewModel.countBookInCart(taiLieu2.getId_tailieu(), id_dg);
 
-                thao.observe(getViewLifecycleOwner(), new Observer<Integer>() {
-                    @Override
-                    public void onChanged(Integer integer) {
-                        if(integer > 0)
-                        {
-                            Toast.makeText(getContext(), "Cuốn sách này đã có trong giỏ sách!!", Toast.LENGTH_SHORT).show();
+                    thao.observe(getViewLifecycleOwner(), new Observer<Integer>() {
+                        @Override
+                        public void onChanged(Integer integer) {
+                            if(integer > 0)
+                            {
+                                Toast.makeText(getContext(), "Cuốn sách này đã có trong giỏ sách!!", Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                Toast.makeText(getContext(), id_dg + "", Toast.LENGTH_SHORT).show();
+                                Cart cart = new Cart(taiLieu2.getId_tailieu(), id_dg, taiLieu2.getHinh(), taiLieu2.getTentailieu(), taiLieu2.getTacgia(), 0);
+                                cartViewModel.insert(cart);
+                                Toast.makeText(getContext(), "Successful", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                        else {
-                            Cart cart = new Cart(taiLieu2.getId_tailieu(), 0, taiLieu2.getHinh(), taiLieu2.getTentailieu(), taiLieu2.getTacgia(), 0);
-                            cartViewModel.insert(cart);
-                            Toast.makeText(getContext(), "Successful", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                    });
+                }
             }
         });
     }
@@ -143,5 +162,10 @@ public class DetailsBookFragment extends Fragment {
                 binding.txtNxb.setText("Nhà xuất bản: " + nhaXuatBan.getTennxb());
             }
         });
+    }
+    private void loadId_dg()
+    {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        id_dg = Integer.parseInt(sharedPreferences.getString("user_id", "0"));
     }
 }
