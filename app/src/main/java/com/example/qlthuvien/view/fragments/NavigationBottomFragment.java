@@ -74,7 +74,7 @@ public class NavigationBottomFragment extends Fragment {
                     if (!isLoggedIn) {
                         Intent loginIntent = new Intent(getActivity(), LoginActivity.class);
                         startActivity(loginIntent);
-                        getActivity().finish();
+                        //getActivity().finish();
                     }
                     else
                         fragment = new FavouriteFragment();

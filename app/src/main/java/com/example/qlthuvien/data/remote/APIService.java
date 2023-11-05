@@ -14,6 +14,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Field;
@@ -87,6 +88,16 @@ public interface APIService {
     Call<SinhVien> updateUserSV(
             @Path("id") int id_sv,
             @Body SinhVien sinhvien
+    );
+    //add yeu thich
+    @POST("yeuthich")
+    Call<YeuThich> addFavorite(
+            @Body YeuThich yeuThich
+    );
+    // delete yeu thich
+    @DELETE("yeuthich/{id}")
+    Call<Void> deleteFavorite(
+            @Path("id") int id_yeuthich
     );
 
 }

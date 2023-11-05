@@ -27,14 +27,26 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.qlthuvien.R;
 import com.example.qlthuvien.data.local.entities.Cart;
+import com.example.qlthuvien.data.model.DocGia;
 import com.example.qlthuvien.data.model.NhaXuatBan;
 import com.example.qlthuvien.data.model.TaiLieu;
+import com.example.qlthuvien.data.model.YeuThich;
+import com.example.qlthuvien.data.remote.APIService;
+import com.example.qlthuvien.data.remote.Common;
 import com.example.qlthuvien.databinding.FragmentDetailsBookBinding;
 import com.example.qlthuvien.view.activities.LoginActivity;
 import com.example.qlthuvien.view.activities.MainActivity;
 import com.example.qlthuvien.viewmodels.CartViewModel;
 import com.example.qlthuvien.viewmodels.NhaXuatBanViewModel;
 import com.example.qlthuvien.viewmodels.TaiLieuViewModel;
+import com.example.qlthuvien.viewmodels.YeuThichViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class DetailsBookFragment extends Fragment {
@@ -42,10 +54,15 @@ public class DetailsBookFragment extends Fragment {
     private FragmentDetailsBookBinding binding;
     TaiLieuViewModel viewModel;
     NhaXuatBanViewModel viewModelNXB;
+
+    YeuThichViewModel viewModelYeuThich;
     private CartViewModel cartViewModel;
     private TaiLieu taiLieu2;
     int id_tailieu;
     int id_dg = 0;
+    List<YeuThich> ListYeuThich = new ArrayList<>();
+    int idYeuThich = 0; // default = 0
+    boolean isFavourite = false; // default = false
     public DetailsBookFragment(int id_tailieu)
     {
         this.id_tailieu = id_tailieu;
@@ -54,6 +71,7 @@ public class DetailsBookFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         loadId_dg();
+        viewModelYeuThich = new ViewModelProvider(this).get(YeuThichViewModel.class);
         viewModel = new ViewModelProvider(this).get(TaiLieuViewModel.class);
         //cartViewModel = new ViewModelProvider(requireActivity()).get(CartViewModel.class);
         cartViewModel = ViewModelProviders.of(this).get(CartViewModel.class);
@@ -64,10 +82,94 @@ public class DetailsBookFragment extends Fragment {
                 activity = (MainActivity) getActivity();
                 NavigationBottomFragment f = new NavigationBottomFragment();
                 f.setCurrent(new HomeFragment(0));
-                f.setMenu_bottom(R.id.page_information);
+                f.setMenu_bottom(R.id.page_home);
                 activity.replaceFragment(f);
             }
         });
+        if(id_dg == 0) // chua dang nhap
+        {
+            binding.btnFavourite.setImageResource(R.drawable.icons8_favorite_50_no_active);
+        }
+        else {
+            viewModelYeuThich.liveData_YT.observe(getViewLifecycleOwner(), new Observer<List<YeuThich>>() {
+                @Override
+                public void onChanged(List<YeuThich> yeuThiches) {
+                    for (YeuThich i: yeuThiches) {
+                        if(i.getId_tailieu() == id_tailieu && i.getId_dg() == id_dg) // ton tai
+                        {
+                            binding.btnFavourite.setImageResource(R.drawable.icons8_favorite_50_active);
+                            isFavourite = true;
+                            idYeuThich = i.getId_yeuthich();
+                        }
+
+                    }
+                }
+            });
+        }
+        // dang nhap roi thi se co event
+        binding.btnFavourite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(id_dg == 0)
+                {
+                    Intent loginIntent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(loginIntent);
+                }
+                else { // xu ly
+                    APIService api = Common.apiService;
+                    if(isFavourite)
+                    {
+                        // xoa yeu thich
+                        Common.apiService.deleteFavorite(idYeuThich).enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                if (response.isSuccessful())
+                                {
+                                    idYeuThich = 0;
+                                    Toast.makeText(getContext(), "Xóa khỏi danh sách yêu thích", Toast.LENGTH_SHORT).show();
+                                    binding.btnFavourite.setImageResource(R.drawable.icons8_favorite_50_no_active);
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+
+                            }
+                        });
+
+
+                    }
+                    else
+                    {
+                        // them yeu thich
+                        YeuThich addYeuThich = new YeuThich();
+                        addYeuThich.setId_dg(id_dg);
+                        addYeuThich.setId_tailieu(id_tailieu);
+                        addYeuThich.setId_yeuthich(0);
+                        Call<YeuThich> call = Common.apiService.addFavorite(addYeuThich);
+                        call.enqueue(new Callback<YeuThich>() {
+                            @Override
+                            public void onResponse(Call<YeuThich> call, Response<YeuThich> response) {
+                                if (response.isSuccessful())
+                                {
+                                    idYeuThich = response.body().getId_yeuthich();
+                                    Toast.makeText(getContext(), "Đã thêm vào danh sách yêu thích", Toast.LENGTH_SHORT).show();
+                                    binding.btnFavourite.setImageResource(R.drawable.icons8_favorite_50_active);
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<YeuThich> call, Throwable t) {
+                                Toast.makeText(getContext(), "loi call api", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                    }
+                    isFavourite = !isFavourite;
+
+                }
+            }
+        });
+
         binding.progressbarStart.setVisibility(View.VISIBLE);
 
         hideView(false);

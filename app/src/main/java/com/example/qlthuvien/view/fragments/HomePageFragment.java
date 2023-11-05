@@ -30,6 +30,7 @@ import com.example.qlthuvien.databinding.FragmentHomePageBinding;
 import com.example.qlthuvien.view.activities.MainActivity;
 import com.example.qlthuvien.view.adapter.BookCategoryAdapter;
 import com.example.qlthuvien.view.adapter.BookInTopAdapter;
+import com.example.qlthuvien.view.adapter.CategoryAdapter;
 import com.example.qlthuvien.view.adapter.ImageSlideAdapter;
 import com.example.qlthuvien.view.adapter.TheLoaiAdapter;
 import com.example.qlthuvien.viewmodels.ChiTietMuonTraViewModel;
@@ -47,6 +48,8 @@ import java.util.stream.Collectors;
 
 public class HomePageFragment extends Fragment implements TheLoaiAdapter.ReplaceFragment {
     TheLoaiAdapter loaiAdapter = new TheLoaiAdapter(new ArrayList<>(), HomePageFragment.this);
+    CategoryAdapter categoryAdapter = new CategoryAdapter(new ArrayList<>());
+
     FragmentHomePageBinding binding;
     ImageSlideAdapter imageSlideAdapter = new ImageSlideAdapter(new ArrayList<>());
     BookInTopAdapter bookInTopAdapter = new BookInTopAdapter(new ArrayList<>());
@@ -92,15 +95,18 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
                     Item_Loai loai = new Item_Loai();
                     loai.setName(i.tenloai);
                     loai.setIcon(i.icon);
+                    loai.setId_loai(i.id_loai);
                     list.add(loai);
 
 
                 }
             }
         });
-        loaiAdapter = new TheLoaiAdapter(list,HomePageFragment.this);
-        loaiAdapter.setContext(getContext());
-        binding.recyclerviewLoai.setAdapter(loaiAdapter);
+        MainActivity activity = (MainActivity) getActivity();
+        categoryAdapter = new CategoryAdapter(list);
+        categoryAdapter.setContext(getContext());
+        categoryAdapter.setMainActivity(activity);
+        binding.recyclerviewLoai.setAdapter(categoryAdapter);
     }
     private void initRecyclerView()
     {

@@ -35,6 +35,7 @@
                     android:src="@drawable/conan" />
 
                 <TextView
+                    android:maxLines="2"
                     android:id="@+id/txt_bookname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -43,6 +44,7 @@
                     android:hint="Ho Phuong Thao"
                     android:textColor="@color/black" />
                 <TextView
+                    android:maxLines="1"
                     android:id="@+id/txt_author"
                     android:textColor="@color/black"
                     android:layout_width="match_parent"

@@ -39,6 +39,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class HomeFragment extends Fragment {
+    public int getId_loai() {
+        return id_loai;
+    }
+
+    public void setId_loai(int id_loai) {
+        this.id_loai = id_loai;
+    }
+
+    int id_loai;
     public HomeFragment(int i){
         _i = i;
     }
@@ -59,7 +68,7 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         if(_i == -1)
         {
-            replaceFragment(new CategoryFragment());
+            replaceFragment(new CategoryFragment(id_loai));
         }
         else if(_i > 0)
         {
@@ -78,7 +87,8 @@ public class HomeFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                replaceFragment(new SearchFragment());
+                Toast.makeText(getContext(), "Ap:"+ newText, Toast.LENGTH_SHORT).show();
+                replaceFragment(new SearchFragment(newText));
                 return false;
             }
         });
