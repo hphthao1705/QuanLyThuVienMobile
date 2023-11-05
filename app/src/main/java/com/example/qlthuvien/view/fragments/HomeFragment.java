@@ -87,7 +87,6 @@ public class HomeFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Toast.makeText(getContext(), "Ap:"+ newText, Toast.LENGTH_SHORT).show();
                 replaceFragment(new SearchFragment(newText));
                 return false;
             }

@@ -356,7 +356,6 @@ public class CartBookFragment extends Fragment {
                             count++;
                         }
                     }
-                    Toast.makeText(getContext(), count + "", Toast.LENGTH_SHORT).show();
                 }
             }
         });

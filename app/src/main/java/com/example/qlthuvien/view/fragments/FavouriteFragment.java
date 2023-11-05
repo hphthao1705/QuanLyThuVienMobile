@@ -1,5 +1,9 @@
 package com.example.qlthuvien.view.fragments;
 
+import static com.example.qlthuvien.view.activities.LoginActivity.SHARED_PREFERENCES_NAME;
+
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -41,20 +45,25 @@ import java.util.stream.Collectors;
  */
 public class FavouriteFragment extends Fragment implements TheLoaiAdapter.ReplaceFragment{
 
-
+    int id_dg = 0;
     YeuThichViewModel viewModelYeuThich;
     TaiLieuViewModel viewModelTaiLieu;
     FragmentFavouriteBinding binding;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        loadId_dg();
         super.onViewCreated(view, savedInstanceState);
     }
 
-
+    private void loadId_dg()
+    {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        id_dg = Integer.parseInt(sharedPreferences.getString("user_id", "0"));
+    }
     private void  loadYeuThich(List<YeuThich> yeuThiches)
     {
         viewModelTaiLieu = new ViewModelProvider(this).get(TaiLieuViewModel.class);
-        int userIdCurrent = 1;
+        int userIdCurrent = id_dg;
         ArrayList<Item_Book> list = new ArrayList<>();
         yeuThiches = yeuThiches.stream()
                 .filter(yeuThich -> yeuThich.getId_dg() == userIdCurrent)
@@ -97,14 +106,24 @@ public class FavouriteFragment extends Fragment implements TheLoaiAdapter.Replac
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_favourite, container, false);
-
-        viewModelYeuThich = new ViewModelProvider(this).get(YeuThichViewModel.class);
-        viewModelYeuThich.liveData_YT.observe(getViewLifecycleOwner(), new Observer<List<YeuThich>>() {
-            @Override
-            public void onChanged(List<YeuThich> yeuThiches) {
-                loadYeuThich(yeuThiches);
-            }
-        });
+        if(id_dg == 0)
+        {
+            binding.empty1.setVisibility(View.VISIBLE);
+            binding.empty2.setVisibility(View.VISIBLE);
+            binding.progressbarStart.setVisibility(View.GONE);
+        }
+        else
+        {
+            binding.empty1.setVisibility(View.GONE);
+            binding.empty2.setVisibility(View.GONE);
+            viewModelYeuThich = new ViewModelProvider(this).get(YeuThichViewModel.class);
+            viewModelYeuThich.liveData_YT.observe(getViewLifecycleOwner(), new Observer<List<YeuThich>>() {
+                @Override
+                public void onChanged(List<YeuThich> yeuThiches) {
+                    loadYeuThich(yeuThiches);
+                }
+            });
+        }
 
 
         return binding.getRoot();

@@ -81,7 +81,6 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
         loadBook();
 
         initRecyclerView();
-        loadLoai();
         loadSlideImage();
     }
     private void loadLoai()
@@ -177,6 +176,7 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
         bookInTopAdapter = new BookInTopAdapter(list);
         bookInTopAdapter.setContext(getContext());
         binding.recyclerGoiY.setAdapter(bookInTopAdapter);
+        loadLoai();
         clickOnItem();
     }
     @Override

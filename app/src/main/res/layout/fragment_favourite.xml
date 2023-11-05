@@ -44,6 +44,30 @@
                     android:layout_height="match_parent"/>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            >
+            <ImageView
+                android:id="@+id/empty_1"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:src="@drawable/book"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/empty_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yêu thích trống"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:textColor="@color/black"
+                android:visibility="gone"/>
+        </LinearLayout>
         <ProgressBar
             android:id="@+id/progressbar_start"
             android:layout_width="match_parent"

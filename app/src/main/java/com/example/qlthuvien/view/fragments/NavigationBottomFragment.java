@@ -68,29 +68,12 @@ public class NavigationBottomFragment extends Fragment {
                 }
                 else  if (item.getItemId() == R.id.page_favourite)
                 {
-                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences(LoginActivity.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-                    boolean isLoggedIn = sharedPreferences.contains(LoginActivity.ID_DG);
 
-                    if (!isLoggedIn) {
-                        Intent loginIntent = new Intent(getActivity(), LoginActivity.class);
-                        startActivity(loginIntent);
-                        //getActivity().finish();
-                    }
-                    else
                         fragment = new FavouriteFragment();
                 }
                 else  if (item.getItemId() == R.id.page_cart_book)
                 {
-                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences(LoginActivity.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-                    boolean isLoggedIn = sharedPreferences.contains(LoginActivity.ID_DG);
-
-                    if (!isLoggedIn) {
-                        Intent loginIntent = new Intent(getActivity(), LoginActivity.class);
-                        startActivity(loginIntent);
-                        getActivity().finish();
-                    }
-                    else
-                        fragment = new CartBookFragment();
+                    fragment = new CartBookFragment();
                 }
                 else  if (item.getItemId() == R.id.page_information)
                 {

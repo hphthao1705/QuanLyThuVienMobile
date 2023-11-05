@@ -159,7 +159,6 @@ public class DetailsBookFragment extends Fragment {
                             }
                             @Override
                             public void onFailure(Call<YeuThich> call, Throwable t) {
-                                Toast.makeText(getContext(), "loi call api", Toast.LENGTH_SHORT).show();
                             }
                         });
 
@@ -230,7 +229,6 @@ public class DetailsBookFragment extends Fragment {
                 {
                     Intent loginIntent = new Intent(getActivity(), LoginActivity.class);
                     startActivity(loginIntent);
-                    getActivity().finish();
                 }
                 else
                 {
@@ -244,7 +242,6 @@ public class DetailsBookFragment extends Fragment {
                                 Toast.makeText(getContext(), "Cuốn sách này đã có trong giỏ sách!!", Toast.LENGTH_SHORT).show();
                             }
                             else {
-                                Toast.makeText(getContext(), id_dg + "", Toast.LENGTH_SHORT).show();
                                 Cart cart = new Cart(taiLieu2.getId_tailieu(), id_dg, taiLieu2.getHinh(), taiLieu2.getTentailieu(), taiLieu2.getTacgia(), 0);
                                 cartViewModel.insert(cart);
                                 Toast.makeText(getContext(), "Successful", Toast.LENGTH_SHORT).show();

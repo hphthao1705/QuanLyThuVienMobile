@@ -63,8 +63,7 @@ public class YeuThichAdapter extends RecyclerView.Adapter<YeuThichAdapter.Favour
         holder.btnRent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(context, DetailsBookActivity.class);
-//                context.startActivity(intent);
+                 onClickListener.onClick(book);
             }
         });
     }
