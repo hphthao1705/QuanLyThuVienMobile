@@ -8,6 +8,7 @@ import com.example.qlthuvien.data.model.NhaXuatBan;
 import com.example.qlthuvien.data.model.SinhVien;
 import com.example.qlthuvien.data.model.TaiLieu;
 import com.example.qlthuvien.data.model.YeuThich;
+import com.google.gson.JsonObject;
 
 import java.util.List;
 
@@ -35,8 +36,10 @@ public interface APIService {
     Call<List<ChiTietMuonTra>> getDetailOfBorrowBooks();
     @GET("muontra")
     Call<List<MuonTra>> getListOfBorrowBook();
-    @PUT("muontra/{id}")
-    Call<MuonTra> insertCallCard(@Path("id") int id_muon, @Body MuonTra body);
+    @POST("muontra")
+    Call<MuonTra> insertCallCard(@Body JsonObject body);
+    @POST("chitietmuontra")
+    Call<ChiTietMuonTra> insertDetailOfCallCard(@Body JsonObject body);
 
     @GET("loai")
     Call<List<Loai>> getCategories();

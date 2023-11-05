@@ -6,6 +6,8 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 
 import com.example.qlthuvien.data.local.entities.Cart;
+import com.example.qlthuvien.data.model.ChiTietMuonTra;
+
 import java.util.List;
 import androidx.room.Query;
 
@@ -25,4 +27,6 @@ public interface CartDAO {
     LiveData<Integer> countBookWhichIsChoosen(int id_dg);
     @Query("delete from cart where id_dg = :id_dg and checkbox = 1")
     void deleteBooksWhichIsBorrowed(int id_dg);
+    @Query("select * from cart where id_dg = :id_dg and checkbox = 1")
+    LiveData<List<Cart>> addBooksToCallCard(int id_dg);
 }

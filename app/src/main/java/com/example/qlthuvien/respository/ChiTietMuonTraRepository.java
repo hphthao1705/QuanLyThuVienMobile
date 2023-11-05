@@ -1,11 +1,15 @@
 package com.example.qlthuvien.respository;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.qlthuvien.data.model.ChiTietMuonTra;
 import com.example.qlthuvien.data.model.DocGia;
+import com.example.qlthuvien.data.model.MuonTra;
 import com.example.qlthuvien.data.remote.Common;
+import com.google.gson.JsonObject;
 
 import java.util.List;
 
@@ -32,5 +36,26 @@ public class ChiTietMuonTraRepository {
             }
         });
         return data;
+    }
+    public void insertDetailOfCallCard(JsonObject muontra)
+    {
+        Common.apiService.insertDetailOfCallCard(muontra).enqueue(new Callback<ChiTietMuonTra>() {
+
+            @Override
+            public void onResponse(Call<ChiTietMuonTra> call, Response<ChiTietMuonTra> response) {
+                if(response.isSuccessful() && response.body()!=null)
+                {
+                    Log.d("Post respone","ChiTietMuonTra: " + response.body());
+                }
+                else {
+                    Log.d("Post error", "Error CTMT: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ChiTietMuonTra> call, Throwable t) {
+
+            }
+        });
     }
 }

@@ -177,13 +177,39 @@
 
 
                         <RelativeLayout
-                            android:id="@+id/view_caidat"
+                            android:id="@+id/view_lichsumuontra"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp">
 
                             <ImageView
                                 android:id="@+id/img_3"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:background="@drawable/bg_icon_taikhoan"
+                                android:padding="12dp"
+                                android:src="@drawable/baseline_history_24" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="20dp"
+                                android:layout_toEndOf="@+id/img_3"
+                                android:text="Lịch sử mượn trả"
+                                android:textColor="@color/black"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                        </RelativeLayout>
+                        <RelativeLayout
+                            android:id="@+id/view_caidat"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp">
+
+                            <ImageView
+                                android:id="@+id/img_5"
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
                                 android:background="@drawable/bg_icon_taikhoan"
@@ -195,19 +221,29 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:layout_marginStart="20dp"
-                                android:layout_toEndOf="@+id/img_3"
+                                android:layout_toEndOf="@+id/img_5"
                                 android:text="Cài đặt"
                                 android:textColor="@color/black"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
                         </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/bg_theme_menu"
+                        android:orientation="vertical"
+                        android:padding="15dp">
 
                         <RelativeLayout
-                            android:id="@+id/view_dangxuat"
+                            android:id="@+id/view_thoat"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp">
+                            android:layout_height="wrap_content">
 
                             <ImageView
                                 android:id="@+id/img_4"
@@ -215,7 +251,7 @@
                                 android:layout_height="40dp"
                                 android:background="@drawable/bg_icon_taikhoan"
                                 android:padding="12dp"
-                                android:src="@drawable/log" />
+                                android:src="@drawable/exit" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -230,43 +266,6 @@
 
                         </RelativeLayout>
                     </LinearLayout>
-
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginStart="20dp"-->
-<!--                        android:layout_marginTop="20dp"-->
-<!--                        android:layout_marginEnd="20dp"-->
-<!--                        android:background="@drawable/bg_theme_menu"-->
-<!--                        android:orientation="vertical"-->
-<!--                        android:padding="15dp">-->
-
-<!--                        <RelativeLayout-->
-<!--                            android:id="@+id/view_thoat"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content">-->
-
-<!--                            <ImageView-->
-<!--                                android:id="@+id/img_4"-->
-<!--                                android:layout_width="40dp"-->
-<!--                                android:layout_height="40dp"-->
-<!--                                android:background="@drawable/bg_icon_taikhoan"-->
-<!--                                android:padding="12dp"-->
-<!--                                android:src="@drawable/exit" />-->
-
-<!--                            <TextView-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:layout_centerVertical="true"-->
-<!--                                android:layout_marginStart="20dp"-->
-<!--                                android:layout_toEndOf="@+id/img_4"-->
-<!--                                android:text="Thoát"-->
-<!--                                android:textColor="@color/black"-->
-<!--                                android:textSize="18sp"-->
-<!--                                android:textStyle="bold" />-->
-
-<!--                        </RelativeLayout>-->
-<!--                    </LinearLayout>-->
 
                     <TextView
                         android:layout_width="wrap_content"

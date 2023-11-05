@@ -8,6 +8,7 @@ import com.example.qlthuvien.data.model.MuonTra;
 import com.example.qlthuvien.data.model.NhaXuatBan;
 import com.example.qlthuvien.respository.MuonTraRepository;
 import com.example.qlthuvien.respository.NhaXuatBanRepository;
+import com.google.gson.JsonObject;
 
 import java.util.List;
 
@@ -16,15 +17,13 @@ public class MuonTraViewModel extends ViewModel {
     public LiveData<List<MuonTra>> liveData = new MutableLiveData();
     public MuonTraViewModel()
     {
-
         repository = new MuonTraRepository();
-        loadListOfBorrowBook();
     }
     public void loadListOfBorrowBook()
     {
         liveData = repository.getListOfBorrowBook();
     }
-    public void insertCallCard(MuonTra muonTra)
+    public void insertCallCard(JsonObject muonTra)
     {
         repository.insertCallCard(muonTra);
     }

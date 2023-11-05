@@ -212,8 +212,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="18dp"
                 android:text="Mô tả sách"
-                android:textColor="@color/black"
-                />
+                android:textColor="@color/black" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

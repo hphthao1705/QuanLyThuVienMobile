@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.qlthuvien.data.local.CartDatabase;
 import com.example.qlthuvien.data.local.entities.Cart;
+import com.example.qlthuvien.data.model.ChiTietMuonTra;
 import com.example.qlthuvien.respository.CartRepository;
 
 import java.util.List;
@@ -23,27 +24,39 @@ public class CartViewModel extends AndroidViewModel {
     private CartRepository repository;
     public LiveData<List<Cart>> cartBook;
     public LiveData<Integer> count;
+    public LiveData<List<Cart>> listLiveData;
     public CartViewModel(Application application) {
         super(application);
         repository = new CartRepository(application);
+    }
+    public void getAllBookFromUser(int id_dg)
+    {
+        repository.getUserCart(id_dg);
         cartBook = repository.getAllBookFromUser();
-        count = repository.countBookWhichIsChoosen();
+    }
+    public void countBookWhichIsChoosen(int id_dg)
+    {
+        count = repository.countBookWhichIsChoosen(id_dg);
     }
     public void insert(Cart cart)
     {
         repository.insert(cart);
     }
-    public LiveData<Integer> countBookInCart(int id_tailieu)
+    public LiveData<Integer> countBookInCart(int id_tailieu, int id_dg)
     {
-        return repository.countBookInCart(id_tailieu);
+        return repository.countBookInCart(id_tailieu, id_dg);
     }
     public void delete(Cart cart) { repository.delete(cart);}
-    public void update(int checked, int id_tailieu)
+    public void update(int checked, int id_tailieu, int id_dg)
     {
-        repository.update(checked, id_tailieu);
+        repository.update(checked, id_tailieu, id_dg);
     }
-    public void deleteBooksWhichIsBorrowed()
+    public void deleteBooksWhichIsBorrowed(int id_dg)
     {
-        repository.deleteBooksWhichIsBorrowed();
+        repository.deleteBooksWhichIsBorrowed(id_dg);
+    }
+    public void addBooksToCallCard(int id_dg)
+    {
+        listLiveData = repository.getBooksAddToCallCart(id_dg);
     }
 }

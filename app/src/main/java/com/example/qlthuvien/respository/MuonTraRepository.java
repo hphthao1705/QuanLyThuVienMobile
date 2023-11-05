@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.qlthuvien.data.model.MuonTra;
 import com.example.qlthuvien.data.model.NhaXuatBan;
 import com.example.qlthuvien.data.remote.Common;
+import com.google.gson.JsonObject;
 
 import java.util.List;
 
@@ -35,23 +36,23 @@ public class MuonTraRepository {
         });
         return data;
     }
-    public void insertCallCard(MuonTra muontra)
+    public void insertCallCard(JsonObject muontra)
     {
-         Common.apiService.insertCallCard(muontra.getId_muon(), muontra).enqueue(new Callback<MuonTra>() {
+         Common.apiService.insertCallCard(muontra).enqueue(new Callback<MuonTra>() {
              @Override
              public void onResponse(Call<MuonTra> call, Response<MuonTra> response) {
                  if(response.isSuccessful() && response.body()!=null)
                  {
-                     Log.d("Put respone","MuonTra: " + response.body());
+                     Log.d("Post respone","MuonTra: " + response.body());
                  }
                  else {
-                     Log.d("Put error", "Error: " + response.code());
+                     Log.d("Post error", "Error: " + response.code());
                  }
              }
 
              @Override
              public void onFailure(Call<MuonTra> call, Throwable t) {
-                 Log.d("Put error haha", "Error: " + t.toString());
+
              }
          });
     }

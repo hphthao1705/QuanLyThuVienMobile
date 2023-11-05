@@ -1,8 +1,14 @@
 package com.example.qlthuvien.view.fragments;
 
+import static com.example.qlthuvien.view.activities.LoginActivity.ID_DG;
+import static com.example.qlthuvien.view.activities.LoginActivity.SHARED_PREFERENCES_NAME;
+
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,13 +16,12 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,39 +31,33 @@ import android.widget.Toast;
 import com.example.qlthuvien.data.local.entities.Cart;
 import com.example.qlthuvien.data.model.MuonTra;
 import com.example.qlthuvien.databinding.FragmentCartBookBinding;
-import com.example.qlthuvien.view.activities.MainActivity;
 import com.example.qlthuvien.view.adapter.CartBookAdapter;
-import com.example.qlthuvien.view.adapter.FavouriteAdapter;
 import com.example.qlthuvien.dto.DtoFavourite;
 import com.example.qlthuvien.R;
 import com.example.qlthuvien.viewmodels.CartViewModel;
+import com.example.qlthuvien.viewmodels.ChiTietMuonTraViewModel;
 import com.example.qlthuvien.viewmodels.MuonTraViewModel;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.Locale;
+import com.google.gson.JsonParser;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 public class CartBookFragment extends Fragment {
+    MutableLiveData<String> thaoQuaMetRoiHuHu = new MutableLiveData<>();
     FragmentCartBookBinding binding;
     private CartViewModel viewModel;
     List<DtoFavourite> list = new ArrayList<>();
     List<Cart> cartList = new ArrayList<>();
     CartBookAdapter adapter = new CartBookAdapter(getContext());
     private MuonTraViewModel muonTraViewModel;
-    int number = 0;
+    private ChiTietMuonTraViewModel chiTietMuonTraViewModel;
+    int id_dg = 0;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -70,10 +69,18 @@ public class CartBookFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding.progressbarStart.setVisibility(View.VISIBLE);
+        loadId_dg();
 
         viewModel = new ViewModelProvider(this).get(CartViewModel.class);
         muonTraViewModel = new ViewModelProvider(this).get(MuonTraViewModel.class);
+        chiTietMuonTraViewModel = new ViewModelProvider(this).get(ChiTietMuonTraViewModel.class);
         //viewModel = ViewModelProviders.of(this).get(CartViewModel.class);
+
+        viewModel.getAllBookFromUser(id_dg);
+        viewModel.countBookWhichIsChoosen(id_dg);
+        viewModel.addBooksToCallCard(id_dg);
+
         loadCart();
         initRecyclerView();
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
@@ -87,18 +94,27 @@ public class CartBookFragment extends Fragment {
             @Override
             public void onChanged(List<Cart> carts) {
                 list.clear();
-                for (Cart i:carts) {
-                    cartList = carts;
-                    DtoFavourite j = new DtoFavourite();
-                    j.Id = String.valueOf(i.getId_tailieu());
-                    j.Check = i.getCheckbox();
-                    j.TacGia = i.getTacgia();
-                    j.TenSach = i.getTensach();
-                    list.add(j);
+                if(carts.size() == 0)
+                {
+                    loadView(false);
                 }
-                adapter.SetData(list);
-                binding.rcvCartBook.setAdapter(adapter);
-                chooseBooks();
+                else
+                {
+                    for (Cart i:carts) {
+                        cartList = carts;
+                        DtoFavourite j = new DtoFavourite();
+                        j.Id = String.valueOf(i.getId_tailieu());
+                        j.Check = i.getCheckbox();
+                        j.TacGia = i.getTacgia();
+                        j.TenSach = i.getTensach();
+                        list.add(j);
+                    }
+                    adapter.SetData(list);
+                    binding.rcvCartBook.setAdapter(adapter);
+                    loadView(true);
+                    chooseBooks();
+                }
+                binding.progressbarStart.setVisibility(View.GONE);
             }
         });
     }
@@ -126,7 +142,7 @@ public class CartBookFragment extends Fragment {
                     builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // quang code cua thao vo day
-                            Cart cart = new Cart(cartList.get(position).getId_tailieu(), 0, cartList.get(position).getHinh(), cartList.get(position).getTensach(),  cartList.get(position).getTacgia(),  cartList.get(position).getCheckbox());
+                            Cart cart = new Cart(cartList.get(position).getId_tailieu(), 1, cartList.get(position).getHinh(), cartList.get(position).getTensach(),  cartList.get(position).getTacgia(),  cartList.get(position).getCheckbox());
                             viewModel.delete(cart);
                             list.remove(position);
                             // Do nothing, but close the dialog
@@ -152,7 +168,7 @@ public class CartBookFragment extends Fragment {
         public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
             new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
                     .addSwipeLeftBackgroundColor(ContextCompat.getColor(getContext(), R.color.red))
-                    .addSwipeLeftActionIcon(R.drawable.baseline_arrow_back_24)
+                    .addSwipeLeftActionIcon(R.drawable.baseline_delete_24)
                     .create()
                     .decorate();
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
@@ -166,11 +182,11 @@ public class CartBookFragment extends Fragment {
                 int position = viewHolder.getAdapterPosition();
                 if(checked)
                 {
-                    viewModel.update(1, cartList.get(position).getId_tailieu());
+                    viewModel.update(1, cartList.get(position).getId_tailieu(), id_dg);
                 }
                 else
                 {
-                    viewModel.update(0, cartList.get(position).getId_tailieu());
+                    viewModel.update(0, cartList.get(position).getId_tailieu(), id_dg);
                 }
             }
         });
@@ -184,31 +200,103 @@ public class CartBookFragment extends Fragment {
             }
         });
     }
-    public void borrowBooks()
+    private void borrowBooks()
     {
         binding.btnMuon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                muonTraViewModel.liveData.observe(getViewLifecycleOwner(), new Observer<List<MuonTra>>() {
-                    @Override
-                    public void onChanged(List<MuonTra> muonTras) {
-                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
-                        Date date = new Date();
-                        Date d;
-                        try {
-                            d = formatter.parse(String.valueOf(date));
-                        } catch (ParseException e) {
-                            throw new RuntimeException(e);
-                        }
-                        number = muonTras.size();
-                        number++;
-                        MuonTra mt = new MuonTra(number,1,d,0,1);
-                        Log.d("check", mt.getId_muon() + " - " + mt.getId_dg() + " - " + mt.getId_nv() + " - " + mt.getNgaymuon());
-                        muonTraViewModel.insertCallCard(mt);
-                    }
-                });
-                viewModel.deleteBooksWhichIsBorrowed();
+                //add phiếu mượn
+                CartBookFragment.AsyncTask task = new CartBookFragment.AsyncTask();
+                task.execute();
             }
         });
+    }
+    private void addDetailOfCallCard()
+    {
+        //add chi tiết phiếu mượn
+        muonTraViewModel.liveData.observe(getViewLifecycleOwner(), new Observer<List<MuonTra>>() {
+            @Override
+            public void onChanged(List<MuonTra> muonTras) {
+                Collections.reverse(muonTras);
+                viewModel.listLiveData.observe(getViewLifecycleOwner(), new Observer<List<Cart>>() {
+                    @Override
+                    public void onChanged(List<Cart> carts) {
+                        int j = 0;
+                        Log.d("id_muon", String.valueOf(muonTras.get(0).getId_muon()));
+                        Log.d("size_ctmt: ", carts.size() + "");
+                        for(Cart i: carts)
+                        {
+                            String jsonString = "{'id_ctmuon':0,'id_muon':"+(muonTras.get(0).getId_muon() + 1)+",'id_tailieu':"+ i.getId_tailieu() +",'ngaytra':null,'tinhtrangtra':0}";
+                            Log.d("json: ",jsonString);
+
+                            JsonParser jsonParser = new JsonParser();
+                            JsonObject jsonObject = (JsonObject) jsonParser.parse(jsonString);
+                            chiTietMuonTraViewModel.insertCallCard(jsonObject);
+                            j++;
+                            if(j==carts.size())
+                            {
+                                thaoQuaMetRoiHuHu.setValue("ok");
+                            }
+                        }
+                    }
+                });
+            }
+        });
+        thaoQuaMetRoiHuHu.observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                viewModel.deleteBooksWhichIsBorrowed(id_dg);
+            }
+        });
+    }
+    private class AsyncTask extends android.os.AsyncTask<Void, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            String d = formatter.format(new Date());
+            String jsonString = "{'id_muon':0,'id_dg':" + 1 + ",'id_nv':1,'ngaymuon': '"+d+"','tintrangmuon':0}";
+            JsonParser jsonParser = new JsonParser();
+            JsonObject jsonObject = (JsonObject) jsonParser.parse(jsonString);
+            muonTraViewModel.insertCallCard(jsonObject);
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void unused) {
+            super.onPostExecute(unused);
+            muonTraViewModel.loadListOfBorrowBook();
+            addDetailOfCallCard();
+        }
+    }
+    private void loadId_dg()
+    {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        id_dg = Integer.parseInt(sharedPreferences.getString("user_id", "0"));
+        Toast.makeText(getContext(), id_dg + "", Toast.LENGTH_SHORT).show();
+    }
+    private void loadView(boolean check)
+    {
+        if(check)
+        {
+            binding.empty1.setVisibility(View.GONE);
+            binding.empty2.setVisibility(View.GONE);
+            binding.empty3.setVisibility(View.GONE);
+            binding.rcvCartBook.setVisibility(View.VISIBLE);
+            binding.muon.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            binding.empty1.setVisibility(View.VISIBLE);
+            binding.empty2.setVisibility(View.VISIBLE);
+            binding.empty3.setVisibility(View.VISIBLE);
+            binding.rcvCartBook.setVisibility(View.GONE);
+            binding.muon.setVisibility(View.GONE);
+        }
     }
 }

@@ -70,6 +70,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setStatusBarGradiant(this);
         setContentView(R.layout.activity_login);
+        getSupportActionBar().hide();
 
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         final boolean firstStart = prefs.getBoolean("firstStart", true);

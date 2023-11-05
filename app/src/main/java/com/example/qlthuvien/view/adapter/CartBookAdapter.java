@@ -2,6 +2,7 @@ package com.example.qlthuvien.view.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.qlthuvien.data.model.Item_Book;
 import com.example.qlthuvien.dto.DtoFavourite;
 import com.example.qlthuvien.R;
@@ -30,6 +32,9 @@ public class CartBookAdapter extends RecyclerView.Adapter<CartBookAdapter.CartBo
     List<DtoFavourite> list;
     private OnCheckedChangeListener onCheckedChangeListener = null;
     Context context;
+    public void setContext(Context context) {
+        this.context = context;
+    }
     public  CartBookAdapter(Context t){
         context = t;
     }
@@ -48,13 +53,22 @@ public class CartBookAdapter extends RecyclerView.Adapter<CartBookAdapter.CartBo
 
     @Override
     public void onBindViewHolder(@NonNull CartBookAdapterViewHolder holder, int position) {
+        //fix loi hinh
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         DtoFavourite dtoFavourite = list.get(position);
         if(dtoFavourite == null)
         {
             return;
         }
         holder.nameOfBook.setText(dtoFavourite.TenSach);
-        holder.imgBook.setImageResource(R.drawable.conan);
+
+//        Glide
+//                .with(context)
+//                .load(list.get(position).HinhSach).centerCrop().placeholder(R.drawable.avatar)
+//                .into(holder.imgBook);
+
         holder.authorOfBook.setText(dtoFavourite.TacGia);
         if(dtoFavourite.Check == 1)
         {
