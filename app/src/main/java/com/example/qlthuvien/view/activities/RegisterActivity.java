@@ -1,24 +1,28 @@
 package com.example.qlthuvien.view.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 
+import com.example.qlthuvien.data.model.DocGia;
 import com.example.qlthuvien.data.model.SinhVien;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.qlthuvien.data.remote.APIService;
+import com.example.qlthuvien.data.remote.Common;
+import com.example.qlthuvien.respository.SinhVienRepository;
+import com.example.qlthuvien.viewmodels.SinhVienViewModel;
+
+import com.example.qlthuvien.R;
 import com.google.android.material.snackbar.Snackbar;
 
-import com.example.qlthuvien.data.model.DocGia;
-import com.example.qlthuvien.data.remote.Common;
-import com.example.qlthuvien.view.activities.MainActivity;
-import com.example.qlthuvien.R;
-import com.example.qlthuvien.data.remote.APIService;
-import com.example.qlthuvien.respository.DocGiaRepository;
-
-import android.content.Intent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -26,43 +30,43 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Field;
-
 
 
 public class RegisterActivity extends AppCompatActivity {
-    private EditText tensv, et_email, etpassword, mssv_u;
+    private EditText tensv, et_email, etpassword, mssv_u, txt_repassword;
     private RadioButton gtNam, gtNu, gtinh;
     private RadioGroup radioGroup;
     private Button btnregister;
     private TextView tvlogin;
+
+    private SinhVienViewModel sinhVienViewModel;
+
+    private String currentMssv = "";
+
     int gioitinhNam;
     int gioitinhNu;
     String sdt, str_userid;
     int id_dg, id_sv;
-    String email, pass;
-    String name, mssv, gioitinh, ngaysinh;
+    String email, repass;
+    String name, mssv;
     int gt;
     String password;
-    LinearLayout lyt_linear;
+    LinearLayout lyt_linear,ll_lay;
+    RelativeLayout rl_pwd, rl_name, rl_mssv, rl_email, rl_repass;
     Pattern pattern_pwd = Pattern.compile("^[a-zA-Z0-9]+$");
 
     public RegisterActivity() {
@@ -81,60 +85,107 @@ public class RegisterActivity extends AppCompatActivity {
 
         et_email = (EditText) findViewById(R.id.txt_email);
         etpassword = (EditText) findViewById(R.id.txt_password);
+        txt_repassword = (EditText) findViewById(R.id.txt_repassword);
 
         btnregister = findViewById(R.id.btn_dangky);
 
         lyt_linear = findViewById(R.id.lyt_linear);
+        ll_lay = findViewById(R.id.ll_lay);
         tvlogin = (TextView) findViewById(R.id.tvlogin);
+        rl_pwd = findViewById(R.id.rl_pwd);
+        rl_email = findViewById(R.id.rl_email);
+        rl_mssv = findViewById(R.id.rl_mssv);
+        rl_name = findViewById(R.id.rl_name);
+        rl_repass = findViewById(R.id.rl_repass);
 
-        tvlogin.setOnClickListener(new View.OnClickListener() {
+        Log.d("email", "" + email);
+
+        name = tensv.getText().toString();
+
+        sinhVienViewModel = ViewModelProviders.of(this).get(SinhVienViewModel.class);
+
+
+        mssv_u.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(intent);
-                RegisterActivity.this.finish();
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String currentMssv = charSequence.toString();
+                if (!currentMssv.isEmpty()) {
+                    LiveData<SinhVien> tenSinhVienLiveData = sinhVienViewModel.generateTenSinhVien(currentMssv);
+                    tenSinhVienLiveData.observe(RegisterActivity.this, new Observer<SinhVien>() {
+                        @Override
+                        public void onChanged(SinhVien sinhVien) {
+                            tensv.setText(sinhVien.getTensv());
+                            id_sv = sinhVien.getId_sv();
+                        }
+                    });
+                } else {
+                    tensv.setText("");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
             }
         });
 
         btnregister.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
 
                 mssv = mssv_u.getText().toString();
-                name = tensv.getText().toString();
-
                 email = et_email.getText().toString();
                 password = etpassword.getText().toString();
+                repass = txt_repassword.getText().toString();
 
-                Log.d("userdata", "onClick: " + email + password);
-                registerMe();
+                Log.d("password", "" + password);
+                Log.d("repass", "" + repass);
 
-//                if (!firstName.isEmpty()) {
-//                    if (!lastName.isEmpty()) {
-//                        if (!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-//
-//                            if (!password.isEmpty() && pattern_pwd.matcher(password).matches()) {
-//
-//                            } else {
-//                                Snackbar.make(lyt_linear, "Enter the Valid Password", Snackbar.LENGTH_SHORT).show();
-//
-//                            }
-//                        } else {
-//                            Snackbar.make(lyt_linear, "Enter the Valid Email", Snackbar.LENGTH_SHORT).show();
-//
-//                        }
-//                    } else {
-//                        Snackbar.make(lyt_linear, "Enter the Valid Last name", Snackbar.LENGTH_SHORT).show();
-//
-//                    }
-//                } else {
-//                    Snackbar.make(lyt_linear, "Enter the Valid First name", Snackbar.LENGTH_SHORT).show();
-//
-//                }
+                if (!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
 
+                    if (!password.isEmpty() && pattern_pwd.matcher(password).matches()) {
+
+                        if(!repass.isEmpty() && pattern_pwd.matcher(repass).matches())
+                        {
+                            if(password.equals(repass))
+                            {
+                                DocGia docGia = new DocGia(0 , id_sv , email, password);
+                                Log.d("id_sv", "success: " + id_sv);
+
+                                LiveData<DocGia> docGiaLiveData = sinhVienViewModel.registerDocGia(docGia);
+                                docGiaLiveData.observe(RegisterActivity.this, new Observer<DocGia>() {
+                                    @Override
+                                    public void onChanged(DocGia docGia) {
+                                        Log.d("email", "success: " + email);
+                                        if (docGia != null) {
+                                            Log.d("test", "success: " + "Đăng ký Độc giả thành công!");
+                                        } else {
+                                            Log.d("test", "Fail!: " + "Đăng ký Độc giả thất bại!");
+                                        }
+                                    }
+                                });
+                            }
+                            else
+                            {
+                                Snackbar.make(rl_repass, "Password and Re-Password not alike", Snackbar.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        else
+                        {
+                            Snackbar.make(rl_repass, "Enter the Valid Re-Password", Snackbar.LENGTH_SHORT).show();
+                        }
+
+                    } else {
+                        Snackbar.make(rl_pwd, "Enter the Valid Password", Snackbar.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Snackbar.make(ll_lay, "Enter the Valid Email", Snackbar.LENGTH_SHORT).show();
+                }
             }
         });
-
     }
 
     protected void setStatusBarGradiant(Activity activity) {
@@ -144,89 +195,6 @@ public class RegisterActivity extends AppCompatActivity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(activity.getResources().getColor(android.R.color.transparent));
             window.setBackgroundDrawable(background);
-        }
-    }
-
-    private void registerMe() {
-        APIService api = Common.apiService;
-
-//        DocGia docGiaToResigter = new DocGia();
-//        docGiaToResigter.setId_dg(Integer.parseInt(id_dg));
-//        docGiaToResigter.setId_sv(Integer.parseInt(id_sv));
-//        docGiaToResigter.setEmail(email);
-//        docGiaToResigter.setPassword(pass);
-//
-//        SinhVien sinhVienResigter = new SinhVien();
-//        sinhVienResigter.setId_sv(Integer.parseInt(id_sv));
-//        sinhVienResigter.setMssv(mssv);
-//        sinhVienResigter.setTensv(name);
-//        sinhVienResigter.setGioitinh(gioitinh);
-//        sinhVienResigter.setNgaysinh(ngaysinh);
-//
-//        Call<SinhVien> call = api.getUserRegi(name, gt);
-//        Call<DocGia> callDocGia = api.getUserRegiDG(docGiaToResigter);
-//
-//        call.enqueue(new Callback<SinhVien>() {
-//            @Override
-//            public void onResponse(Call<SinhVien> call, Response<SinhVien> response) {
-//                Log.i("Responsestring", response.body().toString());
-//                if (response.isSuccessful()) {
-//                    if (response.body() != null) {
-//                        Log.d("responseLog", response.body().getTensv());
-//                        Log.i("onSuccess", response.body().toString());
-//
-//                        response.body().getTensv();
-//
-//                    } else {
-//                        Log.i("onEmptyResponse", "Returned empty response");//Toast.makeText(getContext(),"Nothing returned",Toast.LENGTH_LONG).show();
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<SinhVien> call, Throwable t) {
-//                Log.d("go", "onFailure: " + t.toString());
-//            }
-//        });
-//
-//        callDocGia.enqueue(new Callback<DocGia>() {
-//            @Override
-//            public void onResponse(Call<DocGia> call, Response<DocGia> response) {
-//                Log.i("Responsestring", response.body().toString());
-//                if (response.isSuccessful()) {
-//                    if (response.body() != null) {
-//                        Log.d("responseLog", response.body().getEmail());
-//                        Log.i("onSuccess", response.body().toString());
-//
-//                        String jsonresponse = response.body().getEmail();
-//                        try {
-//                            parseRegData(jsonresponse);
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    } else {
-//                        Log.i("onEmptyResponse", "Returned empty response");//Toast.makeText(getContext(),"Nothing returned",Toast.LENGTH_LONG).show();
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<DocGia> call, Throwable t) {
-//                Log.d("go", "onFailure: " + t.toString());
-//            }
-//        });
-    }
-
-
-    private void parseRegData(String response) throws JSONException {
-        Log.d("juststring", response);
-        if (response.equals("success")) {
-            Toast.makeText(RegisterActivity.this, "Registered Successfully!", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-            finish();
-            startActivity(intent);
-        } else {
-            Toast.makeText(RegisterActivity.this, "OOPS", Toast.LENGTH_SHORT).show();
         }
     }
 

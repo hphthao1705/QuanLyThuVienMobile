@@ -23,7 +23,7 @@
             android:backgroundTint="@android:color/transparent"
             android:layout_height="wrap_content"
             app:tint="@color/white"
-            android:layout_marginBottom="50dp" />
+            android:layout_marginBottom="20dp" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -35,11 +35,12 @@
             android:backgroundTint="#9922151F">
 
             <LinearLayout
+                android:id="@+id/ll_lay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_gravity="center_horizontal"
-                android:padding="15dp">
+                android:padding="10dp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -51,33 +52,45 @@
                     android:textStyle="bold"
                     android:textColor="@color/white" />
 
-                <EditText
+                <RelativeLayout
+                    android:id="@+id/rl_mssv"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:id="@+id/txt_mssv"
-                    android:background="@drawable/custom_edittext"
-                    android:drawableLeft="@drawable/person"
-                    android:drawablePadding="8dp"
-                    android:hint="Mã số sinh viên"
-                    android:padding="8dp"
-                    android:textColor="@color/black"
-                    android:textColorHighlight="@color/cardview_dark_background"
-                    android:layout_marginTop="15dp"
-                    android:textColorHint="@color/white" />
+                    android:layout_height="wrap_content">
 
-                <EditText
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:id="@+id/txt_mssv"
+                        android:background="@drawable/custom_edittext"
+                        android:drawableLeft="@drawable/person"
+                        android:drawablePadding="8dp"
+                        android:hint="Mã số sinh viên"
+                        android:padding="8dp"
+                        android:textColor="@color/black"
+                        android:textColorHighlight="@color/cardview_dark_background"
+                        android:layout_marginTop="15dp"
+                        android:textColorHint="@color/white" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_name"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:id="@+id/txt_name"
-                    android:background="@drawable/custom_edittext"
-                    android:drawableLeft="@drawable/person"
-                    android:drawablePadding="8dp"
-                    android:hint="Họ và tên"
-                    android:padding="8dp"
-                    android:textColor="@color/black"
-                    android:textColorHighlight="@color/cardview_dark_background"
-                    android:layout_marginTop="15dp"
-                    android:textColorHint="@color/white" />
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:id="@+id/txt_name"
+                        android:background="@drawable/custom_edittext"
+                        android:drawableLeft="@drawable/person"
+                        android:drawablePadding="8dp"
+                        android:hint="Họ và tên"
+                        android:padding="8dp"
+                        android:textColor="@color/black"
+                        android:textColorHighlight="@color/cardview_dark_background"
+                        android:layout_marginTop="15dp"
+                        android:textColorHint="@color/white"
+                        android:enabled="false"/>
+                </RelativeLayout>
 
 <!--                <RadioGroup-->
 <!--                    android:id="@+id/radio"-->
@@ -103,49 +116,67 @@
 <!--                        android:textColor="@color/white" />-->
 <!--                </RadioGroup>-->
 
-                <EditText
+                <RelativeLayout
+                    android:id="@+id/rl_email"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:id="@+id/txt_email"
-                    android:background="@drawable/custom_edittext"
-                    android:drawableLeft="@drawable/person"
-                    android:drawablePadding="8dp"
-                    android:hint="Email"
-                    android:textColorHint="@color/white"
-                    android:padding="8dp"
-                    android:textColor="@color/white"
-                    android:textColorHighlight="@color/cardview_dark_background"
-                    android:layout_marginTop="15dp" />
+                    android:layout_height="wrap_content">
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:id="@+id/txt_password"
-                    android:background="@drawable/custom_edittext"
-                    android:drawableLeft="@drawable/baseline_lock_24"
-                    android:drawablePadding="8dp"
-                    android:textColorHint="@color/white"
-                    android:hint="Mật khẩu"
-                    android:inputType="textPassword"
-                    android:padding="8dp"
-                    android:textColor="@color/black"
-                    android:textColorHighlight="@color/cardview_dark_background"
-                    android:layout_marginTop="15dp" />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:id="@+id/txt_email"
+                        android:background="@drawable/custom_edittext"
+                        android:drawableLeft="@drawable/person"
+                        android:drawablePadding="8dp"
+                        android:hint="Email"
+                        android:textColorHint="@color/white"
+                        android:padding="8dp"
+                        android:textColor="@color/white"
+                        android:textColorHighlight="@color/cardview_dark_background"
+                        android:layout_marginTop="15dp" />
+                </RelativeLayout>
 
-                <EditText
+                <RelativeLayout
+                    android:id="@+id/rl_pwd"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:id="@+id/txt_repassword"
-                    android:background="@drawable/custom_edittext"
-                    android:drawableLeft="@drawable/baseline_lock_24"
-                    android:drawablePadding="8dp"
-                    android:hint="Nhập lại mật khẩu"
-                    android:inputType="textPassword"
-                    android:padding="8dp"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/white"
-                    android:textColorHighlight="@color/cardview_dark_background"
-                    android:layout_marginTop="15dp" />
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/txt_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/custom_edittext"
+                        android:drawableLeft="@drawable/baseline_lock_24"
+                        android:drawablePadding="8dp"
+                        android:hint="Mật khẩu"
+                        android:inputType="textPassword"
+                        android:padding="8dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        android:textColorHighlight="@color/cardview_dark_background" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_repass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:id="@+id/txt_repassword"
+                        android:background="@drawable/custom_edittext"
+                        android:drawableLeft="@drawable/baseline_lock_24"
+                        android:drawablePadding="8dp"
+                        android:hint="Nhập lại mật khẩu"
+                        android:inputType="textPassword"
+                        android:padding="8dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        android:textColorHighlight="@color/cardview_dark_background"
+                        android:layout_marginTop="15dp" />
+                </RelativeLayout>
 
                 <Button
                     android:layout_width="match_parent"
@@ -153,7 +184,7 @@
                     android:id="@+id/btn_dangky"
                     android:text="Đăng ký"
                     android:textSize="18sp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="5dp"
                     android:backgroundTint="@color/blue1"
                     android:textColor="@color/white" />
 

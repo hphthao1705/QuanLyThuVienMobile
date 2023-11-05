@@ -94,6 +94,10 @@ android {
         implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
         implementation 'javax.inject:javax.inject:1'
         //Room
+<<<<<<< HEAD
+        implementation 'androidx.room:room-runtime:2.5.2'
+        implementation 'androidx.room:room-ktx:2.5.2'
+=======
         implementation 'androidx.room:room-runtime:2.3.0'
         implementation 'androidx.room:room-ktx:2.3.0'
         kapt "androidx.room:room-compiler:2.3.0"
@@ -106,5 +110,10 @@ android {
     }
     kapt {
         correctErrorTypes true
+>>>>>>> c4c714ebc1a8644af8e65560d2ab97d4a45d1e1d
     }
+}
+
+dependencies {
+    implementation 'androidx.room:room-common:2.6.0'
 }

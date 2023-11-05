@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView tvreg;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-    public static final String SHARED_PREFERENCES_NAME = "login_portal";
+    public static final String SHARED_PREFERENCES_NAME = "tk_mk";
     public static final String USER_ID = "user_id";
     public static final String ID_DG = "";
     public static final String ID_SV = "";

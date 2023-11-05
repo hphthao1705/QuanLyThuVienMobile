@@ -53,13 +53,13 @@ public class InformationFragment extends Fragment {
                 activity.replaceFragment(new InformationOfUserFragment());
             }
         });
-        binding.viewLichsumuontra.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                activity = (MainActivity) getActivity();
-                activity.replaceFragment(new HistoryFragment());
-            }
-        });
+//        binding.viewLichsumuontra.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                activity = (MainActivity) getActivity();
+//                activity.replaceFragment(new HistoryFragment());
+//            }
+//        });
 
         binding.viewYeuthich.setOnClickListener(new View.OnClickListener() {
             @Override

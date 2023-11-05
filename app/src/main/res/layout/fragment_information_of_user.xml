@@ -55,26 +55,16 @@
                 app:cardCornerRadius="500dp"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:scaleType="centerCrop"
-                    android:layout_width="100dp"
-                    android:src="@drawable/avatar"
-                    android:background="@drawable/bg_circle"
-                    android:layout_height="100dp" />
+<!--                <ImageView-->
+<!--                    android:scaleType="centerCrop"-->
+<!--                    android:layout_width="100dp"-->
+<!--                    android:src="@drawable/avatar"-->
+<!--                    android:background="@drawable/bg_circle"-->
+<!--                    android:layout_height="100dp" />-->
             </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="Thảo Khùng"
-                android:id="@+id/tv_name"
-                android:textSize="27dp"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:layout_gravity="center_horizontal"
-                android:layout_height="wrap_content" />
-
             <View
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="50dp"
 
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -134,8 +124,7 @@
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="match_parent"
-                    app:tint="@color/blue1"
-                    android:src="@drawable/baseline_phone_android_24" />
+                    android:src="@drawable/mssv_1" />
 
                 <LinearLayout
                     android:layout_marginLeft="20dp"
@@ -172,14 +161,6 @@
                 android:paddingVertical="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:textSize="18dp"
-                    android:text="Đổi mật khẩu"
-                    android:textColor="@color/blue1"
-                    android:textStyle="bold"
-                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/tv_change"
