@@ -91,14 +91,13 @@ android {
         annotationProcessor 'android.arch.lifecycle:compiler:1.0.0'
         implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
         implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
-<<<<<<< HEAD
-
-
         implementation 'javax.inject:javax.inject:1'
-=======
         //Room
         implementation 'androidx.room:room-runtime:2.5.2'
         implementation 'androidx.room:room-ktx:2.5.2'
->>>>>>> aeed15c5794e6a24a5988098c919987d127215d9
     }
+}
+
+dependencies {
+    implementation 'androidx.room:room-common:2.6.0'
 }

@@ -12,16 +12,12 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
-<<<<<<< HEAD
 import retrofit2.http.POST;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
-=======
-import retrofit2.http.Path;
 import retrofit2.http.Query;
->>>>>>> aeed15c5794e6a24a5988098c919987d127215d9
 
 public interface APIService {
     @GET("docgia")
@@ -56,27 +52,16 @@ public interface APIService {
             @Path("id") int id_sv
     );
 
+    ///////////////////////////////
     // register
-    @FormUrlEncoded
-    @POST("sv")
-    Call<SinhVien> getUserRegi(
-            @Field("tensv") String tensv,
-            @Field("gioitinh") int gioitinh
-    );
-    @FormUrlEncoded
-    @POST("docgia")
-    Call<DocGia> getUserRegis(
-            @Field("id_dg") int id_dg,
-            @Field("id_sv") int id_sv,
-            @Field("email") String email,
-            @Field("password") String password
-    );
+    @GET("sv")
+    Call<List<SinhVien>> getSV();
 
-    @FormUrlEncoded
     @POST("docgia")
     Call<DocGia> getUserRegiDG(
             @Body DocGia dg
     );
+    ////////////////////////////////
 
     // update độc giả
     @PUT("docgia/{id}")
@@ -92,4 +77,5 @@ public interface APIService {
             @Path("id") int id_sv,
             @Body SinhVien sinhvien
     );
+
 }

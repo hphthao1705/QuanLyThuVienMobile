@@ -114,6 +114,8 @@ public class UpdateInfUserFragment extends Fragment {
         edt_mssv = (EditText) view.findViewById(R.id.edt_mssv);
         edt_pass = (EditText) view.findViewById(R.id.edt_pass);
 
+        expandableView = (LinearLayout) view.findViewById(R.id.expandableView);
+
         submit_btn = view.findViewById(R.id.update_btn);
 
 
@@ -161,12 +163,14 @@ public class UpdateInfUserFragment extends Fragment {
 
                     if (!pass.isEmpty() && pattern_pwd.matcher(pass).matches()) {
 
-                        if (!name.isEmpty()) {
+                            if(!mssv.isEmpty() && pattern_pwd.matcher(mssv).matches())
+                            {
                                 updateData();
-
-                        } else {
-                            Snackbar.make(expandableView, "Enter the Name", Snackbar.LENGTH_SHORT).show();
-                        }
+                            }
+                            else
+                            {
+                                Snackbar.make(expandableView, "Enter the Valid MSSV", Snackbar.LENGTH_SHORT).show();
+                            }
                     } else {
                         Snackbar.make(expandableView, "Enter the Valid Password", Snackbar.LENGTH_SHORT).show();
                     }

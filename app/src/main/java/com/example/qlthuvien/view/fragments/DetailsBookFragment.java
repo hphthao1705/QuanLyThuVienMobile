@@ -1,5 +1,8 @@
 package com.example.qlthuvien.view.fragments;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,6 +23,7 @@ import com.example.qlthuvien.R;
 import com.example.qlthuvien.data.local.entities.Cart;
 import com.example.qlthuvien.data.model.TaiLieu;
 import com.example.qlthuvien.databinding.FragmentDetailsBookBinding;
+import com.example.qlthuvien.view.activities.LoginActivity;
 import com.example.qlthuvien.viewmodels.CartViewModel;
 import com.example.qlthuvien.viewmodels.TaiLieuViewModel;
 
@@ -49,7 +53,7 @@ public class DetailsBookFragment extends Fragment {
         binding.progressbarStart.setVisibility(View.VISIBLE);
         hideView(false);
         loadDetailBook();
-        //addBookToCart();
+//        addBookToCart();
     }
 
     @Override
@@ -99,7 +103,16 @@ public class DetailsBookFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Cart cart = new Cart(taiLieu2.getId_tailieu(), 0, taiLieu2.getHinh(), taiLieu2.getTentailieu(), taiLieu2.getTacgia(), false, false);
-                cartViewModel.insert(cart);
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences(LoginActivity.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+                boolean isLoggedIn = sharedPreferences.contains(LoginActivity.ID_DG);
+
+                if (!isLoggedIn) {
+                    Intent loginIntent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(loginIntent);
+                    getActivity().finish();
+                }
+                else
+                    cartViewModel.insert(cart);
             }
         });
     }

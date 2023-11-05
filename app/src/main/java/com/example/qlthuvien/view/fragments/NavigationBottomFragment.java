@@ -1,5 +1,9 @@
 package com.example.qlthuvien.view.fragments;
 
+
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +19,7 @@ import android.view.ViewGroup;
 
 import com.example.qlthuvien.R;
 import com.example.qlthuvien.databinding.FragmentNavigationBottomBinding;
+import com.example.qlthuvien.view.activities.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class NavigationBottomFragment extends Fragment {
@@ -63,11 +68,29 @@ public class NavigationBottomFragment extends Fragment {
                 }
                 else  if (item.getItemId() == R.id.page_favourite)
                 {
-                    fragment = new FavouriteFragment();
+                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences(LoginActivity.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+                    boolean isLoggedIn = sharedPreferences.contains(LoginActivity.ID_DG);
+
+                    if (!isLoggedIn) {
+                        Intent loginIntent = new Intent(getActivity(), LoginActivity.class);
+                        startActivity(loginIntent);
+                        getActivity().finish();
+                    }
+                    else
+                        fragment = new FavouriteFragment();
                 }
                 else  if (item.getItemId() == R.id.page_cart_book)
                 {
-                    fragment = new CartBookFragment();
+                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences(LoginActivity.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+                    boolean isLoggedIn = sharedPreferences.contains(LoginActivity.ID_DG);
+
+                    if (!isLoggedIn) {
+                        Intent loginIntent = new Intent(getActivity(), LoginActivity.class);
+                        startActivity(loginIntent);
+                        getActivity().finish();
+                    }
+                    else
+                        fragment = new CartBookFragment();
                 }
                 else  if (item.getItemId() == R.id.page_information)
                 {
