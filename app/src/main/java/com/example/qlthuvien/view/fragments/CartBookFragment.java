@@ -351,7 +351,7 @@ public class CartBookFragment extends Fragment {
                 {
                     for(MuonTra j:list_thao)
                     {
-                        if(i.getId_muon() == j.getId_muon() && i.getTinhtrangtra() == 0)
+                        if(i.getId_muon() == j.getId_muon() && (i.getTinhtrangtra() == 0 || i.getTinhtrangtra() == 1))
                         {
                             count++;
                         }
