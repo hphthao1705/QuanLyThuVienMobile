@@ -61,6 +61,7 @@ public class CartBookFragment extends Fragment {
     int id_dg = 0;
     int count=0;
     int numberOfBooksIsChoosen = 0;
+    CartBookFragment.AsyncTask task = null;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -147,20 +148,20 @@ public class CartBookFragment extends Fragment {
                     builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // quang code cua thao vo day
-                            Cart cart = new Cart(cartList.get(position).getId_tailieu(), 1, cartList.get(position).getHinh(), cartList.get(position).getTensach(),  cartList.get(position).getTacgia(),  cartList.get(position).getCheckbox());
+                            Cart cart = new Cart(cartList.get(position).getId_tailieu(), id_dg, cartList.get(position).getHinh(), cartList.get(position).getTensach(),  cartList.get(position).getTacgia(),  cartList.get(position).getCheckbox());
                             viewModel.delete(cart);
                             list.remove(position);
+
+                            adapter.notifyItemChanged(position);
                             // Do nothing, but close the dialog
                             dialog.dismiss();
-                            return;
-
                         }
                     });
                     builder.setNegativeButton("Từ chối", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
-                            adapter.notifyItemChanged(position);
+
                         }
                     });
                     AlertDialog alert = builder.create();
@@ -184,14 +185,24 @@ public class CartBookFragment extends Fragment {
         adapter.setOnCheckedListener(new CartBookAdapter.OnCheckedChangeListener() {
             @Override
             public void onChecked(boolean checked, CartBookAdapter.CartBookAdapterViewHolder viewHolder) {
+                viewModel.countBookWhichIsChoosen(id_dg);
+                if(task != null)
+                {
+                    task.cancel(true);
+                    task = null;
+                    Log.d("check cart", "asynctask is still working");
+                }
+                Log.d("check cart", "asynctask is not working when check this checkbox");
                 int position = viewHolder.getAdapterPosition();
                 if(checked)
                 {
                     viewModel.update(1, cartList.get(position).getId_tailieu(), id_dg);
+                    Log.d("check cart", "check");
                 }
                 else
                 {
                     viewModel.update(0, cartList.get(position).getId_tailieu(), id_dg);
+                    Log.d("check cart", "uncheck");
                 }
             }
         });
@@ -201,8 +212,8 @@ public class CartBookFragment extends Fragment {
         viewModel.count.observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
-                binding.txtSoLuong.setText("Số lượng: " + viewModel.count.getValue());
                 numberOfBooksIsChoosen = integer;
+                binding.txtSoLuong.setText("Số lượng: " + numberOfBooksIsChoosen);
             }
         });
     }
@@ -211,32 +222,39 @@ public class CartBookFragment extends Fragment {
         binding.btnMuon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(count + numberOfBooksIsChoosen > 3)
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                if(numberOfBooksIsChoosen == 0)
                 {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setTitle("Thông báo");
-                    if((3 - count) < 0)
+                    builder.setMessage("Vui lòng chọn sách mà bạn muốn mượn");
+                }
+                else {
+                    if(count + numberOfBooksIsChoosen > 3)
                     {
-                        builder.setMessage("Số sách bạn muốn mượn đã vượt quá quy định. Hãy trả sách để có thể mượn tiếp");
+
+                        builder.setTitle("Thông báo");
+                        if((3 - count) <= 0)
+                        {
+                            builder.setMessage("Số sách bạn muốn mượn đã vượt quá quy định. Hãy trả sách để có thể mượn tiếp");
+                        }
+                        else {
+                            builder.setMessage("Số sách bạn muốn mượn đã vượt quá quy định. Bạn chỉ có thể mượn " + (3 - count) + " quyển sách");
+                        }
                     }
                     else
                     {
-                        builder.setMessage("Số sách bạn muốn mượn đã vượt quá quy định. Bạn chỉ có thể mượn " + (3 - count) + " quyển sách");
+                        Log.d("check cart", "start asynctask");
+                        //add phiếu mượn
+                        task = (CartBookFragment.AsyncTask) new CartBookFragment.AsyncTask().execute();
+
                     }
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
                 }
-                else
-                {
-                    //add phiếu mượn
-                    CartBookFragment.AsyncTask task = new CartBookFragment.AsyncTask();
-                    task.execute();
-                }
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
             }
         });
     }
@@ -274,9 +292,17 @@ public class CartBookFragment extends Fragment {
         thaoQuaMetRoiHuHu.observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                viewModel.deleteBooksWhichIsBorrowed(id_dg);
+                if(task != null)
+                {
+                    Log.d("check cart", "delete book which is borrowed");
+                    viewModel.deleteBooksWhichIsBorrowed(id_dg);
+                    task.cancel(true);
+                    Log.d("check cart", "cancel asynctask");
+                }
             }
         });
+        //task.cancel(true);
+
     }
     private class AsyncTask extends android.os.AsyncTask<Void, Void, Void> {
         @Override
@@ -292,7 +318,10 @@ public class CartBookFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
-
+//            if(isCancelled())
+//            {
+//                Log.d("check cart", "cancel asynctask");
+//            }
             return null;
         }
 

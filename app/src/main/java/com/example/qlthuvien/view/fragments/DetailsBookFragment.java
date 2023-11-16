@@ -190,6 +190,10 @@ public class DetailsBookFragment extends Fragment {
             public void onChanged(TaiLieu taiLieu) {
                 taiLieu2 = taiLieu;
                 loadPulisher(taiLieu.getId_nxb());
+                if(taiLieu.getSoluong() == 0)
+                {
+                    binding.btnAddcart.setEnabled(false);
+                }
                 binding.setBook(taiLieu);
                 binding.txtSotrang.setText(taiLieu.getSotrang() + "");
                 binding.txtNsx.setText("Năm sản xuất: " + taiLieu.getNamsanxuat());
@@ -200,7 +204,9 @@ public class DetailsBookFragment extends Fragment {
                         .load(taiLieu.getHinh()).centerCrop().placeholder(R.drawable.avatar)
                         .into(binding.hinhsachDetails);
 
+                binding.txtSoluong.setText(taiLieu.getSoluong() + "");
                 hideView(true);
+
                 binding.progressbarStart.setVisibility(View.GONE);
             }
         });
@@ -244,7 +250,7 @@ public class DetailsBookFragment extends Fragment {
                             else {
                                 Cart cart = new Cart(taiLieu2.getId_tailieu(), id_dg, taiLieu2.getHinh(), taiLieu2.getTentailieu(), taiLieu2.getTacgia(), 0);
                                 cartViewModel.insert(cart);
-                                Toast.makeText(getContext(), "Successful", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Đã thêm vào giỏ sách", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });

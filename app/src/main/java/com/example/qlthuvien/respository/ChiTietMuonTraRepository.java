@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.qlthuvien.data.model.ChiTietMuonTra;
+import com.example.qlthuvien.data.model.ChiTietMuonTra_Full;
 import com.example.qlthuvien.data.model.DocGia;
 import com.example.qlthuvien.data.model.MuonTra;
 import com.example.qlthuvien.data.remote.Common;
@@ -57,5 +58,24 @@ public class ChiTietMuonTraRepository {
 
             }
         });
+    }
+    public LiveData<List<ChiTietMuonTra_Full>> loadDetailOfBorrowBook2()
+    {
+        MutableLiveData<List<ChiTietMuonTra_Full>> data = new MutableLiveData<>();
+        Common.apiService.getDetailOfBorrowBooks2().enqueue(new Callback<List<ChiTietMuonTra_Full>>() {
+            @Override
+            public void onResponse(Call<List<ChiTietMuonTra_Full>> call, Response<List<ChiTietMuonTra_Full>> response) {
+                if (response.isSuccessful())
+                {
+                    data.setValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ChiTietMuonTra_Full>> call, Throwable t) {
+
+            }
+        });
+        return data;
     }
 }

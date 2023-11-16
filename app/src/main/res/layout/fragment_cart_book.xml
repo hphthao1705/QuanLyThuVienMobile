@@ -32,18 +32,14 @@
         </LinearLayout>
 
 
-        <ScrollView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcvCartBook"
             android:layout_width="match_parent"
-            android:layout_height="470dp"
-            >
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcvCartBook"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:listitem="@layout/item_cart_book"
-                android:visibility="visible">
-            </androidx.recyclerview.widget.RecyclerView>
-        </ScrollView>
+            android:layout_height="wrap_content"
+            app:layout_constraintHeight_max="480dp"
+            tools:listitem="@layout/item_cart_book"
+            android:visibility="visible">
+        </androidx.recyclerview.widget.RecyclerView>
 
         <LinearLayout
             android:id="@+id/muon"

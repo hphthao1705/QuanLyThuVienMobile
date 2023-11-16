@@ -1,5 +1,6 @@
 package com.example.qlthuvien.view.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,7 +20,11 @@ import com.example.qlthuvien.view.activities.MainActivity;
 public class HistoryFragment extends Fragment {
 
     FragmentHistoryBinding binding;
-
+    int position;
+    public HistoryFragment(int position)
+    {
+        this.position = position;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,6 +61,17 @@ public class HistoryFragment extends Fragment {
                 activity.replaceFragment(f);
             }
         });
+
+        if(position == 0)
+        {
+            HistoryPartFragment f = new HistoryPartFragment(0);
+            replaceFragment(f);
+        }
+        else
+        {
+            HistoryPartFragment f = new HistoryPartFragment(1);
+            replaceFragment(f);
+        }
 
     }
     public void replaceFragment(Fragment fragment) {

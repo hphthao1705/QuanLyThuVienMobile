@@ -1,6 +1,7 @@
 package com.example.qlthuvien.view.adapter;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -8,6 +9,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.qlthuvien.R;
+import com.example.qlthuvien.data.model.ChiTietMuonTra_Full;
 import com.example.qlthuvien.data.model.MuonTra;
 import com.example.qlthuvien.databinding.ItemHistoryBinding;
 
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHolder>{
     ArrayList<MuonTra> list;
+    private HistoryAdapter.OnClickListener onClickListener = null;
     public HistoryAdapter(ArrayList<MuonTra> list)
     {
         this.list = list;
@@ -50,6 +53,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
         {
             holder.binding.txtNgaytra.setText("Đang xử lý");
         }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickListener.onClick(post);
+            }
+        });
     }
 
     @Override
@@ -64,5 +73,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
             super(itemBinding.getRoot());
             this.binding = itemBinding;
         }
+    }
+    public interface OnClickListener {
+        void onClick(MuonTra item_book);
+    }
+    public void setOnClickListener(HistoryAdapter.OnClickListener listener)
+    {
+        this.onClickListener = listener;
     }
 }

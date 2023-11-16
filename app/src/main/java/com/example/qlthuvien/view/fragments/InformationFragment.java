@@ -85,7 +85,7 @@ public class InformationFragment extends Fragment {
             public void onClick(View view) {
                 if (isLoggedIn) {
                     activity = (MainActivity) getActivity();
-                    activity.replaceFragment(new HistoryFragment());
+                    activity.replaceFragment(new HistoryFragment(0));
                 }
                 else
                 {

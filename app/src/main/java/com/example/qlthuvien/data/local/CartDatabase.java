@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import com.example.qlthuvien.data.local.dao.CartDAO;
 import com.example.qlthuvien.data.local.entities.Cart;
 
-@Database(entities = {Cart.class}, version = 3)
+@Database(entities = {Cart.class}, version = 4)
 public abstract class CartDatabase extends RoomDatabase {
     static CartDatabase instance;
 
@@ -25,7 +25,6 @@ public abstract class CartDatabase extends RoomDatabase {
 //                            CartDatabase.class, "cart")
 //                    .fallbackToDestructiveMigration()
 //                    .build();
-
         }
         return instance;
     }

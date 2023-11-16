@@ -1,6 +1,7 @@
 package com.example.qlthuvien.data.remote;
 
 import com.example.qlthuvien.data.model.ChiTietMuonTra;
+import com.example.qlthuvien.data.model.ChiTietMuonTra_Full;
 import com.example.qlthuvien.data.model.DocGia;
 import com.example.qlthuvien.data.model.Loai;
 import com.example.qlthuvien.data.model.MuonTra;
@@ -35,6 +36,8 @@ public interface APIService {
 
     @GET("chitietmuontra")
     Call<List<ChiTietMuonTra>> getDetailOfBorrowBooks();
+    @GET("chitietmuontra/info")
+    Call<List<ChiTietMuonTra_Full>> getDetailOfBorrowBooks2();
     @GET("muontra")
     Call<List<MuonTra>> getListOfBorrowBook();
     @POST("muontra")

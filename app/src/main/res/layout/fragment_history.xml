@@ -45,7 +45,7 @@
 
             <Button
                 android:id="@+id/btn_rcv_lichsu"
-                android:backgroundTint="@color/blue2"
+                android:backgroundTint="@color/button_color"
                 android:layout_height="wrap_content"
                 android:text="LỊCH SỬ MƯỢN TRẢ"
                 android:textSize="15dp"
@@ -55,7 +55,7 @@
 
             <Button
                 android:id="@+id/btn_rcv_dangxuly"
-                android:backgroundTint="@color/blue2"
+                android:backgroundTint="@color/button_color"
                 android:layout_height="wrap_content"
                 android:text="ĐANG XỬ LÝ"
                 android:textSize="15dp"

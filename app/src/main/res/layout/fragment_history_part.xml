@@ -15,14 +15,35 @@
             android:id="@+id/frame_history"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            tools:listitem="@layout/item_history" />
+            tools:listitem="@layout/item_history"
+            android:visibility="gone"/>
         <ProgressBar
-            android:visibility="visible"
+            android:visibility="gone"
             android:id="@+id/progressbar_start"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:indeterminateDrawable="@drawable/loading"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center" />
 
+        <ImageView
+            android:id="@+id/empty_1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="-50dp"
+            android:src="@drawable/history"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/empty_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Không có dữ liệu"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:visibility="gone"/>
     </FrameLayout>
 </layout>
