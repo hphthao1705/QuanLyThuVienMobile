@@ -13,6 +13,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -246,6 +247,7 @@ public class CartBookFragment extends Fragment {
                         //add phiếu mượn
                         task = (CartBookFragment.AsyncTask) new CartBookFragment.AsyncTask().execute();
 
+                        return;
                     }
                 }
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -284,6 +286,7 @@ public class CartBookFragment extends Fragment {
                             {
                                 thaoQuaMetRoiHuHu.setValue("ok");
                             }
+                            makeNotification(muonTras.get(0).getId_muon() + 1);
                         }
                     }
                 });
@@ -388,5 +391,21 @@ public class CartBookFragment extends Fragment {
                 }
             }
         });
+    }
+    private void makeNotification(int id_muon)
+    {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "THAO");
+        builder.setSmallIcon(R.drawable.avatar);
+        builder.setContentTitle("Thông báo");
+        String maphieumuon;
+        if(id_muon < 10)
+        {
+            maphieumuon = "PM00" + id_muon;
+        }
+        else
+        {
+            maphieumuon = "PM0" + id_muon;
+        }
+        builder.setContentText("Phiếu mượn " + maphieumuon + " đã được lập. Hãy đến thư viện để nhận sách nào");
     }
 }
