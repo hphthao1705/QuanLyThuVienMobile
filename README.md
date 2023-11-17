@@ -8,4 +8,5 @@ Công nghệ phần mềm nâng cao
   <li>Shared Preferences</li>
   <li>Glide</li>
   <li>Retrofit2</li>
+  <li>AsyncTask</li>
 </ul>
