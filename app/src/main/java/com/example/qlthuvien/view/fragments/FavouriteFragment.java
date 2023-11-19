@@ -1,6 +1,12 @@
 package com.example.qlthuvien.view.fragments;
 
+import static com.example.qlthuvien.view.activities.LoginActivity.EMAIL;
+import static com.example.qlthuvien.view.activities.LoginActivity.ID_DG;
+import static com.example.qlthuvien.view.activities.LoginActivity.MSSV;
+import static com.example.qlthuvien.view.activities.LoginActivity.NAME;
+import static com.example.qlthuvien.view.activities.LoginActivity.PASSWORD;
 import static com.example.qlthuvien.view.activities.LoginActivity.SHARED_PREFERENCES_NAME;
+import static com.example.qlthuvien.view.activities.LoginActivity.USER_ID;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -15,6 +21,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +52,7 @@ import java.util.stream.Collectors;
  */
 public class FavouriteFragment extends Fragment implements TheLoaiAdapter.ReplaceFragment{
 
-    int id_dg = 0;
+    String id_dg;
     YeuThichViewModel viewModelYeuThich;
     TaiLieuViewModel viewModelTaiLieu;
     FragmentFavouriteBinding binding;
@@ -58,12 +65,13 @@ public class FavouriteFragment extends Fragment implements TheLoaiAdapter.Replac
     private void loadId_dg()
     {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        id_dg = Integer.parseInt(sharedPreferences.getString("user_id", "0"));
+        id_dg = sharedPreferences.getString(ID_DG, "");
+//        id_dg = Integer.parseInt(sharedPreferences.getString("user_id", "0"));
     }
     private void  loadYeuThich(List<YeuThich> yeuThiches)
     {
         viewModelTaiLieu = new ViewModelProvider(this).get(TaiLieuViewModel.class);
-        int userIdCurrent = id_dg;
+        int userIdCurrent = Integer.parseInt(id_dg);
         ArrayList<Item_Book> list = new ArrayList<>();
         yeuThiches = yeuThiches.stream()
                 .filter(yeuThich -> yeuThich.getId_dg() == userIdCurrent)
@@ -105,8 +113,10 @@ public class FavouriteFragment extends Fragment implements TheLoaiAdapter.Replac
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        loadId_dg();
+        Log.d("id_dg", "" + id_dg);
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_favourite, container, false);
-        if(id_dg == 0)
+        if(Integer.parseInt(id_dg) == 0)
         {
             binding.empty1.setVisibility(View.VISIBLE);
             binding.empty2.setVisibility(View.VISIBLE);

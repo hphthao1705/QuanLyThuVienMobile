@@ -86,7 +86,11 @@ public class DetailsBookFragment extends Fragment {
                 activity.replaceFragment(f);
             }
         });
-        if(id_dg == 0) // chua dang nhap
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(LoginActivity.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        boolean isLoggedIn = sharedPreferences.contains(LoginActivity.ID_DG);
+
+        if(!isLoggedIn) // chua dang nhap
         {
             binding.btnFavourite.setImageResource(R.drawable.icons8_favorite_50_no_active);
         }
@@ -110,10 +114,14 @@ public class DetailsBookFragment extends Fragment {
         binding.btnFavourite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(id_dg == 0)
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences(LoginActivity.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+                boolean isLoggedIn = sharedPreferences.contains(LoginActivity.ID_DG);
+
+                if(!isLoggedIn)
                 {
                     Intent loginIntent = new Intent(getActivity(), LoginActivity.class);
                     startActivity(loginIntent);
+                    getActivity().finish();
                 }
                 else { // xu ly
                     APIService api = Common.apiService;
@@ -182,6 +190,9 @@ public class DetailsBookFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details_book, container, false);
         return binding.getRoot();
     }
+
+
+
     private void loadDetailBook()
     {
         viewModel.loadDetailBook(id_tailieu);
@@ -231,10 +242,14 @@ public class DetailsBookFragment extends Fragment {
         binding.btnAddcart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(id_dg == 0)
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences(LoginActivity.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+                boolean isLoggedIn = sharedPreferences.contains(LoginActivity.ID_DG);
+
+                if(!isLoggedIn)
                 {
                     Intent loginIntent = new Intent(getActivity(), LoginActivity.class);
                     startActivity(loginIntent);
+                    getActivity().finish();
                 }
                 else
                 {

@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
 import android.util.Log;
 import android.util.Patterns;
@@ -28,6 +30,7 @@ import com.example.qlthuvien.data.remote.Common;
 import com.example.qlthuvien.databinding.FragmentUpdateInfUserBinding;
 import com.example.qlthuvien.view.activities.MainActivity;
 import com.example.qlthuvien.R;
+import com.example.qlthuvien.view.activities.RegisterActivity;
 import com.google.android.material.snackbar.Snackbar;
 
 import static com.example.qlthuvien.view.activities.LoginActivity.EMAIL;
@@ -52,10 +55,10 @@ public class UpdateInfUserFragment extends Fragment {
     FragmentUpdateInfUserBinding binding;
     MainActivity activity;
 
-    private EditText edt_name, edt_mssv, edt_email, edt_pass;
+    private EditText edt_name, edt_mssv, edt_email, edt_pass, txt_repassword;
     String sdt, str_userid;
     int gioitinh;
-    String email, pass, id_dg, id_sv;
+    String email, pass, id_dg, id_sv, repass;
     String name, mssv, ngaysinh;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -110,9 +113,10 @@ public class UpdateInfUserFragment extends Fragment {
 
         // text view
         edt_name = (EditText) view.findViewById(R.id.edt_name);
-        edt_email = (EditText) view.findViewById(R.id.edt_email);
         edt_mssv = (EditText) view.findViewById(R.id.edt_mssv);
         edt_pass = (EditText) view.findViewById(R.id.edt_pass);
+
+        txt_repassword = (EditText) view.findViewById(R.id.edt_repass);
 
         expandableView = (LinearLayout) view.findViewById(R.id.expandableView);
 
@@ -133,20 +137,6 @@ public class UpdateInfUserFragment extends Fragment {
             Log.e("inf", "Không tìm thấy");
         }
 
-        TextView email_user = (TextView) view.findViewById(R.id.edt_email);
-        if (email_user != null) {
-            email_user.setText(email);
-        } else {
-            Log.e("inf", "Không tìm thấy");
-        }
-
-        TextView pass_user = (TextView) view.findViewById(R.id.edt_pass);
-        if (pass_user != null) {
-            pass_user.setText(pass);
-        } else {
-            Log.e("inf", "Không tìm thấy");
-        }
-
         Log.i("user id", String.valueOf(id_sv));
         Log.i("user id", String.valueOf(id_dg));
 
@@ -155,9 +145,11 @@ public class UpdateInfUserFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 name = name_user.getText().toString().trim();
-                email = email_user.getText().toString().trim();
                 mssv = mssv_user.getText().toString().trim();
-                pass = pass_user.getText().toString().trim();
+
+                pass = edt_pass.getText().toString();
+                repass = txt_repassword.getText().toString();
+
 
                 if (!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
 
@@ -165,7 +157,14 @@ public class UpdateInfUserFragment extends Fragment {
 
                             if(!mssv.isEmpty() && pattern_pwd.matcher(mssv).matches())
                             {
-                                updateData();
+                                if(pass.equals(repass))
+                                {
+                                    updateData();
+                                }
+                                else
+                                {
+                                    Snackbar.make(expandableView, "Password and Re-Password not alike", Snackbar.LENGTH_SHORT).show();
+                                }
                             }
                             else
                             {
@@ -295,13 +294,10 @@ public class UpdateInfUserFragment extends Fragment {
                 Log.d("sherf", "called" + useremail);
                 sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
                 editor = sharedPreferences.edit();
-                editor.putString(USER_ID, String.valueOf(userid));
                 editor.putString(MSSV, userMSSV);
                 editor.putString(NAME, username);
                 editor.putString(EMAIL, useremail);
                 editor.putString(PASSWORD, userpass);
-                editor.putString(ID_DG, userid_dg);
-                editor.putString(ID_SV, userid_sv);
                 editor.apply();
 
                 Intent intent = new Intent(getActivity(), InformationOfUserFragment.class);

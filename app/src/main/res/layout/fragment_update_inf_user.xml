@@ -78,7 +78,8 @@
                     android:hint="Mã số sinh viên"
                     android:inputType="text"
                     android:textColor="@color/colorTextAction"
-                    android:textSize="15dp" />
+                    android:textSize="15dp"
+                    android:enabled="false"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -122,17 +123,17 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="12dp"
 
-                    android:src="@drawable/baseline_contact_mail_24" />
+                    android:src="@drawable/pass" />
 
                 <EditText
-                    android:id="@+id/edt_email"
+                    android:id="@+id/edt_pass"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_toRightOf="@id/icon_three"
-                    android:hint="email"
+                    android:hint="password"
                     android:inputType="text"
                     android:textColor="@color/colorTextAction"
                     android:textSize="15dp" />
@@ -154,13 +155,13 @@
                     android:src="@drawable/pass" />
 
                 <EditText
-                    android:id="@+id/edt_pass"
+                    android:id="@+id/edt_repass"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_toRightOf="@id/icon_four"
-                    android:hint="password"
+                    android:hint="re-password"
                     android:inputType="textPassword"
                     android:textColor="@color/colorTextAction"
                     android:textSize="15dp" />
