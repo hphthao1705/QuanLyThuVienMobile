@@ -85,4 +85,54 @@ public class SinhVienRepository {
         });
         return docGiaLiveData;
     }
+
+    public LiveData<Boolean> checkAccountExistence(String email) {
+        MutableLiveData<Boolean> accountExistenceLiveData = new MutableLiveData<>();
+        Call<List<DocGia>> call = Common.apiService.getUser();
+        call.enqueue(new Callback<List<DocGia>>() {
+            @Override
+            public void onResponse(Call<List<DocGia>> call, Response<List<DocGia>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    for (DocGia docGia : response.body()) {
+                        if (docGia.getEmail().equals(email)) {
+                            accountExistenceLiveData.setValue(true);
+                            return;
+                        }
+                    }
+                }
+                accountExistenceLiveData.setValue(false);
+            }
+
+            @Override
+            public void onFailure(Call<List<DocGia>> call, Throwable t) {
+                accountExistenceLiveData.setValue(false);
+            }
+        });
+        return accountExistenceLiveData;
+    }
+
+    public LiveData<Boolean> checkMssvExistence(String mssv) {
+        MutableLiveData<Boolean> mssvExistenceLiveData = new MutableLiveData<>();
+        Call<List<SinhVien>> call = Common.apiService.getSV();
+        call.enqueue(new Callback<List<SinhVien>>() {
+            @Override
+            public void onResponse(Call<List<SinhVien>> call, Response<List<SinhVien>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    for (SinhVien sinhVien : response.body()) {
+                        if (sinhVien.getMssv().equals(mssv)) {
+                            mssvExistenceLiveData.setValue(true);
+                            return;
+                        }
+                    }
+                }
+                mssvExistenceLiveData.setValue(false);
+            }
+
+            @Override
+            public void onFailure(Call<List<SinhVien>> call, Throwable t) {
+                mssvExistenceLiveData.setValue(false);
+            }
+        });
+        return mssvExistenceLiveData;
+    }
 }

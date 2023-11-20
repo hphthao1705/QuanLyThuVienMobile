@@ -134,7 +134,6 @@ public class RegisterActivity extends AppCompatActivity {
         btnregister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 mssv = mssv_u.getText().toString();
                 email = et_email.getText().toString();
                 password = etpassword.getText().toString();
@@ -144,40 +143,47 @@ public class RegisterActivity extends AppCompatActivity {
                 Log.d("repass", "" + repass);
 
                 if (!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-
                     if (!password.isEmpty() && pattern_pwd.matcher(password).matches()) {
-
-                        if(!repass.isEmpty() && pattern_pwd.matcher(repass).matches())
-                        {
-                            if(password.equals(repass))
-                            {
-                                DocGia docGia = new DocGia(0 , id_sv , email, password);
-                                Log.d("id_sv", "success: " + id_sv);
-
-                                LiveData<DocGia> docGiaLiveData = sinhVienViewModel.registerDocGia(docGia);
-                                docGiaLiveData.observe(RegisterActivity.this, new Observer<DocGia>() {
+                        if (!repass.isEmpty() && pattern_pwd.matcher(repass).matches()) {
+                            if (password.equals(repass)) {
+                                sinhVienViewModel.checkAccountExistence(email).observe(RegisterActivity.this, new Observer<Boolean>() {
                                     @Override
-                                    public void onChanged(DocGia docGia) {
-                                        Log.d("email", "success: " + email);
-                                        if (docGia != null) {
-                                            Log.d("test", "success: " + "Đăng ký Độc giả thành công!");
+                                    public void onChanged(Boolean accountExists) {
+                                        if (accountExists) {
+                                            Snackbar.make(ll_lay, "Email already exists", Snackbar.LENGTH_SHORT).show();
                                         } else {
-                                            Log.d("test", "Fail!: " + "Đăng ký Độc giả thất bại!");
+                                            sinhVienViewModel.checkMssvExistence(mssv).observe(RegisterActivity.this, new Observer<Boolean>() {
+                                                @Override
+                                                public void onChanged(Boolean mssvExists) {
+                                                    if (mssvExists) {
+                                                        DocGia docGia = new DocGia(0, id_sv, email, password);
+                                                        LiveData<DocGia> docGiaLiveData = sinhVienViewModel.registerDocGia(docGia);
+                                                        docGiaLiveData.observe(RegisterActivity.this, new Observer<DocGia>() {
+                                                            @Override
+                                                            public void onChanged(DocGia docGia) {
+                                                                Log.d("email", "success: " + email);
+                                                                if (docGia != null) {
+                                                                    Log.d("test", "success: " + "Đăng ký Độc giả thành công!");
+                                                                } else {
+                                                                    Log.d("test", "Fail!: " + "Đăng ký Độc giả thất bại!");
+                                                                }
+                                                            }
+                                                        });
+                                                    } else {
+                                                        // MSSV doesn't exist, show appropriate message or take necessary action
+                                                        Snackbar.make(ll_lay, "MSSV not found", Snackbar.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
                                         }
                                     }
                                 });
-                            }
-                            else
-                            {
+                            } else {
                                 Snackbar.make(rl_repass, "Password and Re-Password not alike", Snackbar.LENGTH_SHORT).show();
                             }
-                        }
-
-                        else
-                        {
+                        } else {
                             Snackbar.make(rl_repass, "Enter the Valid Re-Password", Snackbar.LENGTH_SHORT).show();
                         }
-
                     } else {
                         Snackbar.make(rl_pwd, "Enter the Valid Password", Snackbar.LENGTH_SHORT).show();
                     }

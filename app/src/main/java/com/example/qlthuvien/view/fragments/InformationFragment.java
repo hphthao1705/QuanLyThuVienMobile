@@ -99,9 +99,11 @@ public class InformationFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (isLoggedIn) {
-
                     activity = (MainActivity) getActivity();
-                    activity.replaceFragment(new FavouriteFragment());
+                    NavigationBottomFragment f = new NavigationBottomFragment();
+                    f.setCurrent(new FavouriteFragment());
+                    f.setMenu_bottom(R.id.page_favourite);
+                    activity.replaceFragment(f);
                 }
                 else {
                     Intent loginIntent = new Intent(getActivity(), LoginActivity.class);

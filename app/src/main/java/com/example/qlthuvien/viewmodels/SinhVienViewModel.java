@@ -30,6 +30,13 @@ public class SinhVienViewModel extends ViewModel {
         return sinhVienRepository.registerDocGia(docGia);
     }
 
+    public LiveData<Boolean> checkAccountExistence(String email) {
+        return sinhVienRepository.checkAccountExistence(email);
+    }
+    public LiveData<Boolean> checkMssvExistence(String mssv) {
+        return sinhVienRepository.checkMssvExistence(mssv);
+    }
+
     public LiveData<SinhVien> generateTenSinhVien(String mssv) {
 
         LiveData<List<SinhVien>> sinhVienListData = sinhVienRepository.getAllSinhVienInfo();
