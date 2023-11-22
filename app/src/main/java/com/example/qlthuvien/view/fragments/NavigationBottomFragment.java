@@ -68,7 +68,6 @@ public class NavigationBottomFragment extends Fragment {
                 }
                 else  if (item.getItemId() == R.id.page_favourite)
                 {
-
                         fragment = new FavouriteFragment();
                 }
                 else  if (item.getItemId() == R.id.page_cart_book)

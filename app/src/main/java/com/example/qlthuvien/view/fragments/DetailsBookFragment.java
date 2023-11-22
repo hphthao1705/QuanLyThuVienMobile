@@ -6,6 +6,7 @@ import static com.example.qlthuvien.view.activities.LoginActivity.SHARED_PREFERE
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -60,6 +61,14 @@ public class DetailsBookFragment extends Fragment {
     private TaiLieu taiLieu2;
     int id_tailieu;
     int id_dg = 0;
+
+    public int id_loai = 1;
+    int page = 0;
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
     List<YeuThich> ListYeuThich = new ArrayList<>();
     int idYeuThich = 0; // default = 0
     boolean isFavourite = false; // default = false
@@ -81,7 +90,9 @@ public class DetailsBookFragment extends Fragment {
             public void onClick(View view) {
                 activity = (MainActivity) getActivity();
                 NavigationBottomFragment f = new NavigationBottomFragment();
-                f.setCurrent(new HomeFragment(0));
+                HomeFragment homeFragment = new HomeFragment(page);
+                homeFragment.setId_loai(id_loai);
+                f.setCurrent(homeFragment);
                 f.setMenu_bottom(R.id.page_home);
                 activity.replaceFragment(f);
             }
@@ -201,9 +212,9 @@ public class DetailsBookFragment extends Fragment {
             public void onChanged(TaiLieu taiLieu) {
                 taiLieu2 = taiLieu;
                 loadPulisher(taiLieu.getId_nxb());
-                if(taiLieu.getSoluong() == 0)
+                if(taiLieu2.getSoluong() == 0)
                 {
-                    binding.btnAddcart.setEnabled(false);
+                    binding.btnAddcart.setText("Sách đã hết");
                 }
                 binding.setBook(taiLieu);
                 binding.txtSotrang.setText(taiLieu.getSotrang() + "");
@@ -253,6 +264,11 @@ public class DetailsBookFragment extends Fragment {
                 }
                 else
                 {
+                    if(taiLieu2.getSoluong() == 0)
+                    {
+                        Toast.makeText(getContext(), "Sách đã hết!!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     LiveData<Integer> thao = cartViewModel.countBookInCart(taiLieu2.getId_tailieu(), id_dg);
 
                     thao.observe(getViewLifecycleOwner(), new Observer<Integer>() {

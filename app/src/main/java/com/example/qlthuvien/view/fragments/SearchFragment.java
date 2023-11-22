@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -66,6 +67,14 @@ public class SearchFragment extends Fragment {
 
             Item_Book b = new Item_Book(i.getHinh(),i.getTentailieu(),i.getTacgia(),i.getId_tailieu());
             books.add(b);
+        }
+        TextView notFound = getActivity().findViewById(R.id.not_found_book);
+        if(books.size() == 0)
+        {
+            notFound.setVisibility(View.VISIBLE);
+        }
+        else {
+            notFound.setVisibility(View.GONE);
         }
         SearchAdapter adapter = new SearchAdapter(books);
         adapter.setMainActivity((MainActivity) getActivity());
