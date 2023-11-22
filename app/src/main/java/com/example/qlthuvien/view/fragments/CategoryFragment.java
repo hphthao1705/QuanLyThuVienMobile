@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
 import android.widget.Toast;
 
 import com.example.qlthuvien.R;
@@ -24,6 +25,7 @@ import com.example.qlthuvien.databinding.FragmentCategoryBinding;
 import com.example.qlthuvien.view.activities.MainActivity;
 import com.example.qlthuvien.view.adapter.BookCategoryAdapter;
 import com.example.qlthuvien.view.adapter.BookInTopAdapter;
+import com.example.qlthuvien.view.adapter.CategoryAdapter;
 import com.example.qlthuvien.viewmodels.LoaiViewModel;
 import com.example.qlthuvien.viewmodels.TaiLieuViewModel;
 import com.google.android.material.tabs.TabLayout;
@@ -35,17 +37,17 @@ import java.util.List;
 public class CategoryFragment extends Fragment {
     TaiLieuViewModel viewModelTaiLieu;
     public void setId_loai(int id_loai) {
-        this.id_loai = id_loai;
+        this.id_loai_active = id_loai;
     }
-
-    int id_loai;
+    int id_loai_active = 1;
     public CategoryFragment(int id) {
-        id_loai = id;
+        id_loai_active = id;
     }
+    public CategoryFragment(){}
 
     FragmentCategoryBinding binding;
     private LoaiViewModel viewModel_Loai;
-    private void loadBooks()
+    private void loadBooks(int id_loai)
     {
         ArrayList<Item_Book> list = new ArrayList<>();
 
@@ -57,6 +59,7 @@ public class CategoryFragment extends Fragment {
                     if(i.getId_loai() == id_loai)
                     {
                         Item_Book temp = new Item_Book(i.getHinh(), i.getTentailieu(), i.getTacgia(), i.getId_tailieu());
+                        temp.setId_loai(i.getId_loai());
                         list.add(temp);
                     }
 
@@ -68,6 +71,19 @@ public class CategoryFragment extends Fragment {
                 binding.rcvCategory.hasFixedSize();
                 LinearLayoutManager verticalLayoutManager = new GridLayoutManager(getActivity(), 3);
                 binding.rcvCategory.setLayoutManager(verticalLayoutManager);
+                binding.tabTheloai.getTabCount();
+                TabLayout tabLayout = (TabLayout) binding.tabTheloai;
+
+                for (int i = 0; i < tabLayout.getTabCount(); i++) {
+                    TabLayout.Tab tab = tabLayout.getTabAt(i);
+                    {
+                        if(tab.getId() == id_loai)
+                        {
+                            TabLayout.Tab tabSelect = binding.tabTheloai.getTabAt(i);
+                            tabSelect.select();
+                        }
+                    }
+                }
             }
         });
 
@@ -94,25 +110,27 @@ public class CategoryFragment extends Fragment {
                      loais) {
                     tabLayout.addTab(tabLayout.newTab().setId(i.id_loai).setText(i.tenloai));
                 }
+                binding.tabTheloai.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                    @Override
+                    public void onTabSelected(TabLayout.Tab tab) {
+                        loadBooks(tab.getId());
+                    }
+
+                    @Override
+                    public void onTabUnselected(TabLayout.Tab tab) {
+
+                    }
+
+                    @Override
+                    public void onTabReselected(TabLayout.Tab tab) {
+
+                    }
+                });
+
+
             }
         });
-        binding.tabTheloai.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                id_loai = tab.getId();
-               loadBooks();
-            }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-        loadBooks();
+        loadBooks(id_loai_active);
     }
 }

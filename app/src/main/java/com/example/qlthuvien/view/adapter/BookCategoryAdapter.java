@@ -56,6 +56,8 @@ public class BookCategoryAdapter extends RecyclerView.Adapter<BookCategoryAdapte
             public void onClick(View view) {
                 NavigationBottomFragment f = new NavigationBottomFragment();
                 HomeFragment homeFragment = new HomeFragment(list.get(position).getId_tailieu());
+                homeFragment.page=-3;
+                homeFragment.setId_loai(list.get(position).getId_loai());
                 f.setCurrent(homeFragment);
                 f.setMenu_bottom(R.id.page_home);
                 activity.replaceFragment(f);

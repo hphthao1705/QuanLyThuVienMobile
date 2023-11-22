@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:backgroundTint="@color/blue1"
-                android:text="Mượn ngay"
+                android:text="Xem"
                 />
         </LinearLayout>
     </LinearLayout>

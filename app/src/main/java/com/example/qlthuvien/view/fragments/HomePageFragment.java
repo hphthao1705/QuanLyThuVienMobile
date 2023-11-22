@@ -96,8 +96,6 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
                     loai.setIcon(i.icon);
                     loai.setId_loai(i.id_loai);
                     list.add(loai);
-
-
                 }
             }
         });
@@ -176,7 +174,6 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
         bookInTopAdapter = new BookInTopAdapter(list);
         bookInTopAdapter.setContext(getContext());
         binding.recyclerGoiY.setAdapter(bookInTopAdapter);
-        loadLoai();
         clickOnItem();
     }
     @Override
@@ -197,6 +194,7 @@ public class HomePageFragment extends Fragment implements TheLoaiAdapter.Replace
                 loadNewBook();
                 loadRecommendBooks();
                 loadDetailOfBorrowBook();
+                loadLoai();
             }
         });
     }
