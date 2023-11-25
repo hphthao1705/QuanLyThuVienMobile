@@ -52,7 +52,7 @@ import java.util.stream.Collectors;
  */
 public class FavouriteFragment extends Fragment implements TheLoaiAdapter.ReplaceFragment{
 
-    String id_dg;
+    String id_dg = "0";
     YeuThichViewModel viewModelYeuThich;
     TaiLieuViewModel viewModelTaiLieu;
     FragmentFavouriteBinding binding;
@@ -65,7 +65,7 @@ public class FavouriteFragment extends Fragment implements TheLoaiAdapter.Replac
     private void loadId_dg()
     {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        id_dg = sharedPreferences.getString(ID_DG, "");
+        id_dg = sharedPreferences.getString(ID_DG, "0");
 //        id_dg = Integer.parseInt(sharedPreferences.getString("user_id", "0"));
     }
     private void  loadYeuThich(List<YeuThich> yeuThiches)
@@ -144,6 +144,7 @@ public class FavouriteFragment extends Fragment implements TheLoaiAdapter.Replac
         MainActivity activity = (MainActivity) getActivity();
         NavigationBottomFragment f = new NavigationBottomFragment();
         HomeFragment homeFragment = new HomeFragment(id_tailieu);
+        homeFragment.page = -2;
         f.setCurrent(homeFragment);
         f.setMenu_bottom(R.id.page_home);
         activity.replaceFragment(f);

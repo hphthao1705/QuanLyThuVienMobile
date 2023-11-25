@@ -1,6 +1,7 @@
 package com.example.qlthuvien.view.fragments;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,9 @@ public class HomeFragment extends Fragment {
     }
 
     int id_loai;
+
+    public int page;
+
     public HomeFragment(int i){
         _i = i;
     }
@@ -68,27 +72,76 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         if(_i == -1)
         {
-            replaceFragment(new CategoryFragment(id_loai));
+            CategoryFragment cate = new CategoryFragment(id_loai);
+             cate.setId_loai(id_loai);
+             replaceFragment(cate);
         }
         else if(_i > 0)
         {
             MainActivity activity = (MainActivity) getActivity();
-            activity.replaceFragment(new DetailsBookFragment(_i));
+            DetailsBookFragment detailsBookFragment = new DetailsBookFragment(_i);
+            detailsBookFragment.setPage(page);
+            detailsBookFragment.id_loai = id_loai;
+            activity.replaceFragment(detailsBookFragment);
         }
-        else
+        else if(_i == 0)
         {
             replaceFragment(new HomePageFragment());
         }
+        else if(_i == -2)
+        {
+            MainActivity activity = (MainActivity) getActivity();
+            NavigationBottomFragment f = new NavigationBottomFragment();
+            f.setCurrent(new FavouriteFragment());
+            f.setMenu_bottom(R.id.page_favourite);
+            activity.replaceFragment(f);
+        }
+        else if(_i == -3) // category fragment
+        {
+            replaceFragment(new CategoryFragment(id_loai));
+        }
+        // Thêm OnKeyListener để theo dõi sự kiện phím Enter
+        binding.searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (!hasFocus) {
+                    // Focus has left the SearchView
+                    String query = binding.searchView.getQuery().toString();
+                    // Xử lý sự kiện khi người dùng nhấn Enter
+                    // Cũng kiểm tra xem chuỗi tìm kiếm có rỗng không và thực hiện xử lý tương ứng
+                    if(query.isEmpty())
+                    {
+                        MainActivity activity = (MainActivity) getActivity();
+                        NavigationBottomFragment f = new NavigationBottomFragment();
+                        f.setCurrent(new HomeFragment(0));
+                        f.setMenu_bottom(R.id.page_home);
+                        activity.replaceFragment(f);
+                        return;
+                    }
+                    replaceFragment(new SearchFragment(query));
+                }
+            }
+        });
         binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                return false;
+                if(query.isEmpty())
+                {
+                    MainActivity activity = (MainActivity) getActivity();
+                    NavigationBottomFragment f = new NavigationBottomFragment();
+                    f.setCurrent(new HomeFragment(0));
+                    f.setMenu_bottom(R.id.page_home);
+                    activity.replaceFragment(f);
+                    return true;
+                }
+                replaceFragment(new SearchFragment(query));
+                return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                replaceFragment(new SearchFragment(newText));
-                return false;
+
+                return true;
             }
         });
         binding.searchView.setFocusable(false);

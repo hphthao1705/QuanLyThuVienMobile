@@ -6,6 +6,16 @@ public class Item_Book {
     String author_book;
     int id_tailieu;
 
+    int id_loai;
+
+    public int getId_loai() {
+        return id_loai;
+    }
+
+    public void setId_loai(int id_loai) {
+        this.id_loai = id_loai;
+    }
+
     public String getImage_book() {
         return image_book;
     }
