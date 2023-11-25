@@ -30,38 +30,67 @@ public class SinhVienViewModel extends ViewModel {
         return sinhVienRepository.registerDocGia(docGia);
     }
 
-    public LiveData<Boolean> checkAccountExistence(String email) {
-        return sinhVienRepository.checkAccountExistence(email);
+    public LiveData<Boolean> checkAccountExistence(int id_sv) {
+        return sinhVienRepository.checkAccountExistence(id_sv);
     }
     public LiveData<Boolean> checkMssvExistence(String mssv) {
         return sinhVienRepository.checkMssvExistence(mssv);
     }
 
-    public LiveData<SinhVien> generateTenSinhVien(String mssv) {
+    public LiveData<Boolean> checkEmailExistence(String email)
+    {
+        return sinhVienRepository.checkEmailExistence(email);
+    }
 
+//    public LiveData<SinhVien> generateTenSinhVien(String mssv) {
+//
+//        LiveData<List<SinhVien>> sinhVienListData = sinhVienRepository.getAllSinhVienInfo();
+//
+//        sinhVienListData.observeForever(new Observer<List<SinhVien>>() {
+//            @Override
+//            public void onChanged(List<SinhVien> sinhVienList) {
+//                if (sinhVienList != null && !mssv.isEmpty()) {
+//                    for (SinhVien sinhVien : sinhVienList) {
+//                        if(sinhVien.getMssv().equals(mssv))
+//                        {
+//                            tenSinhVienLiveData.setValue(sinhVien);
+//                            break;
+//                        }
+////                        else
+////                        {
+////                            tenSinhVienLiveData.setValue(null);
+////                        }
+//                    }
+//                }
+//            }
+//        });
+//
+//
+//        Log.d("tenSinhVienLiveData", "" + tenSinhVienLiveData.getValue());
+//
+//        return tenSinhVienLiveData;
+//    }
+
+    public LiveData<SinhVien> generateTenSinhVien(String mssv) {
         LiveData<List<SinhVien>> sinhVienListData = sinhVienRepository.getAllSinhVienInfo();
 
         sinhVienListData.observeForever(new Observer<List<SinhVien>>() {
             @Override
             public void onChanged(List<SinhVien> sinhVienList) {
+                SinhVien matchedSinhVien = null;
                 if (sinhVienList != null && !mssv.isEmpty()) {
                     for (SinhVien sinhVien : sinhVienList) {
-                        if(sinhVien.getMssv().equals(mssv))
-                        {
-                            tenSinhVienLiveData.setValue(sinhVien);
+                        if(sinhVien.getMssv().equals(mssv)) {
+                            matchedSinhVien = sinhVien;
                             break;
                         }
-//                        else
-//                        {
-//                            tenSinhVienLiveData.setValue(null);
-//                        }
                     }
                 }
+                tenSinhVienLiveData.setValue(matchedSinhVien);
             }
         });
 
-        Log.d("tenSinhVienLiveData", "" + tenSinhVienLiveData.getValue());
-
         return tenSinhVienLiveData;
     }
+
 }

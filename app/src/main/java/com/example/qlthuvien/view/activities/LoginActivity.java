@@ -47,22 +47,22 @@ public class LoginActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
     public static final String SHARED_PREFERENCES_NAME = "tk_mk";
     public static final String USER_ID = "user_id";
+    public static final String NGAYSINH = "ngaysinh";
     public static final String ID_DG = "";
+    public static final String ID_DG1 = "";
     public static final String ID_SV = "";
     public static final String MSSV = "mssv";
     public static final String NAME = "name";
     public static final String EMAIL = "email";
     public static final String PASSWORD = "password";
     public static final int GIOITINH = 0;
-    public static final String NS = "";
+
     private View parent_view;
     String email, password;
     RelativeLayout rl_pwd;
     LinearLayout ll_lay;
     Pattern pattern_pwd = Pattern.compile("^[a-zA-Z0-9]+$");
-    public static String userMSSV = "",  userid = "", username = "" ,useremail = "", userpass = "", userid_dg = "", userid_sv = "";
-
-    public static String userns = "";
+    public static String userMSSV = "",  userid = "", username = "" ,useremail = "", userpass = "", userid_dg = "", userid_sv = "", userngaysinh = "";
     public static int usergt;
 
     @Override
@@ -108,10 +108,14 @@ public class LoginActivity extends AppCompatActivity {
                         loginUser();
 
                     } else {
-                        Snackbar.make(rl_pwd, "Enter the Valid Password", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(rl_pwd, "Mật khẩu trống hoặc sai định dạng", Snackbar.LENGTH_SHORT).show();
+                        etUname.setText("");
+                        etPass.setText("");
                     }
                 } else {
-                    Snackbar.make(ll_lay, "Enter the Valid Email", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(ll_lay, "Tài khoản hoặc sai tài khoản", Snackbar.LENGTH_SHORT).show();
+                    etUname.setText("");
+                    etPass.setText("");
                 }
 
             }
@@ -142,13 +146,10 @@ public class LoginActivity extends AppCompatActivity {
                     if (response.body() != null) {
 
                         Log.i("onSuccess", response.body().getEmail());
-                        userid = String.valueOf(response.body().getId_dg());
                         userid_dg = String.valueOf(response.body().getId_dg());
                         userid_sv = String.valueOf(response.body().getId_sv());
                         useremail = response.body().getEmail();
 
-                        Log.i("userid_sv","called" + userid_sv);
-                        Log.i("userid_dg", "called" + userid_dg);
 
                         Common.apiService.getSinhVien(Integer.parseInt(userid_sv)).enqueue(new Callback<SinhVien>() {
                             @Override
@@ -158,20 +159,23 @@ public class LoginActivity extends AppCompatActivity {
 
                                         userMSSV = response.body().getMssv();
                                         username = response.body().getTensv();
+                                        userngaysinh = response.body().getNgaysinh();
                                         usergt = response.body().getGioitinh();
-                                        userns = response.body().getNgaysinh();
-//
-                                        Log.d("mssv", "called" + userMSSV);
 
-                                        Log.d("tensv", "called" + username);
+
+
 
                                         try {
                                             parseLoginData();
                                         } catch (Exception e) {
+                                            etUname.setText("");
+                                            etPass.setText("");
                                             e.printStackTrace();
                                         }
                                     } else {
-                                        Log.i("onEmptyResponse", "Returned empty response");//Toast.makeText(getContext(),"Nothing returned",Toast.LENGTH_LONG).show();
+                                        Log.i("onEmptyResponse", "Returned empty response");
+                                        etUname.setText("");
+                                        etPass.setText("");
                                     }
                                 }
                             }
@@ -179,10 +183,16 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onFailure(Call<SinhVien> call, Throwable t) {
                                 Log.d("LoginBHai_error", "onFailure: " + "Throw" + t.toString());
+                                etUname.setText("");
+                                etPass.setText("");
+                                Snackbar.make(rl_pwd, "login error", Snackbar.LENGTH_SHORT).show();
                             }
                         });
                     } else {
-                        Log.i("onEmptyResponse", "Returned empty response");//Toast.makeText(getContext(),"Nothing returned",Toast.LENGTH_LONG).show();
+                        Log.i("onEmptyResponse", "Returned empty response");
+                        etUname.setText("");
+                        etPass.setText("");
+                        Snackbar.make(rl_pwd, "Returned empty response", Snackbar.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -190,6 +200,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<DocGia> call, Throwable t) {
                 Log.d("LoginBHai_error", "onFailure: " + "Throw" + t.toString());
+                etUname.setText("");
+                etPass.setText("");
+                Snackbar.make(rl_pwd, "login error", Snackbar.LENGTH_SHORT).show();
             }
         });
 
@@ -206,13 +219,15 @@ public class LoginActivity extends AppCompatActivity {
             } else {
                 Log.d("Docgia", "empty");
             }
-            Toast.makeText(LoginActivity.this, "Login Successfully!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             this.finish();
 
         } catch (Exception e) {
+            etUname.setText("");
+            etPass.setText("");
             e.printStackTrace();
         }
     }
@@ -224,19 +239,23 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d("sherf", "called" + useremail);
                 sharedPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
                 editor = sharedPreferences.edit();
-                editor.putString(USER_ID, userid);
                 editor.putString(MSSV, userMSSV);
                 editor.putString(NAME, username);
 
+                editor.putString(NGAYSINH, userngaysinh);
+
                 editor.putString(PASSWORD, userpass);
                 editor.putString(ID_DG, userid_dg);
+
+                String a = String.valueOf(editor.putString(ID_DG, userid_dg));
+
+                Log.d("test a", "" + a);
+
+                editor.putString(ID_DG1, a);
+
                 editor.putString(ID_SV, userid_sv);
 
-                Log.d("sherf", "called" + userid_dg);
-                Log.d("sherf", "called" + userid_sv);
-
                 editor.putInt(String.valueOf(GIOITINH), usergt);
-//                editor.putString(NS, userns);
                 editor.putString(EMAIL, useremail);
 
                 editor.apply();

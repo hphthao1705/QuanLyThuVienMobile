@@ -41,144 +41,176 @@
             android:orientation="vertical"
             android:layout_height="match_parent"
             android:background="@drawable/bg_update"
-            android:paddingTop="130dp">
+            android:paddingTop="50dp">
 
             <androidx.cardview.widget.CardView
-                android:layout_marginTop="50dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
-                app:cardCornerRadius="500dp"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                app:cardCornerRadius="30dp"
+                app:cardElevation="20dp"
+                android:background="@drawable/custom_edittext"
+                android:backgroundTint="#9922151F">
 
+                <LinearLayout
+                    android:id="@+id/ll_lay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal"
+                    android:padding="10dp">
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="CẬP NHẬT THÔNG TIN"
+                        android:id="@+id/loginText"
+                        android:textSize="30dp"
+                        android:textAlignment="center"
+                        android:textStyle="bold"
+                        android:textColor="@color/white" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_mssv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:id="@+id/edt_mssv"
+                            android:background="@drawable/custom_grey_40"
+                            android:drawableLeft="@drawable/person_grey_40"
+                            android:drawablePadding="8dp"
+                            android:hint="Mã số sinh viên"
+                            android:padding="8dp"
+                            android:textColor="@color/grey_40"
+                            android:textColorHighlight="@color/grey_40"
+                            android:layout_marginTop="15dp"
+                            android:textColorHint="@color/grey_40"
+                            android:enabled="false"/>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:id="@+id/edt_name"
+                            android:background="@drawable/custom_edittext"
+                            android:drawableLeft="@drawable/person"
+                            android:drawablePadding="8dp"
+                            android:hint="Họ và tên"
+                            android:padding="8dp"
+                            android:textColor="@color/white"
+                            android:textColorHighlight="@color/cardview_dark_background"
+                            android:layout_marginTop="15dp"
+                            android:textColorHint="@color/white"
+                            />
+                    </RelativeLayout>
+
+                    <RadioGroup
+                        android:id="@+id/radio"
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="15dp">
+
+                        <RadioButton
+                            android:text="Nam"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/rad_nam"
+                            android:layout_width="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/white" />
+
+                        <RadioButton
+                            android:text="Nữ"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/rad_nu"
+                            android:layout_width="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/white" />
+                    </RadioGroup>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_ns"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:id="@+id/edt_ngaysinh"
+                            android:background="@drawable/custom_edittext"
+                            android:drawableLeft="@drawable/person"
+                            android:drawablePadding="8dp"
+                            android:hint="Ngày sinh"
+                            android:padding="8dp"
+                            android:textColor="@color/white"
+                            android:textColorHighlight="@color/cardview_dark_background"
+                            android:layout_marginTop="15dp"
+                            android:textColorHint="@color/white"
+                            />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_pwd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/edt_pass"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginTop="15dp"
+                            android:background="@drawable/custom_edittext"
+                            android:drawableLeft="@drawable/baseline_lock_24"
+                            android:drawablePadding="8dp"
+                            android:hint="Mật khẩu"
+                            android:inputType="textPassword"
+                            android:padding="8dp"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white"
+                            android:textColorHighlight="@color/cardview_dark_background" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_repass"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:id="@+id/edt_repass"
+                            android:background="@drawable/custom_edittext"
+                            android:drawableLeft="@drawable/baseline_lock_24"
+                            android:drawablePadding="8dp"
+                            android:hint="Nhập lại mật khẩu"
+                            android:inputType="textPassword"
+                            android:padding="8dp"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white"
+                            android:textColorHighlight="@color/cardview_dark_background"
+                            android:layout_marginTop="15dp" />
+                    </RelativeLayout>
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:id="@+id/update_btn"
+                        android:text="CẬP NHẬT"
+                        android:textSize="18sp"
+                        android:layout_marginTop="5dp"
+                        android:backgroundTint="@color/blue1"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-
-                <ImageView
-                    android:id="@+id/phoneIcon"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="12dp"
-                    android:src="@drawable/mssv" />
-
-                <EditText
-                    android:id="@+id/edt_mssv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_toRightOf="@id/phoneIcon"
-                    android:hint="Mã số sinh viên"
-                    android:inputType="text"
-                    android:textColor="@color/colorTextAction"
-                    android:textSize="15dp"
-                    android:enabled="false"/>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp">
-
-                <ImageView
-                    android:id="@+id/mailIcon"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="12dp"
-                    android:src="@drawable/name" />
-
-                <EditText
-                    android:id="@+id/edt_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_toRightOf="@id/mailIcon"
-                    android:hint="Họ và tên"
-                    android:inputType="text"
-                    android:textColor="@color/colorTextAction"
-                    android:textSize="15dp" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp">
-
-                <ImageView
-                    android:id="@+id/icon_three"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="12dp"
-
-                    android:src="@drawable/pass" />
-
-                <EditText
-                    android:id="@+id/edt_pass"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_toRightOf="@id/icon_three"
-                    android:hint="password"
-                    android:inputType="text"
-                    android:textColor="@color/colorTextAction"
-                    android:textSize="15dp" />
-
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp">
-
-                <ImageView
-                    android:id="@+id/icon_four"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="12dp"
-                    android:src="@drawable/pass" />
-
-                <EditText
-                    android:id="@+id/edt_repass"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_toRightOf="@id/icon_four"
-                    android:hint="re-password"
-                    android:inputType="textPassword"
-                    android:textColor="@color/colorTextAction"
-                    android:textSize="15dp" />
-
-
-
-            </RelativeLayout>
-
-            <Button
-                android:id="@+id/update_btn"
-                android:layout_width="200dp"
-                android:layout_height="35dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/round_btn"
-                android:text="update"
-                android:textColor="#fff" />
         </LinearLayout>
     </LinearLayout>
 </layout>

@@ -33,8 +33,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import static com.example.qlthuvien.view.activities.LoginActivity.EMAIL;
+import static com.example.qlthuvien.view.activities.LoginActivity.GIOITINH;
 import static com.example.qlthuvien.view.activities.LoginActivity.NAME;
 import static com.example.qlthuvien.view.activities.LoginActivity.MSSV;
+import static com.example.qlthuvien.view.activities.LoginActivity.NGAYSINH;
 import static com.example.qlthuvien.view.activities.LoginActivity.PASSWORD;
 import static com.example.qlthuvien.view.activities.LoginActivity.SHARED_PREFERENCES_NAME;
 import static com.example.qlthuvien.view.activities.LoginActivity.USER_ID;
@@ -50,17 +52,10 @@ public class InformationOfUserFragment extends Fragment {
     MainActivity activity;
 
     TextView tv_name, tv_email;
-    String name , email, sdt, pass, mssv, str_userid;
+    String name , email, sdt, pass, mssv, str_userid, ngaysinh;
+    int gt;
     SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
 
-    Button submit_btn, logout;
-
-    TextView u_name, u_email, post_count, bookmark_count, following_count;
-    ImageView u_image;
-    LinearLayout expandableView, layt_bk, layt_post, layt_follow;
-    Pattern pattern_pwd = Pattern.compile("^[a-zA-Z0-9]+$");
-    public static String userid = "", userfname = "", userlname = "", useremail = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,6 +67,7 @@ public class InformationOfUserFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         binding.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,11 +87,6 @@ public class InformationOfUserFragment extends Fragment {
             }
         });
 
-//        sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-//        str_userid = sharedPreferences.getString(USER_ID, "");
-//        str_fname = sharedPreferences.getString(FNAME, "");
-//        str_lname = sharedPreferences.getString(LNAME, "");
-//        str_email = sharedPreferences.getString(EMAIL, "");
 
         sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         str_userid = sharedPreferences.getString(USER_ID, "");
@@ -103,6 +94,8 @@ public class InformationOfUserFragment extends Fragment {
         email = sharedPreferences.getString(EMAIL, "");
         mssv = sharedPreferences.getString(MSSV, "");
         pass = sharedPreferences.getString(PASSWORD, "");
+        ngaysinh = sharedPreferences.getString(NGAYSINH, "");
+        gt = sharedPreferences.getInt(String.valueOf(GIOITINH), 0);
 
         Log.e("inf", email);
         TextView name_user = (TextView) view.findViewById(R.id.tv_email);
@@ -115,6 +108,26 @@ public class InformationOfUserFragment extends Fragment {
         TextView mssv_user = (TextView) view.findViewById(R.id.tv_mssv);
         if (name_user != null) {
             mssv_user.setText(mssv);
+        } else {
+            Log.e("inf", "Không tìm thấy");
+        }
+
+        TextView ngaysinh_user = (TextView) view.findViewById(R.id.tv_ngaysinh);
+        if (name_user != null) {
+            ngaysinh_user.setText(ngaysinh);
+        } else {
+            Log.e("inf", "Không tìm thấy");
+        }
+
+        TextView gt_user = (TextView) view.findViewById(R.id.tv_gt);
+        if (name_user != null) {
+            if(gt == 0)
+            {
+                gt_user.setText("Nữ");
+            }
+            else
+                gt_user.setText("Nam");
+
         } else {
             Log.e("inf", "Không tìm thấy");
         }

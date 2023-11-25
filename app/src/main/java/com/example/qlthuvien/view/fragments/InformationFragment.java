@@ -14,33 +14,51 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.qlthuvien.databinding.FragmentUpdateInfUserBinding;
 import com.example.qlthuvien.view.activities.LoginActivity;
 import com.example.qlthuvien.view.activities.MainActivity;
 import com.example.qlthuvien.R;
 import com.example.qlthuvien.databinding.FragmentInformationBinding;
 
-import static com.example.qlthuvien.view.activities.LoginActivity.GIOITINH;
-import static com.example.qlthuvien.view.activities.LoginActivity.ID_SV;
-import static com.example.qlthuvien.view.activities.LoginActivity.MSSV;
-import static com.example.qlthuvien.view.activities.LoginActivity.NAME;
 import static com.example.qlthuvien.view.activities.LoginActivity.EMAIL;
-import static com.example.qlthuvien.view.activities.LoginActivity.NS;
+import static com.example.qlthuvien.view.activities.LoginActivity.ID_DG;
+import static com.example.qlthuvien.view.activities.LoginActivity.ID_SV;
+import static com.example.qlthuvien.view.activities.LoginActivity.NAME;
+import static com.example.qlthuvien.view.activities.LoginActivity.MSSV;
+import static com.example.qlthuvien.view.activities.LoginActivity.NGAYSINH;
 import static com.example.qlthuvien.view.activities.LoginActivity.PASSWORD;
 import static com.example.qlthuvien.view.activities.LoginActivity.SHARED_PREFERENCES_NAME;
 import static com.example.qlthuvien.view.activities.LoginActivity.USER_ID;
-import static com.example.qlthuvien.view.activities.LoginActivity.ID_DG;
+import static com.example.qlthuvien.view.activities.LoginActivity.userMSSV;
+import static com.example.qlthuvien.view.activities.LoginActivity.GIOITINH;
 
 import java.io.File;
+import java.util.regex.Pattern;
 
 public class InformationFragment extends Fragment {
     FragmentInformationBinding binding;
-    private TextView tv_name, tv_email;
-    String name;
-    SharedPreferences sharedPreferences;
     MainActivity activity;
-    String id_dg;
+
+    private EditText edt_name, edt_mssv, edt_email, edt_pass, txt_repassword;
+    String sdt, str_userid;
+    int gtNam, gtNu, gioitinh;
+    String email, pass, id_dg, id_sv, repass;
+    String name, mssv, ngaysinh;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+
+    Button submit_btn, logout;
+
+    LinearLayout expandableView;
+    Pattern pattern_pwd = Pattern.compile("^[a-zA-Z0-9]+$");
+    public static  int usergt;
+    public static String userns = "", username = "", userpass = "", useremail = "",userid_dg = "", userid_sv = "";
+    //    public static int userid_dg, userid_sv;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -56,7 +74,19 @@ public class InformationFragment extends Fragment {
         View viewInf = view.findViewById(R.id.view_inf);
         View viewLogout = view.findViewById(R.id.view_logout);
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(LoginActivity.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+//        sharedPreferences = getActivity().getSharedPreferences(LoginActivity.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+
+        sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        str_userid = sharedPreferences.getString(USER_ID, "");
+        name = sharedPreferences.getString(NAME, "");
+        email = sharedPreferences.getString(EMAIL, "");
+        mssv = sharedPreferences.getString(MSSV, "");
+        pass = sharedPreferences.getString(PASSWORD, "");
+        id_dg = sharedPreferences.getString(ID_DG, "");
+        id_sv = sharedPreferences.getString(ID_SV, "");
+        gioitinh = sharedPreferences.getInt(String.valueOf(GIOITINH), 0);
+        ngaysinh = sharedPreferences.getString(NGAYSINH, "");
+
         boolean isLoggedIn = sharedPreferences.contains(LoginActivity.ID_DG);
 
         binding.btnXemthongtin.setOnClickListener(new View.OnClickListener() {
@@ -119,11 +149,18 @@ public class InformationFragment extends Fragment {
             }
         });
 
-        sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        name = sharedPreferences.getString(NAME, "");
-        id_dg = sharedPreferences.getString(ID_DG, "");
-
         Log.e("inf", "result" + id_dg);
+        Log.e("ngaysinh", "result" + ngaysinh);
+
+        Log.e("id_sv", "result" + id_sv);
+
+        Log.e("ngaysinh", "result" + name);
+
+        Log.e("id_sv", "result" + email);
+
+        Log.e("inf", "result" + str_userid);
+        Log.e("ngaysinh", "result" + gioitinh);
+
 
         TextView name_user = (TextView) view.findViewById(R.id.tv_nameuser);
         if (name_user != null) {
@@ -134,7 +171,7 @@ public class InformationFragment extends Fragment {
     }
 
     private void logout() {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove(USER_ID);
         editor.remove(MSSV);
@@ -143,7 +180,7 @@ public class InformationFragment extends Fragment {
         editor.remove(ID_DG);
         editor.remove(ID_SV);
         editor.remove(String.valueOf(GIOITINH));
-        editor.remove(NS);
+        editor.remove(NGAYSINH);
         editor.remove(EMAIL);
         editor.apply();
 

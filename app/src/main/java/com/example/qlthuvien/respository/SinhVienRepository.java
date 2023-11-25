@@ -86,7 +86,7 @@ public class SinhVienRepository {
         return docGiaLiveData;
     }
 
-    public LiveData<Boolean> checkAccountExistence(String email) {
+    public LiveData<Boolean> checkEmailExistence(String email) {
         MutableLiveData<Boolean> accountExistenceLiveData = new MutableLiveData<>();
         Call<List<DocGia>> call = Common.apiService.getUser();
         call.enqueue(new Callback<List<DocGia>>() {
@@ -110,6 +110,57 @@ public class SinhVienRepository {
         });
         return accountExistenceLiveData;
     }
+
+//    public LiveData<Boolean> checkAccountExistence(String mssv) {
+//        MutableLiveData<Boolean> accountExistenceLiveData = new MutableLiveData<>();
+//        Call<List<DocGia>> call = Common.apiService.getUser();
+//        call.enqueue(new Callback<List<DocGia>>() {
+//            @Override
+//            public void onResponse(Call<List<DocGia>> call, Response<List<DocGia>> response) {
+//                if (response.isSuccessful() && response.body() != null) {
+//                    for (DocGia docGia : response.body()) {
+//                        if (docGia.getEmail().equals(mssv)) {
+//                            accountExistenceLiveData.setValue(true);
+//                            return;
+//                        }
+//                    }
+//                }
+//                accountExistenceLiveData.setValue(false);
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<DocGia>> call, Throwable t) {
+//                accountExistenceLiveData.setValue(false);
+//            }
+//        });
+//        return accountExistenceLiveData;
+//    }
+
+    public LiveData<Boolean> checkAccountExistence(int id_sv) {
+        MutableLiveData<Boolean> accountExistenceLiveData = new MutableLiveData<>();
+        Call<List<DocGia>> call = Common.apiService.getUser();
+        call.enqueue(new Callback<List<DocGia>>() {
+            @Override
+            public void onResponse(Call<List<DocGia>> call, Response<List<DocGia>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    for (DocGia docGia : response.body()) {
+                        if (docGia.getId_sv() == id_sv) {
+                            accountExistenceLiveData.setValue(true);
+                            return;
+                        }
+                    }
+                }
+                accountExistenceLiveData.setValue(false);
+            }
+
+            @Override
+            public void onFailure(Call<List<DocGia>> call, Throwable t) {
+                accountExistenceLiveData.setValue(false);
+            }
+        });
+        return accountExistenceLiveData;
+    }
+
 
     public LiveData<Boolean> checkMssvExistence(String mssv) {
         MutableLiveData<Boolean> mssvExistenceLiveData = new MutableLiveData<>();

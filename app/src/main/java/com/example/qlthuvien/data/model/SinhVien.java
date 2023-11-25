@@ -50,6 +50,7 @@ public class SinhVien {
     }
 
 
+
     public int getId_sv() {
         return id_sv;
     }
