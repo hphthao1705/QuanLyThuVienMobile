@@ -11,4 +11,5 @@ Công nghệ phần mềm nâng cao
   <li>Dagger2</li>
   <li>JUnit4</li>
   <li>Espresso</li>
+  <li>Data Binding</li>
 </ul>
