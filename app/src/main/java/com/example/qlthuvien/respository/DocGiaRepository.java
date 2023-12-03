@@ -26,7 +26,7 @@ public class DocGiaRepository {
             public void onResponse(Call<List<DocGia>> call, Response<List<DocGia>> response) {
                 if(response.isSuccessful())
                 {
-                    data.postValue(response.body());
+                    data.setValue(response.body());
                 }
             }
 

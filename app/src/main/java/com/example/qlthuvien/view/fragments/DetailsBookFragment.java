@@ -35,6 +35,8 @@ import com.example.qlthuvien.data.model.YeuThich;
 import com.example.qlthuvien.data.remote.APIService;
 import com.example.qlthuvien.data.remote.Common;
 import com.example.qlthuvien.databinding.FragmentDetailsBookBinding;
+import com.example.qlthuvien.di.DaggerYeuThichComponent;
+import com.example.qlthuvien.di.YeuThichComponent;
 import com.example.qlthuvien.view.activities.LoginActivity;
 import com.example.qlthuvien.view.activities.MainActivity;
 import com.example.qlthuvien.viewmodels.CartViewModel;
@@ -72,6 +74,7 @@ public class DetailsBookFragment extends Fragment {
     List<YeuThich> ListYeuThich = new ArrayList<>();
     int idYeuThich = 0; // default = 0
     boolean isFavourite = false; // default = false
+    YeuThichComponent component = DaggerYeuThichComponent.create();
     public DetailsBookFragment(int id_tailieu)
     {
         this.id_tailieu = id_tailieu;
@@ -80,7 +83,7 @@ public class DetailsBookFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         loadId_dg();
-        viewModelYeuThich = new ViewModelProvider(this).get(YeuThichViewModel.class);
+        viewModelYeuThich = component.getViewModel();
         viewModel = new ViewModelProvider(this).get(TaiLieuViewModel.class);
         //cartViewModel = new ViewModelProvider(requireActivity()).get(CartViewModel.class);
         cartViewModel = ViewModelProviders.of(this).get(CartViewModel.class);
