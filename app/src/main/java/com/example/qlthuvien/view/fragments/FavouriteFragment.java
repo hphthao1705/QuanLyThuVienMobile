@@ -30,6 +30,8 @@ import com.example.qlthuvien.data.model.Item_Book;
 import com.example.qlthuvien.data.model.TaiLieu;
 import com.example.qlthuvien.data.model.YeuThich;
 import com.example.qlthuvien.databinding.FragmentFavouriteBinding;
+import com.example.qlthuvien.di.DaggerYeuThichComponent;
+import com.example.qlthuvien.di.YeuThichComponent;
 import com.example.qlthuvien.view.activities.MainActivity;
 import com.example.qlthuvien.view.adapter.BookInTopAdapter;
 import com.example.qlthuvien.view.adapter.FavouriteAdapter;
@@ -45,17 +47,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FavouriteFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class FavouriteFragment extends Fragment implements TheLoaiAdapter.ReplaceFragment{
 
     String id_dg = "0";
     YeuThichViewModel viewModelYeuThich;
     TaiLieuViewModel viewModelTaiLieu;
     FragmentFavouriteBinding binding;
+    YeuThichComponent component = DaggerYeuThichComponent.create();
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         loadId_dg();
@@ -126,7 +124,8 @@ public class FavouriteFragment extends Fragment implements TheLoaiAdapter.Replac
         {
             binding.empty1.setVisibility(View.GONE);
             binding.empty2.setVisibility(View.GONE);
-            viewModelYeuThich = new ViewModelProvider(this).get(YeuThichViewModel.class);
+            //viewModelYeuThich = new ViewModelProvider(this).get(YeuThichViewModel.class);
+            viewModelYeuThich = component.getViewModel();
             viewModelYeuThich.liveData_YT.observe(getViewLifecycleOwner(), new Observer<List<YeuThich>>() {
                 @Override
                 public void onChanged(List<YeuThich> yeuThiches) {

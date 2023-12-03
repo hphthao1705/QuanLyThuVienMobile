@@ -22,7 +22,7 @@ public class TaiLieuRepository {
             public void onResponse(Call<List<TaiLieu>> call, Response<List<TaiLieu>> response) {
                 if(response.isSuccessful())
                 {
-                    data.setValue(response.body());
+                    data.postValue(response.body());
                 }
             }
 
@@ -41,7 +41,7 @@ public class TaiLieuRepository {
             public void onResponse(Call<TaiLieu> call, Response<TaiLieu> response) {
                 if(response.isSuccessful())
                 {
-                    data.setValue(response.body());
+                    data.postValue(response.body());
                 }
             }
 

@@ -27,7 +27,7 @@ public class ChiTietMuonTraRepository {
             public void onResponse(Call<List<ChiTietMuonTra>> call, Response<List<ChiTietMuonTra>> response) {
                 if (response.isSuccessful())
                 {
-                    data.setValue(response.body());
+                    data.postValue(response.body());
                 }
             }
 
@@ -67,7 +67,7 @@ public class ChiTietMuonTraRepository {
             public void onResponse(Call<List<ChiTietMuonTra_Full>> call, Response<List<ChiTietMuonTra_Full>> response) {
                 if (response.isSuccessful())
                 {
-                    data.setValue(response.body());
+                    data.postValue(response.body());
                 }
             }
 

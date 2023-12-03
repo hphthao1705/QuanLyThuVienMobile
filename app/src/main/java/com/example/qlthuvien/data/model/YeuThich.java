@@ -28,4 +28,15 @@ public class YeuThich {
     public void setId_dg(int id_dg) {
         this.id_dg = id_dg;
     }
+
+    public YeuThich(int id_dg, int id_tailieu, int id_yeuthich)
+    {
+        this.id_dg = id_dg;
+        this.id_tailieu = id_tailieu;
+        this.id_dg = id_dg;
+    }
+    public YeuThich()
+    {
+
+    }
 }

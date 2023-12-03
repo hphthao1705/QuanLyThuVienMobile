@@ -11,12 +11,19 @@ import com.example.qlthuvien.data.remote.Common;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class YeuThichRepository {
-    public LiveData<List<YeuThich>> loadFavorites()
+    @Inject
+    public YeuThichRepository()
+    {
+
+    }
+    public MutableLiveData<List<YeuThich>> loadFavorites()
     {
         MutableLiveData<List<YeuThich>> data = new MutableLiveData<>();
         Common.apiService.getFavorites().enqueue(new Callback<List<YeuThich>>() {

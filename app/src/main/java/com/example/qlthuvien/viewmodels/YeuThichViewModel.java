@@ -12,20 +12,23 @@ import com.example.qlthuvien.respository.YeuThichRepository;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class YeuThichViewModel  extends ViewModel {
     private final YeuThichRepository repository;
 
     private LiveData<List<TaiLieu>> favoriteBooks;
 
-    public LiveData<List<YeuThich>> liveData_YT = new MutableLiveData();
+    public MutableLiveData<List<YeuThich>> liveData_YT = new MutableLiveData();
 
-    public YeuThichViewModel() {
-        this.repository = new YeuThichRepository();
+    @Inject
+    public YeuThichViewModel(YeuThichRepository repository) {
+        this.repository = repository;
         liveData_YT = repository.loadFavorites();
     }
 
 
-    public LiveData<List<YeuThich>> getFavorites()
+    public LiveData<List<YeuThich>> getFavourites()
     {
         return liveData_YT;
     }
