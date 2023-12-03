@@ -9,4 +9,5 @@ Công nghệ phần mềm nâng cao
   <li>Glide</li>
   <li>Retrofit2</li>
   <li>AsyncTask</li>
+  <li>Dagger2</li>
 </ul>
