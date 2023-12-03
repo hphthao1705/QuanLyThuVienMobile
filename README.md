@@ -10,4 +10,6 @@ Công nghệ phần mềm nâng cao
   <li>Retrofit2</li>
   <li>AsyncTask</li>
   <li>Dagger2</li>
+  <li>JUnit4</li>
+  <li>Espresso</li>
 </ul>
