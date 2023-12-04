@@ -64,10 +64,10 @@ public class CartBookAdapter extends RecyclerView.Adapter<CartBookAdapter.CartBo
         }
         holder.nameOfBook.setText(dtoFavourite.TenSach);
 
-//        Glide
-//                .with(context)
-//                .load(list.get(position).HinhSach).centerCrop().placeholder(R.drawable.avatar)
-//                .into(holder.imgBook);
+        Glide
+                .with(context)
+                .load(list.get(position).HinhSach).centerCrop().placeholder(R.drawable.avatar)
+                .into(holder.imgBook);
 
         holder.authorOfBook.setText(dtoFavourite.TacGia);
         if(dtoFavourite.Check == 1)

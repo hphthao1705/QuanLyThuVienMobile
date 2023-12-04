@@ -32,7 +32,7 @@ public class DetailsOfBookLoanSlipsFragment extends Fragment {
     FragmentDetailsOfBookLoanSlipsBinding binding;
     ChiTietMuonTraViewModel viewModel;
     ArrayList<ChiTietMuonTra_Full> list = new ArrayList<>();
-    DetailsCallCardAdapter adapter = new DetailsCallCardAdapter(new ArrayList<>());
+    DetailsCallCardAdapter adapter = new DetailsCallCardAdapter(new ArrayList<>(), getContext());
     int id_muon;
     String ngaymuon;
     MainActivity activity;
@@ -89,7 +89,7 @@ public class DetailsOfBookLoanSlipsFragment extends Fragment {
                         list.add(j);
                     }
                 }
-                adapter = new DetailsCallCardAdapter(list);
+                adapter = new DetailsCallCardAdapter(list,getContext());
                 binding.frameDetailsOfBookLoanSlips.setAdapter(adapter);
             }
         });
