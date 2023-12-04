@@ -1,5 +1,6 @@
 package com.example.qlthuvien.view.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.qlthuvien.R;
 import com.example.qlthuvien.data.model.ChiTietMuonTra;
 import com.example.qlthuvien.data.model.ChiTietMuonTra_Full;
@@ -21,10 +23,12 @@ import java.util.ArrayList;
 
 public class DetailsCallCardAdapter extends RecyclerView.Adapter<DetailsCallCardAdapter.MyViewHolder>{
     ArrayList<ChiTietMuonTra_Full> list;
+    Context context;
 
-    public DetailsCallCardAdapter(ArrayList<ChiTietMuonTra_Full> list)
+    public DetailsCallCardAdapter(ArrayList<ChiTietMuonTra_Full> list,Context _context)
     {
         this.list = list;
+        context = _context;
     }
     @NonNull
     @Override
@@ -46,6 +50,10 @@ public class DetailsCallCardAdapter extends RecyclerView.Adapter<DetailsCallCard
         {
             holder.binding.txtNgaytra.setText(post.getNgaytra());
         }
+        Glide
+                .with(context)
+                .load(list.get(position).getHinh()).centerCrop().placeholder(R.drawable.avatar)
+                .into(holder.binding.imgLoanBook);
     }
 
     @Override
