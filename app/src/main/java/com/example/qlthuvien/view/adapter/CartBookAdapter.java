@@ -66,7 +66,7 @@ public class CartBookAdapter extends RecyclerView.Adapter<CartBookAdapter.CartBo
 
         Glide
                 .with(context)
-                .load(list.get(position).HinhSach).centerCrop().placeholder(R.drawable.avatar)
+                .load(dtoFavourite.HinhSach).centerCrop().placeholder(R.drawable.avatar)
                 .into(holder.imgBook);
 
         holder.authorOfBook.setText(dtoFavourite.TacGia);

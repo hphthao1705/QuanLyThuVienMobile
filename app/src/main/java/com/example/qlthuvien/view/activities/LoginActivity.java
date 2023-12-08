@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
     public static final String SHARED_PREFERENCES_NAME = "tk_mk";
     public static final String USER_ID = "user_id";
     public static final String NGAYSINH = "ngaysinh";
-    public static final String ID_DG = "";
+    public static final String ID_DG = "user_id";
     public static final String ID_DG1 = "";
     public static final String ID_SV = "";
     public static final String MSSV = "mssv";

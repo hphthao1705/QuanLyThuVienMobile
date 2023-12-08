@@ -14,6 +14,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -114,10 +115,12 @@ public class CartBookFragment extends Fragment {
                         j.Check = i.getCheckbox();
                         j.TacGia = i.getTacgia();
                         j.TenSach = i.getTensach();
+                        j.HinhSach = i.getHinh();
                         list.add(j);
                     }
                     adapter.SetData(list);
                     binding.rcvCartBook.setAdapter(adapter);
+                    adapter.setContext(getContext());
                     loadView(true);
                     chooseBooks();
                 }
@@ -313,7 +316,7 @@ public class CartBookFragment extends Fragment {
             super.onPreExecute();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             String d = formatter.format(new Date());
-            String jsonString = "{'id_muon':0,'id_dg':" + id_dg + ",'id_nv':1,'ngaymuon': '"+d+"','tintrangmuon':0}";
+            String jsonString = "{'id_muon':0,'id_dg':" + id_dg + ",'id_nv':1,'ngaymuon': '"+d+"','tinhtrangmuon':0}";
             JsonParser jsonParser = new JsonParser();
             JsonObject jsonObject = (JsonObject) jsonParser.parse(jsonString);
             muonTraViewModel.insertCallCard(jsonObject);
@@ -321,10 +324,6 @@ public class CartBookFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
-//            if(isCancelled())
-//            {
-//                Log.d("check cart", "cancel asynctask");
-//            }
             return null;
         }
 
@@ -407,5 +406,9 @@ public class CartBookFragment extends Fragment {
             maphieumuon = "PM0" + id_muon;
         }
         builder.setContentText("Phiếu mượn " + maphieumuon + " đã được lập. Hãy đến thư viện để nhận sách nào");
+        // NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+        // notificationId is a unique int for each notification that you must define.
+        // notificationManager.notify(1, builder.build());
     }
 }
