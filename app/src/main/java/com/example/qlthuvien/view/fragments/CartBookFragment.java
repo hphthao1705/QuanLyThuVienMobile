@@ -367,7 +367,7 @@ public class CartBookFragment extends Fragment {
             public void onChanged(List<ChiTietMuonTra> chiTietMuonTras) {
                 for (ChiTietMuonTra i : chiTietMuonTras) {
                     for (MuonTra j : list_thao) {
-                        if (i.getId_muon() == j.getId_muon() && (i.getTinhtrangtra() == 0 || i.getTinhtrangtra() == 1)) {
+                        if (i.getId_muon() == j.getId_muon() && (i.getTinhtrangtra() == 0)) {
                             count++;
                         }
                     }
