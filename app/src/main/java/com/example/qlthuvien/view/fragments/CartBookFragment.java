@@ -377,28 +377,29 @@ public class CartBookFragment extends Fragment {
     }
 
     private void makeNotification(int id_muon) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "THAO");
-        builder.setSmallIcon(R.drawable.avatar);
-        builder.setContentTitle("Thông báo");
-        String maphieumuon;
-        if (id_muon < 10) {
-            maphieumuon = "PM00" + id_muon;
-        } else {
-            maphieumuon = "PM0" + id_muon;
-        }
-        builder.setContentText("Phiếu mượn " + maphieumuon + " đã được lập. Hãy đến thư viện để nhận sách nào");
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
-        //notificationId is a unique int for each notification that you must define.
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        notificationManager.notify(1, builder.build());
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "THAO");
+//        builder.setSmallIcon(R.drawable.avatar);
+//        builder.setContentTitle("Thông báo");
+            String maphieumuon;
+            if (id_muon < 10) {
+                maphieumuon = "PM00" + id_muon;
+            } else {
+                maphieumuon = "PM0" + id_muon;
+            }
+//        builder.setContentText("Phiếu mượn " + maphieumuon + " đã được lập. Hãy đến thư viện để nhận sách nào");
+//        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
+//        //notificationId is a unique int for each notification that you must define.
+//        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+//            // TODO: Consider calling
+//            //    ActivityCompat#requestPermissions
+//            // here to request the missing permissions, and then overriding
+//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//            //                                          int[] grantResults)
+//            // to handle the case where the user grants the permission. See the documentation
+//            // for ActivityCompat#requestPermissions for more details.
+//            return;
+//        }
+//        notificationManager.notify(1, builder.build());
+        Toast.makeText(getContext(), "Phiếu mượn" + maphieumuon + " đã được lập. Hãy đến thư viện để nhận sách nào", Toast.LENGTH_SHORT).show();
     }
 }
