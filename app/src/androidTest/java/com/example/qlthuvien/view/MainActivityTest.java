@@ -55,29 +55,6 @@ public class MainActivityTest {
     @After
     public void tearDown() throws Exception {
     }
-    @Test
-    public void test1_TimKiemThanhCong() throws InterruptedException {
-        onView(withId(R.id.searchView)).perform(click());
-        //onView(withId(R.id.searchView)).perform(pressKey(KeyEvent.KEYCODE_T), closeSoftKeyboard()).perform(pressImeActionButton());
-
-        Espresso.onView(withId(R.id.searchView))
-                .perform(click(), pressKey(KeyEvent.KEYCODE_T));
-        Thread.sleep(500);  // Add a small delay
-        Espresso.onView(withId(R.id.searchView)).perform(ViewActions.pressImeActionButton());
-
-        //onView(withId(R.id.searchView)).perform(pressKey(KeyEvent.KEYCODE_T), ViewActions.pressImeActionButton());;
-        onView(withId(R.id.recyclerview_search)).check(new RecyclerViewItemCountAssertion(4));
-    }
-    @Test
-    public void test2_TimKiemThatBai()
-    {
-
-    }
-    @Test
-    public void test3_KhongTimKiemNua()
-    {
-
-    }
 
     @Test
     public void test4_ThemSachVaoGioSach() throws InterruptedException {

@@ -3,16 +3,19 @@ package com.example.qlthuvien.view.fragments;
 import static com.example.qlthuvien.view.activities.LoginActivity.ID_DG;
 import static com.example.qlthuvien.view.activities.LoginActivity.SHARED_PREFERENCES_NAME;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Canvas;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
@@ -24,6 +27,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,11 +45,13 @@ import com.example.qlthuvien.viewmodels.CartViewModel;
 import com.example.qlthuvien.viewmodels.ChiTietMuonTraViewModel;
 import com.example.qlthuvien.viewmodels.MuonTraViewModel;
 import com.google.gson.JsonObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+
 import com.google.gson.JsonParser;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
@@ -61,9 +67,10 @@ public class CartBookFragment extends Fragment {
     private MuonTraViewModel muonTraViewModel;
     private ChiTietMuonTraViewModel chiTietMuonTraViewModel;
     int id_dg = 0;
-    int count=0;
+    int count = 0;
     int numberOfBooksIsChoosen = 0;
     CartBookFragment.AsyncTask task = null;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -96,19 +103,16 @@ public class CartBookFragment extends Fragment {
         loadCountBook();
         borrowBooks();
     }
-    private void loadCart()
-    {
+
+    private void loadCart() {
         viewModel.cartBook.observe(getViewLifecycleOwner(), new Observer<List<Cart>>() {
             @Override
             public void onChanged(List<Cart> carts) {
                 list.clear();
-                if(carts.size() == 0)
-                {
+                if (carts.size() == 0) {
                     loadView(false);
-                }
-                else
-                {
-                    for (Cart i:carts) {
+                } else {
+                    for (Cart i : carts) {
                         cartList = carts;
                         DtoFavourite j = new DtoFavourite();
                         j.Id = String.valueOf(i.getId_tailieu());
@@ -128,12 +132,13 @@ public class CartBookFragment extends Fragment {
             }
         });
     }
-    private void initRecyclerView()
-    {
+
+    private void initRecyclerView() {
         binding.rcvCartBook.hasFixedSize();
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
         binding.rcvCartBook.setLayoutManager(layoutManager);
     }
+
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -143,16 +148,15 @@ public class CartBookFragment extends Fragment {
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             int position = viewHolder.getAdapterPosition();
-            switch (direction)
-            {
-                case ItemTouchHelper.LEFT:{
+            switch (direction) {
+                case ItemTouchHelper.LEFT: {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setTitle("Thông báo");
                     builder.setMessage("Bạn muốn xóa quyển sách này ra khỏi giỏ sách?");
                     builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // quang code cua thao vo day
-                            Cart cart = new Cart(cartList.get(position).getId_tailieu(), id_dg, cartList.get(position).getHinh(), cartList.get(position).getTensach(),  cartList.get(position).getTacgia(),  cartList.get(position).getCheckbox());
+                            Cart cart = new Cart(cartList.get(position).getId_tailieu(), id_dg, cartList.get(position).getHinh(), cartList.get(position).getTensach(), cartList.get(position).getTacgia(), cartList.get(position).getCheckbox());
                             viewModel.delete(cart);
                             list.remove(position);
 
@@ -170,7 +174,8 @@ public class CartBookFragment extends Fragment {
                     });
                     AlertDialog alert = builder.create();
                     alert.show();
-                }break;
+                }
+                break;
             }
         }
 
@@ -184,35 +189,31 @@ public class CartBookFragment extends Fragment {
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         }
     };
-    private void chooseBooks()
-    {
+
+    private void chooseBooks() {
         adapter.setOnCheckedListener(new CartBookAdapter.OnCheckedChangeListener() {
             @Override
             public void onChecked(boolean checked, CartBookAdapter.CartBookAdapterViewHolder viewHolder) {
                 viewModel.countBookWhichIsChoosen(id_dg);
-                if(task != null)
-                {
+                if (task != null) {
                     task.cancel(true);
                     task = null;
                     Log.d("check cart", "asynctask is still working");
                 }
                 Log.d("check cart", "asynctask is not working when check this checkbox");
                 int position = viewHolder.getAdapterPosition();
-                if(checked)
-                {
+                if (checked) {
                     viewModel.update(1, cartList.get(position).getId_tailieu(), id_dg);
                     Log.d("check cart", "check");
-                }
-                else
-                {
+                } else {
                     viewModel.update(0, cartList.get(position).getId_tailieu(), id_dg);
                     Log.d("check cart", "uncheck");
                 }
             }
         });
     }
-    public void loadCountBook()
-    {
+
+    public void loadCountBook() {
         viewModel.count.observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
@@ -221,31 +222,24 @@ public class CartBookFragment extends Fragment {
             }
         });
     }
-    private void borrowBooks()
-    {
+
+    private void borrowBooks() {
         binding.btnMuon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                if(numberOfBooksIsChoosen == 0)
-                {
+                if (numberOfBooksIsChoosen == 0) {
                     builder.setMessage("Vui lòng chọn sách mà bạn muốn mượn");
-                }
-                else {
-                    if(count + numberOfBooksIsChoosen > 3)
-                    {
+                } else {
+                    if (count + numberOfBooksIsChoosen > 3) {
 
                         builder.setTitle("Thông báo");
-                        if((3 - count) <= 0)
-                        {
+                        if ((3 - count) <= 0) {
                             builder.setMessage("Số sách bạn muốn mượn đã vượt quá quy định. Hãy trả sách để có thể mượn tiếp");
-                        }
-                        else {
+                        } else {
                             builder.setMessage("Số sách bạn muốn mượn đã vượt quá quy định. Bạn chỉ có thể mượn " + (3 - count) + " quyển sách");
                         }
-                    }
-                    else
-                    {
+                    } else {
                         Log.d("check cart", "start asynctask");
                         //add phiếu mượn
                         task = (CartBookFragment.AsyncTask) new CartBookFragment.AsyncTask().execute();
@@ -263,8 +257,8 @@ public class CartBookFragment extends Fragment {
             }
         });
     }
-    private void addDetailOfCallCard()
-    {
+
+    private void addDetailOfCallCard() {
         //add chi tiết phiếu mượn
         muonTraViewModel.liveData.observe(getViewLifecycleOwner(), new Observer<List<MuonTra>>() {
             @Override
@@ -276,17 +270,15 @@ public class CartBookFragment extends Fragment {
                         int j = 0;
                         Log.d("id_muon", String.valueOf(muonTras.get(0).getId_muon()));
                         Log.d("size_ctmt: ", carts.size() + "");
-                        for(Cart i: carts)
-                        {
-                            String jsonString = "{'id_ctmuon':0,'id_muon':"+(muonTras.get(0).getId_muon() + 1)+",'id_tailieu':"+ i.getId_tailieu() +",'ngaytra':null,'tinhtrangtra':0}";
-                            Log.d("json: ",jsonString);
+                        for (Cart i : carts) {
+                            String jsonString = "{'id_ctmuon':0,'id_muon':" + (muonTras.get(0).getId_muon() + 1) + ",'id_tailieu':" + i.getId_tailieu() + ",'ngaytra':null,'tinhtrangtra':0}";
+                            Log.d("json: ", jsonString);
 
                             JsonParser jsonParser = new JsonParser();
                             JsonObject jsonObject = (JsonObject) jsonParser.parse(jsonString);
                             chiTietMuonTraViewModel.insertCallCard(jsonObject);
                             j++;
-                            if(j==carts.size())
-                            {
+                            if (j == carts.size()) {
                                 thaoQuaMetRoiHuHu.setValue("ok");
                             }
                             makeNotification(muonTras.get(0).getId_muon() + 1);
@@ -298,8 +290,7 @@ public class CartBookFragment extends Fragment {
         thaoQuaMetRoiHuHu.observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                if(task != null)
-                {
+                if (task != null) {
                     Log.d("check cart", "delete book which is borrowed");
                     viewModel.deleteBooksWhichIsBorrowed(id_dg);
                     task.cancel(true);
@@ -310,13 +301,14 @@ public class CartBookFragment extends Fragment {
         //task.cancel(true);
 
     }
+
     private class AsyncTask extends android.os.AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             String d = formatter.format(new Date());
-            String jsonString = "{'id_muon':0,'id_dg':" + id_dg + ",'id_nv':1,'ngaymuon': '"+d+"','tinhtrangmuon':0}";
+            String jsonString = "{'id_muon':0,'id_dg':" + id_dg + ",'id_nv':1,'ngaymuon': '" + d + "','tinhtrangmuon':0}";
             JsonParser jsonParser = new JsonParser();
             JsonObject jsonObject = (JsonObject) jsonParser.parse(jsonString);
             muonTraViewModel.insertCallCard(jsonObject);
@@ -333,23 +325,20 @@ public class CartBookFragment extends Fragment {
             addDetailOfCallCard();
         }
     }
-    private void loadId_dg()
-    {
+
+    private void loadId_dg() {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         id_dg = Integer.parseInt(sharedPreferences.getString("user_id", "0"));
     }
-    private void loadView(boolean check)
-    {
-        if(check)
-        {
+
+    private void loadView(boolean check) {
+        if (check) {
             binding.empty1.setVisibility(View.GONE);
             binding.empty2.setVisibility(View.GONE);
             binding.empty3.setVisibility(View.GONE);
             binding.rcvCartBook.setVisibility(View.VISIBLE);
             binding.muon.setVisibility(View.VISIBLE);
-        }
-        else
-        {
+        } else {
             binding.empty1.setVisibility(View.VISIBLE);
             binding.empty2.setVisibility(View.VISIBLE);
             binding.empty3.setVisibility(View.VISIBLE);
@@ -357,15 +346,13 @@ public class CartBookFragment extends Fragment {
             binding.muon.setVisibility(View.GONE);
         }
     }
-    private void loadBorrowBooks()
-    {
+
+    private void loadBorrowBooks() {
         muonTraViewModel.liveData.observe(getViewLifecycleOwner(), new Observer<List<MuonTra>>() {
             @Override
             public void onChanged(List<MuonTra> muonTras) {
-                for(MuonTra i:muonTras)
-                {
-                    if(i.getId_dg() == id_dg)
-                    {
+                for (MuonTra i : muonTras) {
+                    if (i.getId_dg() == id_dg) {
                         list_thao.add(i);
                     }
                 }
@@ -373,17 +360,14 @@ public class CartBookFragment extends Fragment {
             }
         });
     }
-    private void countBooksThatUserBorrow()
-    {
+
+    private void countBooksThatUserBorrow() {
         chiTietMuonTraViewModel.liveData.observe(getViewLifecycleOwner(), new Observer<List<ChiTietMuonTra>>() {
             @Override
             public void onChanged(List<ChiTietMuonTra> chiTietMuonTras) {
-                for (ChiTietMuonTra i:chiTietMuonTras)
-                {
-                    for(MuonTra j:list_thao)
-                    {
-                        if(i.getId_muon() == j.getId_muon() && (i.getTinhtrangtra() == 0 || i.getTinhtrangtra() == 1))
-                        {
+                for (ChiTietMuonTra i : chiTietMuonTras) {
+                    for (MuonTra j : list_thao) {
+                        if (i.getId_muon() == j.getId_muon() && (i.getTinhtrangtra() == 0 || i.getTinhtrangtra() == 1)) {
                             count++;
                         }
                     }
@@ -391,24 +375,30 @@ public class CartBookFragment extends Fragment {
             }
         });
     }
-    private void makeNotification(int id_muon)
-    {
+
+    private void makeNotification(int id_muon) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "THAO");
         builder.setSmallIcon(R.drawable.avatar);
         builder.setContentTitle("Thông báo");
         String maphieumuon;
-        if(id_muon < 10)
-        {
+        if (id_muon < 10) {
             maphieumuon = "PM00" + id_muon;
-        }
-        else
-        {
+        } else {
             maphieumuon = "PM0" + id_muon;
         }
         builder.setContentText("Phiếu mượn " + maphieumuon + " đã được lập. Hãy đến thư viện để nhận sách nào");
-        // NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-
-        // notificationId is a unique int for each notification that you must define.
-        // notificationManager.notify(1, builder.build());
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
+        //notificationId is a unique int for each notification that you must define.
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        notificationManager.notify(1, builder.build());
     }
 }
