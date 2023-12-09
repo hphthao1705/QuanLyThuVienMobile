@@ -173,7 +173,7 @@ public class LoginActivity extends AppCompatActivity {
                                             e.printStackTrace();
                                         }
                                     } else {
-                                        Log.i("onEmptyResponse", "Returned empty response");
+                                        Log.i("onEmptyResponse", "Tài khoản không tồn tại");
                                         etUname.setText("");
                                         etPass.setText("");
                                     }
@@ -189,10 +189,10 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         });
                     } else {
-                        Log.i("onEmptyResponse", "Returned empty response");
+                        Log.i("onEmptyResponse", "Tài khoản không tồn tại");
                         etUname.setText("");
                         etPass.setText("");
-                        Snackbar.make(rl_pwd, "Returned empty response", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(rl_pwd, "Tài khoản không tồn tại", Snackbar.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -219,6 +219,7 @@ public class LoginActivity extends AppCompatActivity {
             } else {
                 Log.d("Docgia", "empty");
             }
+            Snackbar.make(rl_pwd, "Đăng nhập thành công!", Snackbar.LENGTH_SHORT).show();
             Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
