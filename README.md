@@ -1,5 +1,5 @@
 # Library Android App
-Đồ án môn học: Công nghệ phần mềm nâng cao \n
+Đồ án môn học: Công nghệ phần mềm nâng cao<br>
 Mô tả: App thư viện dành cho trường học, chỉ những sinh viên trong trường mới có thể đăng ký, đăng nhập vào để tìm kiếm sách, thêm sách vào yêu thích, mượn sách,...
 <h1>Library</h1>
 <ul>
